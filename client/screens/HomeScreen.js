@@ -5,6 +5,7 @@ export default function HomeScreen() {
   return (
     <View>
       <Text>HomeScreen</Text>
+      <Text>Hello</Text>
     </View>
   )
 }
