@@ -1,11 +1,9 @@
-// userController.js
 const db = require('../database');
 
 exports.signup = (req, res) => {
   try {
     const { username, email, password } = req.body;
 
-    // Insert user into the database
     const sql = 'INSERT INTO Users (username, email, password) VALUES (?, ?, ?)';
     db.query(sql, [username, email, password], (err, result) => {
       if (err) {
