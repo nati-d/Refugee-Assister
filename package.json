@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "expo": "^44.0.6",
+    "expo-status-bar": "~1.2.0"
+  }
+}
