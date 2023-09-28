@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TextInput } from 'react-native'
+import { View, Text, ScrollView, TextInput,Image } from 'react-native'
 import React from 'react'
 import {MdPerson} from 'react-icons/md'
 

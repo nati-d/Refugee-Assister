@@ -1,31 +1,9 @@
- import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import spalshscreen from './screens/splashscreen';
-const Stack = createStackNvigatator();
+import SplashScreen from './screens/SplashScreen';
+import Navigation from './navigation/navigation';
 const App = ()=> {
-  const [isFirstLaunched,setIsFirstLaunched]=React.useState(true);
-  React.useEffect(
-   async ()=>{
-    const appData= await AsyncStroge.setItem('isFirstyLaunched','true');
-    console.log(appData);
-    if(appData==null){
-      setIsFirstLaunched(true);
-    }else{
-      setIsFirstLaunched(false);
-    }
-   },[]
-  );
   return(
-    isFirstLaunched != null &&(
-      <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown:false}}>
-        <Stack.Screen name ="splashscreen" component={spalshscreen}/>
-        <Stack.Screen name="HomeScreen" component={HomeScreen}/>
-      </Stack.Navigator>
-    </NavigationContainer>
-    )
-  
+      <Navigation/>
   );
 };
 export default App;
