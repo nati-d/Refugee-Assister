@@ -6,7 +6,7 @@
 Assister is an innovative mobile application designed to provide comprehensive support and resources for refugees, with a focus on mental health care, education, news updates, and healthcare assistance. Leveraging cutting-edge artificial intelligence, Assister aims to empower refugees by offering personalized guidance, educational content, news updates, and access to healthcare services. The application is built with a user-friendly interface and multilingual support to ensure ease of use and inclusivity.
 
 ## Core Features
-- **AI-Powered Chatbot Functionality: **
+###AI-Powered Chatbot Functionality: 
 The heart of Assister lies in its robust AI-powered chatbot functionality. The chatbot acts as a compassionate and knowledgeable virtual companion, providing invaluable support and guidance for the unique mental health and medical care needs of refugees. By leveraging natural language processing and machine learning techniques, the chatbot continually refines its understanding of user needs, ensuring personalized recommendations and guidance. It also connects users with appropriate professional services when necessary.
 
 - **Educational Platform: **
