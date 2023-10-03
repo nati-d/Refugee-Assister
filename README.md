@@ -32,6 +32,7 @@ Assister addresses the healthcare needs of refugees through its Symptom Checker 
 - Redux (for State Management)(https://redux.js.org/)
 - Axios (for HTTP requests)(https://axios-http.com/docs/intro)
 - Tailwind and Nativewind CSS (CSS styling framework)(https://tailwindcss.com/)
+  
 **Backend:**
 
 - Node JS (for API development)(https://nodejs.org/en/)
