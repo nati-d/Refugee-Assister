@@ -38,6 +38,7 @@ Assister addresses the healthcare needs of refugees through its Symptom Checker 
 - Node JS (for API development)(https://nodejs.org/en/)
 - MySQL (for Relational Database)(https://www.mysql.com/)
 - Express (Node.js framework)(https://expressjs.com/)
+  
 **AI Models:**
 - OpenAI (for content generation and customization)(https://platform.openai.com/docs/introduction)
 
