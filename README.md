@@ -2,7 +2,7 @@
 ![Untitled-2](https://github.com/Natthyx/Assister/assets/99822269/2bdd5ba3-81f0-4f51-a3a0-8eda4ff248a0)
 ## BY INNOVATEX
 
-##Introduction
+## Introduction
 Assister is an innovative mobile application designed to provide comprehensive support and resources for refugees, with a focus on mental health care, education, news updates, and healthcare assistance. Leveraging cutting-edge artificial intelligence, Assister aims to empower refugees by offering personalized guidance, educational content, news updates, and access to healthcare services. The application is built with a user-friendly interface and multilingual support to ensure ease of use and inclusivity.
 
 ##Core Features
