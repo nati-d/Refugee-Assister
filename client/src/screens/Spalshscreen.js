@@ -1,37 +1,39 @@
 import React, { useRef, useState } from 'react';
 
 import { SafeAreaView, StyleSheet, Dimensions, StatusBar, FlatList, TouchableWithoutFeedback, View, TouchableOpacity } from 'react-native';
-const { width, heigth } = Dimensions.get('window');
+
+import { Text, Image } from 'react-native';
+
 const Colors = { Blue: '#28C2FF', Gray: '#AEB7B3',white:'#fff '};
 const slides =
     [
         {
             id: '1',
-            image: require('./assets/photo_2023-09-19_13-22-15.jpg'),
+            // image: require('./assets/images/photo_2023-09-19_13-22-15.jpg'),
 
         },
         {
             id: '2',
-            image: require('./assets/photo_2023-09-22_09-40-10.jpg'),
+            // image: require('./assets/images/photo_2023-09-22_09-40-10.jpg'),
             title: 'Guiding Resiliance'
         },
         {
             id: '3',
-            image: require('./assets/photo_2023-09-22_09-40-10.jpg'),
+            // image: require('./assets/images/photo_2023-09-22_09-40-10.jpg'),
             title: 'Healing Paths',
             description: 'Guiding Mental Health and Medical Wellness Toward a Balanced, Resilient, and Fulfilling Life Journey.',
 
         },
         {
-            id: '4',
-            image: require('./assets/photo_2023-09-22_09-40-10.jpg'),
+             id: '4',
+            // image: require('./assets/images/photo_2023-09-22_09-40-10.jpg'),
             title: 'Chatbot Compass',
             description: 'Navigating Your Journey with AI for Smart and Helpful Conversational Guidance and Support.',
 
         },
         {
             id: '5',
-            image: require('./assets/photo_2023-09-22_09-39-52.jpg'),
+            // image:require('./assets/images/photo_2023-09-22_09-39-52.jpg'),
             title: 'Universal Connection',
             description: 'Bridging Language Barriers and Simplifying Tasks with Voice-Powered Chatbot Guidance and Support.',
 
@@ -49,7 +51,7 @@ const slide = ({ item }) => {
         </View>
     )
 }
-const spalshscreen = ({ navigation }) => {
+const Spalshscreen = ({ navigation }) => {
     const [currentSlideIndex,setcurrentSlideIndex]=useState(0);
     const ref = useRef();
     const Footer = () => {
@@ -86,8 +88,8 @@ const spalshscreen = ({ navigation }) => {
            </View>
    );
                    }
-                     
-                   
+
+
     // };
     function updateCurrentIndex(e) {
         const contentOffSet = e.nativeEvent.contentOffSet.x;
@@ -101,7 +103,7 @@ const spalshscreen = ({ navigation }) => {
             ref?.current?.scrollToOffset({offset});
             setcurrentSlideIndex(nextSlideIndex)
         }
-        
+
 
     }; 
     const skip =()=>{
@@ -138,7 +140,7 @@ const styles = StyleSheet.create({
         fontSize: 13,
         maxWidth: '75%',
         marginTop: 10,
-        textAlign: center,
+        // textAlign: center,
         lineHeight: 23,
 
     },
@@ -160,4 +162,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default spalshscreen;
+export default Spalshscreen;

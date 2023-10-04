@@ -1,8 +1,10 @@
- import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import spalshscreen from './screens/splashscreen';
-const Stack = createStackNvigatator();
+import NavigationContainer from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import spalshscreen from './src/screens/Spalshscreen';
+const Stack =  createNativeStackNavigator();
 const App = ()=> {
   const [isFirstLaunched,setIsFirstLaunched]=React.useState(true);
   React.useEffect(
@@ -20,51 +22,12 @@ const App = ()=> {
     isFirstLaunched != null &&(
       <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown:false}}>
-        <Stack.Screen name ="splashscreen" component={spalshscreen}/>
-        <Stack.Screen name="HomeScreen" component={HomeScreen}/>
+        <Stack.Screen name ="Spalshscreen" component={spalshscreen}/>
+        {/* <Stack.Screen name="HomeScreen" component={HomeScreen}/> */}
       </Stack.Navigator>
     </NavigationContainer>
     )
-  
+
   );
 };
 export default App;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// export default function App() {
-//   return (
-//     <View style={styles.container}>
-//       <Text>Open up App.js to start working on your app!</Text>
-//       <StatusBar style="auto" />
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
-
