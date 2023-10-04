@@ -4,7 +4,7 @@
     "slug": "client",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "../assets",
+    "icon": "./assets/splash.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "../assets",
@@ -19,7 +19,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "../assets",
+        "foregroundImage": "./assets/splash.png",
         "backgroundColor": "#ffffff"
       }
     },
