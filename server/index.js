@@ -6,11 +6,6 @@ const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
-const userRoutes = require('./routes/authRoutes');
-app.use('/api/users', userRoutes);
-
-const authRoute = require('./routes/authRoutes');
-app.use('/auth', authRoute);
 
 const chatRoutes = require("./routes/chatRoutes");
 app.use("/chat",chatRoutes)

@@ -1,7 +1,5 @@
 import React from 'react';
-import SplashScreen from './screens/SplashScreen';
 import Navigation from './navigation/navigation';
-import tw from 'twrnc'
 const App = ()=> {
   return(
       <Navigation/>
