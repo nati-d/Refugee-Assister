@@ -15,6 +15,7 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 import { Ionicons } from '@expo/vector-icons';
+import ChatbotScreen from '../screens/ChatbotScreen';
 
 function HomeTabNavigator() {
   return (
@@ -56,7 +57,9 @@ function Navigation() {
           screenOptions={{
             headerShown: false
           }}>
-          <Stack.Screen name="Home" component={HomeTabNavigator} options={{ headerShown: false }} />
+
+          <Stack.Screen name="Home" component={HomeTabNavigator}  />
+          <Stack.Screen name="Chatbot" component={ChatbotScreen}  />
         </Stack.Navigator>
       </NavigationContainer>
     );

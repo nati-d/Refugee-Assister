@@ -62,7 +62,7 @@ const OnboardingScreen = ({ navigation }) => {
       pages={[
         {
           backgroundColor: '#fff',
-          image: <Image style={{ width: '90%', height: 250 }} source={require('../assets/photo_2023-09-22_09-40-10.jpg')} />,
+          image: <Image style={{ width: '90%', height: 250 }} source={require('../assets/images/photo_2023-09-22_09-40-10.jpg')} />,
           title: (
             <Text style={{fontSize:26, fontWeight:'bold', marginBottom:8}}>
               <Text style={{ color: '#28c2ff' }}>Guiding</Text> Resilience
@@ -72,7 +72,7 @@ const OnboardingScreen = ({ navigation }) => {
         },
         {
           backgroundColor: '#fff',
-          image: <Image style={{ width: '90%', height: 250 }} source={require('../assets/photo_2023-09-22_09-40-04.jpg')} />,
+          image: <Image style={{ width: '90%', height: 250 }} source={require('../assets/images/photo_2023-09-22_09-40-04.jpg')} />,
           title: (
             <Text style={{fontSize:26, fontWeight:'bold', marginBottom:8}}>
               <Text style={{ color: '#28c2ff' }}>Healing</Text> Paths
@@ -82,7 +82,7 @@ const OnboardingScreen = ({ navigation }) => {
         },
         {
           backgroundColor: '#fff',
-          image: <Image style={{ width: '90%', height: 250 }} source={require('../assets/photo_2023-09-22_09-39-59.jpg')} />,
+          image: <Image style={{ width: '90%', height: 250 }} source={require('../assets/images/photo_2023-09-22_09-39-59.jpg')} />,
           title: (
             <Text style={{fontSize:26, fontWeight:'bold', marginBottom:8}}>
               <Text style={{ color: '#28c2ff' }}>Chatbot</Text> Compass
@@ -92,7 +92,7 @@ const OnboardingScreen = ({ navigation }) => {
         },
         {
           backgroundColor: '#fff',
-          image: <Image style={{ width: '90%', height: 250 }} source={require('../assets/photo_2023-09-22_09-39-52.jpg')} />,
+          image: <Image style={{ width: '90%', height: 250 }} source={require('../assets/images/photo_2023-09-22_09-39-52.jpg')} />,
           title: (
             <Text style={{fontSize:26, fontWeight:'bold', marginBottom:8}}>
               <Text style={{ color: '#28c2ff' }}>Universal</Text> Connection

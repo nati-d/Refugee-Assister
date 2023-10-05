@@ -5,8 +5,10 @@ import { Ionicons } from '@expo/vector-icons'
 import HomeScreenTool from '../components/HomeScreenTools';
 import SubTitle from '../components/SubTitles';
 import News from '../components/News';
+import { useNavigation } from '@react-navigation/native';
 
 export default function HomePage() {
+  const navigation = useNavigation()
   return (
     <View style={tw `flex-1 bg-white`}>
       <ScrollView>
@@ -26,7 +28,7 @@ export default function HomePage() {
               {/* <SubTitle title="Tools" /> */}
               <View style={tw `flex-row items-center justify-between mt-5`}>
                 <HomeScreenTool name="Checker" icon="md-medkit" iconSize={36} />
-                <HomeScreenTool name="Assistant" icon="md-chatbox" iconSize={36} />
+                <HomeScreenTool name="Assistant" icon="md-chatbox" iconSize={36} navigation = {navigation}/>
                 <HomeScreenTool name="Learn" icon="md-school" iconSize={40} />
                 <HomeScreenTool name="Progress" icon="md-trending-up" iconSize={40} />
               </View>
