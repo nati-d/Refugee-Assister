@@ -8,28 +8,39 @@ import News from '../components/News';
 
 export default function HomePage() {
   return (
-    <View style={tw `flex-1 bg-white`}>
+    <View style={{ backgroundColor: '#F8F8F8' }}>
       <ScrollView>
         <View style={tw `flex items-center mt-20`}>
           <View style={tw `flex w-85`}>
             <View style={tw `flex-row items-center justify-between`}>
-              <Text style={tw `text-7 text-blue-400 font-bold`}>Assister</Text>
+                <Text style={tw `text-7 font-bold`}>Your Journey, Our Guiding Hand</Text>
               <TouchableOpacity>
                 <Ionicons name="md-notifications-outline" size={30} color="black" />
               </TouchableOpacity> 
             </View>
             <View style={tw `flex-row mt-10 items-center`}>
               <Ionicons name="md-pin" size={24} color="red" />
-              <Text style={tw `text-gray-400 text-3`}>United States of America, Silver Spring Virginia</Text>
+              <View style={tw ``}>
+                <Text style={tw `text-3 font-bold`}>USA,</Text>
+                <Text style={tw `text-gray-400 text-3`}>Silver Spring Virginia</Text>
+              </View>
             </View>
             <View style={tw `mt-8`}>
-              {/* <SubTitle title="Tools" /> */}
               <View style={tw `flex-row items-center justify-between mt-5`}>
-                <HomeScreenTool name="Checker" icon="md-medkit" iconSize={36} />
-                <HomeScreenTool name="Assistant" icon="md-chatbox" iconSize={36} />
-                <HomeScreenTool name="Learn" icon="md-school" iconSize={40} />
-                <HomeScreenTool name="Progress" icon="md-trending-up" iconSize={40} />
+                <HomeScreenTool name="Checker" icon="md-medkit" />
+                <HomeScreenTool name="Assistant" icon="md-chatbox" />
+                <HomeScreenTool name="Learn" icon="md-school" />
+                <HomeScreenTool name="Progress" icon="md-trending-up" />
               </View>
+            </View>
+            <View style={tw `mt-15`}>
+              <SubTitle title="Demo" />
+              <ScrollView horizontal>
+                <News />
+                <News />
+                <News />
+                <News />
+              </ScrollView>
             </View>
             <View style={tw `mt-15 mb-10`}>
               <SubTitle title="Recent News" />
