@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "expo": "^49.0.13",
-    "firebase": "^10.4.0",
-    "react-native": "^0.72.5",
-    "react-native-vector-icons": "^10.0.0"
-  }
-}
