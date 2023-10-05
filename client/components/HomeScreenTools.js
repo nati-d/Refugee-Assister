@@ -7,6 +7,7 @@ import { StyleSheet } from "react-native";
 export default function HomeScreenTool (props) {
     const handlePress = () => {
         props.navigation.navigate("Chatbot")
+        props.navigation.navigate("Diagnosis")
     }
     return(
         <View>

@@ -16,6 +16,7 @@ const Tab = createBottomTabNavigator();
 
 import { Ionicons } from '@expo/vector-icons';
 import ChatbotScreen from '../screens/ChatbotScreen';
+import DiagnosisScreen from '../screens/DiagnosisScreen';
 
 function HomeTabNavigator() {
   return (
@@ -60,6 +61,7 @@ function Navigation() {
 
           <Stack.Screen name="Home" component={HomeTabNavigator}  />
           <Stack.Screen name="Chatbot" component={ChatbotScreen}  />
+          <Stack.Screen name="Diagnosis" component={DiagnosisScreen}  />
         </Stack.Navigator>
       </NavigationContainer>
     );
