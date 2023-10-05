@@ -27,7 +27,7 @@ export default function ChatbotScreen() {
       }
     }
   return (
-    <View style={tw`flex-1 relative mt-7`}>
+    <View style={tw`flex-1 relative mt-12`}>
       <View style={[tw`h-20 justify-center`, styles.container]}>
         <View style={tw`flex-row items-center `}>
           <TouchableOpacity style={tw`bg-white ml-3 mr-4 rounded-xl`} onPress={() => navigation.navigate("Home")} >

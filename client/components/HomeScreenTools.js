@@ -5,20 +5,23 @@ import tw from 'twrnc';
 import { StyleSheet } from "react-native";
 
 export default function HomeScreenTool (props) {
+    const navigation = useNavigation();
+
     const handlePress = () => {
-        props.navigation.navigate("Chatbot")
-        props.navigation.navigate("Diagnosis")
+        // props.navigation.navigate("Chatbot")
+        navigation.navigate(props.page)
     }
     return(
         <View>
-            <TouchableOpacity style={tw `flex justify-center items-center bg-blue-300 w-16 h-16 rounded-full mb-2`}>                
+            <TouchableOpacity 
+                style={tw `flex justify-center items-center bg-blue-300 w-16 h-16 rounded-full mb-2`}
+                onPress = {handlePress}
+            >                
                 <Ionicons name={props.icon} size={props.iconSize} color="white" />
             </TouchableOpacity>
             <Text style={tw `text-center text-blue-400 font-bold`}>{props.name}</Text>
-        </View>
-        
+        </View> 
     )
-    
 }
 
 const styles = StyleSheet.create({
