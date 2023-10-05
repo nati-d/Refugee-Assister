@@ -1,3 +1,4 @@
+
 const { OpenAI } = require("openai");
 
 const apiKey = process.env.API_KEY;
@@ -43,4 +44,5 @@ exports.chat = async (req, res) => {
     console.error("Error:", error.message);
     res.status(500).json({ error: "An error occurred" });
   }
+
 };

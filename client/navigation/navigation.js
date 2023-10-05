@@ -35,7 +35,7 @@ function HomeTabNavigator() {
         },
       })}
       tabBarOptions={{
-        activeTintColor: '#007BFF',
+        activeTintColor: '#007bff',
         inactiveTintColor: 'gray',
       }}
       tabBarStyle={{ display: 'flex' }}
@@ -60,7 +60,8 @@ function Navigation() {
         </Stack.Navigator>
       </NavigationContainer>
     );
-  } else {
+  } 
+  else {
     return (
       <NavigationContainer>
         <Stack.Navigator
