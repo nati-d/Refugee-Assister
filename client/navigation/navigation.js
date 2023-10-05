@@ -15,6 +15,8 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 import { Ionicons } from '@expo/vector-icons';
+import ChatbotScreen from '../screens/ChatbotScreen';
+import DiagnosisScreen from '../screens/DiagnosisScreen';
 
 function HomeTabNavigator() {
   return (
@@ -35,7 +37,7 @@ function HomeTabNavigator() {
         },
       })}
       tabBarOptions={{
-        activeTintColor: '#007bff',
+        activeTintColor: '#007BFF',
         inactiveTintColor: 'gray',
       }}
       tabBarStyle={{ display: 'flex' }}
@@ -56,12 +58,14 @@ function Navigation() {
           screenOptions={{
             headerShown: false
           }}>
-          <Stack.Screen name="Home" component={HomeTabNavigator} options={{ headerShown: false }} />
+
+          <Stack.Screen name="Home" component={HomeTabNavigator}  />
+          <Stack.Screen name="Chatbot" component={ChatbotScreen}  />
+          <Stack.Screen name="Diagnosis" component={DiagnosisScreen}  />
         </Stack.Navigator>
       </NavigationContainer>
     );
-  } 
-  else {
+  } else {
     return (
       <NavigationContainer>
         <Stack.Navigator
