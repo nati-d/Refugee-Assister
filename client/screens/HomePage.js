@@ -48,4 +48,5 @@ export default function HomePage() {
       </ScrollView>
     </View>
   )
+
 }
