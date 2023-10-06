@@ -7,7 +7,6 @@ import SubTitle from '../components/SubTitles';
 import News from '../components/News';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../themes/colors';
-import Carousel from '../components/CarouselSlider';
 
 export default function HomePage() {
   const navigation = useNavigation()
