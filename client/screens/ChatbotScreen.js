@@ -15,13 +15,15 @@ export default function ChatbotScreen() {
 
     const handleSend = async() => {
       try{
-        const response = await axios.post("http://localhost:3000/chat", {message})
+        console.log("Button Clicked")
+        const response = await axios.post("http://196.188.160.227:3000/chat/", {message:message})
         const ai = response.data.chatbotResponse
         console.log("Response data:", response.data);
 
         console.log(ai)
 
         setMessage("")
+
       }catch(err){
         console.log("Error:", err.message)
       }

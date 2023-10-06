@@ -8,7 +8,6 @@ require('dotenv').config();
 
 
 app.use(bodyParser.json());
-app.use(cors())
 
 const chatRoutes = require("./routes/chatRoutes");
 app.use("/chat",chatRoutes)
