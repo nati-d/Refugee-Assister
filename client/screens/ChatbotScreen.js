@@ -16,8 +16,8 @@ export default function ChatbotScreen() {
     const handleSend = async() => {
       try{
         console.log("Button Clicked")
-        const response = await axios.post("http://196.188.160.227:3000/chat/", {message:message})
-        const ai = response.data.chatbotResponse
+        const response = await axios.post("http://196.168.1.8:3000/chat", {message:message})
+        const ai = response.data.response
         console.log("Response data:", response.data);
 
         console.log(ai)
