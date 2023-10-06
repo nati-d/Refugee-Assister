@@ -70,7 +70,8 @@ const styles = StyleSheet.create({
       borderColor: 'lightgray',
     },
     checkboxSelected: {
-      backgroundColor: '#44afff',
+      backgroundColor: 'pink',
+      borderWidth: 0,
     },
     checkboxLabel: {
         color: 'white',

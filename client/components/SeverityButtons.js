@@ -56,6 +56,6 @@ export default function SeverityButtons () {
     },
     radioButtonSelected: {
       borderWidth: 5,
-      borderColor: 'black',
+      borderColor: '#888888',
     },
   });

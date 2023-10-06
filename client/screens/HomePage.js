@@ -8,10 +8,12 @@ import News from '../components/News';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../themes/colors';
 
+
 export default function HomePage() {
   const navigation = useNavigation()
   return (
     <View style={[tw `flex-1 mt-9`, {backgroundColor:colors.background}]}>
+
       <ScrollView>
         <View style={tw `flex items-center`}>
           <View style={tw `flex w-85`}>
@@ -20,6 +22,7 @@ export default function HomePage() {
                 <Text style={[tw `text-6 font-bold`, {color:colors.black}]}>Your Journey, Our </Text>
                 <Text style={[tw `text-6 font-bold`, {color:colors.black}]}>Guiding <Text style={{color:colors.primary}}>Hand</Text></Text>
               </View>
+
               <TouchableOpacity>
                 <Ionicons name="md-notifications-outline" size={30} color="black" />
               </TouchableOpacity> 
@@ -27,6 +30,7 @@ export default function HomePage() {
             <View style={[tw `flex-row mt-10 items-center p-3 rounded-lg justify-center`, {backgroundColor:colors.primary}]}>
               <Ionicons name="md-pin" size={24} color="red" />
               <Text style={[tw ` text-3 text-white`]}>United States of America, Silver Spring Virginia</Text>
+
             </View>
             
             <View style={tw `mt-8`}>
@@ -37,6 +41,18 @@ export default function HomePage() {
                 <HomeScreenTool name="Learn" icon="md-school" iconSize={40} />
                 <HomeScreenTool name="Progress" icon="md-trending-up" iconSize={40} />
               </View>
+            </View>
+            <View style={tw `mt-15`} >
+              <SubTitle title="Recent News" />
+              <ScrollView style={tw `flex-row`} horizontal>
+                <News />
+                <News />
+                <News />
+                <News />
+                <News />
+                <News />
+                <News />
+              </ScrollView>
             </View>
             <View style={tw `mt-15 mb-10`}>
               <SubTitle title="Recent News" />

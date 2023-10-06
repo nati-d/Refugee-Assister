@@ -10,6 +10,7 @@ import SplashScreen from '../screens/SplashScreen';
 import HomePage from '../screens/HomePage';
 import ToolsPage from '../screens/ToolsPage';
 import ProfilePage from '../screens/ProfilePage';
+import DiagnosisResultScreen from '../screens/DiagnosisResultScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -58,7 +59,6 @@ function Navigation() {
           screenOptions={{
             headerShown: false
           }}>
-
           <Stack.Screen name="Home" component={HomeTabNavigator}  />
           <Stack.Screen name="Chatbot" component={ChatbotScreen}  />
           <Stack.Screen name="Diagnosis" component={DiagnosisScreen}  />

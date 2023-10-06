@@ -9,7 +9,7 @@ import { colors } from '../themes/colors';
 
 
 export default function HomeScreenTool (props) {
-    const navigation = useNavigation()
+    const navigation=useNavigation()
     const handlePress = () => {
         if (props.name === "Checker") {
             navigation.navigate("Diagnosis");
@@ -26,7 +26,6 @@ export default function HomeScreenTool (props) {
         </View>
         
     )
-    
 }
 
 const styles = StyleSheet.create({
