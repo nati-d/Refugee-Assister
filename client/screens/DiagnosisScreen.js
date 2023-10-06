@@ -5,8 +5,10 @@ import SeverityButtons from '../components/SeverityButtons';
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { colors } from '../themes/colors';
+import { useNavigation } from '@react-navigation/native';
 
 export default function DiagnosisScreen () {
+    const navigation = useNavigation()
 
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -27,7 +29,9 @@ export default function DiagnosisScreen () {
             <TouchableOpacity 
                 style={[ tw `mt-20 p-5 rounded-4`, { backgroundColor: '#007bff' }]}
             >
-                <Text style={tw `text-center font-bold text-white text-4`}>Start Diagnosing</Text>
+                <TouchableOpacity onPress={() => navigation.navigate("DiagnosisResult")}>
+                    <Text style={tw `text-center font-bold text-white text-4`}>Start Diagnosing</Text>
+                </TouchableOpacity>
             </TouchableOpacity>
         </View>
     </View>
