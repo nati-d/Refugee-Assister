@@ -1,11 +1,8 @@
 const { OpenAI } = require("openai");
+const axios = require('axios');
 
 const apiKey = process.env.API_KEY;
-const openai = new OpenAI({
-  apiKey,
-});
 
-// Create a conversation state variable to store previous messages
 let conversationState = [];
 
 // Format user input for the OpenAI API
@@ -21,19 +18,21 @@ function formatUserInput(userInput) {
 
 exports.chat = async (req, res) => {
   try {
-    const userInput = req.body.message; // Changed from userInput to message
-    if (!userInput) {
-      throw new Error("User input is missing");
-    }
+    const userInput = req.body.message;
     const messages = formatUserInput(userInput);
 
-    const response = await openai.chat.completions.create({
+    const response = await axios.post('https://api.openai.com/v1/chat/completions', {
       model: "gpt-3.5-turbo",
       messages,
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
+      },
     });
 
     // Extract the chatbot's response
-    const chatbotResponse = response.choices[0].message.content;
+    const chatbotResponse = response.data.choices[0].message.content;
 
     // Save the current conversation state for future reference
     conversationState = [...messages, { role: "assistant", content: chatbotResponse }];
