@@ -4,10 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
-
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +21,7 @@
     "mongoose": "^7.5.2",
     "mysql2": "^3.6.1",
     "nodemon": "^3.0.1",
-    "openai": "^4.11.1"
+    "openai": "^4.11.1",
+    "whisper-node": "^0.2.12"
   }
 }
