@@ -23,6 +23,9 @@ app.use(function (req, res, next) {
 const chatRoutes = require("./routes/chatRoutes");
 app.use("/chat",chatRoutes)
 
+const symptomCheckerRoute = require("./routes/symptomcheRoutes")
+app.use("/symptomChecker",symptomCheckerRoute)
+
 
 
 app.listen(port, () => {
