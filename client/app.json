@@ -18,7 +18,7 @@
       "supportsTablet": true
     },
     "android": {
-      "permissions": ["RECORD_AUDIO", "MODIFY_AUDIO_SETTINGS"],
+      "permissions": ["RECORD_AUDIO", "MODIFY_AUDIO_SETTINGS","READ_EXTERNAL_STORAGE","WRITE_EXTERNAL_STORAGE"],
       "adaptiveIcon": {
         "foregroundImage": "./assets/splash.png",
         "backgroundColor": "#ffffff"

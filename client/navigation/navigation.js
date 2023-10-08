@@ -18,6 +18,7 @@ const Tab = createBottomTabNavigator();
 import { Ionicons } from '@expo/vector-icons';
 import ChatbotScreen from '../screens/ChatbotScreen';
 import DiagnosisScreen from '../screens/DiagnosisScreen';
+import TranscribeScreen from '../screens/TranscribeScreen';
 
 function HomeTabNavigator() {
   return (
@@ -63,6 +64,7 @@ function Navigation() {
           <Stack.Screen name="Chatbot" component={ChatbotScreen}  />
           <Stack.Screen name="Diagnosis" component={DiagnosisScreen}  />
           <Stack.Screen name="DiagnosisResult" component={DiagnosisResultScreen}  />
+          <Stack.Screen name="Transcribe" component={TranscribeScreen}  />
         </Stack.Navigator>
       </NavigationContainer>
     );

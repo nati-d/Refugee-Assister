@@ -15,6 +15,8 @@ export default function HomeScreenTool (props) {
             navigation.navigate("Diagnosis");
         } else if (props.name === "Assistant") {
             navigation.navigate("Chatbot");
+        }else if (props.name === "Transcribe"){
+            navigation.navigate("Transcribe")
         }
     }    
     return(

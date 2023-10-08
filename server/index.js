@@ -19,11 +19,11 @@ app.use(function (req, res, next) {
   next();
 });
 
-
 const chatRoutes = require("./routes/chatRoutes");
 app.use("/chat",chatRoutes)
 
-
+const audioRoutes = require('./routes/audio');
+app.use('/api/audio', audioRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

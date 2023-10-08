@@ -40,7 +40,7 @@ export default function ChatbotScreen() {
   
       setLoading(true);
   
-      const response = await axios.post('http://192.168.1.16:3000/chat', {
+      const response = await axios.post('http://192.168.1.8:3000/chat', {
         message: message,
       });
   

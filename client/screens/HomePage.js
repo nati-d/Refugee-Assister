@@ -39,7 +39,7 @@ export default function HomePage() {
                 <HomeScreenTool name="Checker" icon="md-medkit" iconSize={36} />
                 <HomeScreenTool name="Assistant" icon="md-chatbox" iconSize={36} />
                 <HomeScreenTool name="Learn" icon="md-school" iconSize={40} />
-                <HomeScreenTool name="Progress" icon="md-trending-up" iconSize={40} />
+                <HomeScreenTool name="Transcribe" icon="md-trending-up" iconSize={40} />
               </View>
             </View>
             <View style={tw `mt-15`} >
