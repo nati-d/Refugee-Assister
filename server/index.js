@@ -25,8 +25,6 @@ app.use("/chat",chatRoutes)
 const transcribeRoutes = require("./routes/transcribeRoute");
 app.use("/api/audio", transcribeRoutes);
 
-
-
 const symptomCheckerRoute = require("./routes/symptomCheRoute")
 app.use("/symptomChecker",symptomCheckerRoute)
 

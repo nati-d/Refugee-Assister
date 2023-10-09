@@ -28,15 +28,15 @@ async function generateChatResponse(userSymptom) {
 
 
 // Controller function for symptom checker
+// Controller function for symptom checker
 exports.checkSymptom = async (req, res) => {
   try {
-    const userSymptom = req.body.symptom;
+    const userSymptoms = req.body.symptoms; // Assuming the frontend sends an array
 
-    // Generate a chat response based on the user's symptom
-    const response = await generateChatResponse(userSymptom);
+    // Generate a chat response based on the user's symptoms
+    const response = await generateChatResponse(userSymptoms.join(', '));
 
-    res.json({ response })
-
+    res.json({ response });
   } catch (error) {
     console.error("Error generating chat response:", error);
     res.status(500).json({ error: "An error occurred" });

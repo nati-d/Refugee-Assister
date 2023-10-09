@@ -69,7 +69,7 @@ export default function ChatbotScreen() {
 
   const handleStartRecording = async () => {
     try {
-      const recording = new Audio.Recording(); // Create a new recording object
+      const recording = new Audio.Recording(); 
       await recording.prepareToRecordAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
       await recording.startAsync();
       setRecording(recording);
@@ -87,15 +87,13 @@ export default function ChatbotScreen() {
         setIsRecording(false);
         console.log('Recording stopped');
   
-        // Prepare the audio for sending to the backend
         const uri = recording.getURI();
   
-        // Create a FormData object to upload the audio file
         const audioData = new FormData();
         audioData.append('audio', {
           uri,
           name: 'audio.3gp',
-          type: 'audio/3gp', // Adjust the file type as needed
+          type: 'audio/3gp', 
         });
   
         // Send the audio data to the backend
@@ -109,10 +107,9 @@ export default function ChatbotScreen() {
           const transcribedText = response.data.transcription;
           console.log('Transcribed Text:', transcribedText);
   
-          // Handle the transcribed text here, for example, you can add it to the chat
           const updatedChat = [
             ...chats,
-            { role: 'user', content: 'Voice message' }, // You can replace 'Voice message' with a more appropriate message
+            { role: 'user', content: 'Voice message' },
             { role: 'assistant', content: transcribedText },
           ];
           setChats(updatedChat);
