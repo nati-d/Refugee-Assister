@@ -22,8 +22,10 @@ app.use(function (req, res, next) {
 const chatRoutes = require("./routes/chatRoutes");
 app.use("/chat",chatRoutes)
 
-const audioRoutes = require('./routes/audio');
-app.use('/api/audio', audioRoutes);
+const transcribeRoutes = require("./routes/transcribeRoute");
+app.use("/api/audio", transcribeRoutes);
+
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

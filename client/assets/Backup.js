@@ -4,7 +4,6 @@ import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import * as Speech from 'expo-speech';
-import Voice from 'react-native-voice';
 import axios from 'axios';
 import tw from 'twrnc';
 
@@ -22,24 +21,7 @@ export default function ChatbotScreen() {
   const scrollViewRef = useRef();
 
 
-useEffect(() => {
-  Voice.onSpeechStart = () => {
-    setIsListening(true);
-  };
 
-  Voice.onSpeechEnd = () => {
-    setIsListening(false);
-  };
-
-  Voice.onSpeechResults = (e) => {
-    const spokenText = e.value[0]; // Get the recognized text
-    setMessage(spokenText); // Set the recognized text as the user's message
-  };
-
-  return () => {
-    Voice.destroy().then(Voice.removeAllListeners);
-  };
-}, []);
 
   const speak = (aiText) => {
     Speech.speak(aiText);
@@ -152,20 +134,14 @@ useEffect(() => {
         </View>
         {!speaking && (
           <View style={tw`p-1 ml-1 rounded-full`}>
-          {isListening ? (
-            <TouchableOpacity onPress={Voice.stop}>
-              <FontAwesome5 name="microphone-slash" size={24} color={colors.red} />
-            </TouchableOpacity>
-          ) : (
+          
             <TouchableOpacity
-              onPress={() => {
-                Voice.start('en-US'); // Start voice recognition with English language
-              }}
+              
               disabled={loading}
             >
               <FontAwesome5 name="microphone" size={24} color={loading ? 'gray' : colors.primary} />
             </TouchableOpacity>
-          )}
+          
         </View>
         )}
       </View>

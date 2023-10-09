@@ -6,6 +6,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import * as Speech from 'expo-speech';
 import axios from 'axios';
 import tw from 'twrnc';
+import { Audio } from 'expo-av'; // Import the Audio module
 
 import { colors } from '../themes/colors';
 import BotImg from '../assets/images/photo_2023-09-22_09-40-16.jpg';
@@ -17,11 +18,10 @@ export default function ChatbotScreen() {
   const [loading, setLoading] = useState(false);
   const [speaking, setSpeaking] = useState(false);
   const [isListening, setIsListening] = useState(false);
+  const [isRecording, setIsRecording] = useState(false); // Track recording status
+  const [recording, setRecording] = useState(null); // Store recording object
   const navigation = useNavigation();
   const scrollViewRef = useRef();
-
-
-
 
   const speak = (aiText) => {
     Speech.speak(aiText);
@@ -66,10 +66,69 @@ export default function ChatbotScreen() {
       setLoading(false);
     }
   };
+
+  const handleStartRecording = async () => {
+    try {
+      const recording = new Audio.Recording(); // Create a new recording object
+      await recording.prepareToRecordAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
+      await recording.startAsync();
+      setRecording(recording);
+      setIsRecording(true);
+      console.log('Recording started');
+    } catch (error) {
+      console.error('Failed to start recording:', error);
+    }
+  };
+
+  const handleStopRecording = async () => {
+    if (recording) {
+      try {
+        await recording.stopAndUnloadAsync();
+        setIsRecording(false);
+        console.log('Recording stopped');
+  
+        // Prepare the audio for sending to the backend
+        const uri = recording.getURI();
+  
+        // Create a FormData object to upload the audio file
+        const audioData = new FormData();
+        audioData.append('audio', {
+          uri,
+          name: 'audio.3gp',
+          type: 'audio/3gp', // Adjust the file type as needed
+        });
+  
+        // Send the audio data to the backend
+        const response = await axios.post('http://192.168.1.8:3000/api/audio/transcribe', audioData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+  
+        if (response?.data?.transcription) {
+          const transcribedText = response.data.transcription;
+          console.log('Transcribed Text:', transcribedText);
+  
+          // Handle the transcribed text here, for example, you can add it to the chat
+          const updatedChat = [
+            ...chats,
+            { role: 'user', content: 'Voice message' }, // You can replace 'Voice message' with a more appropriate message
+            { role: 'assistant', content: transcribedText },
+          ];
+          setChats(updatedChat);
+        } else {
+          console.log('Transcription data is missing or invalid');
+        }
+      } catch (error) {
+        console.error('Failed to stop recording or transcribe:', error);
+      }
+    }
+  };
+  
   
 
   const scrollToBottom = () => {
-    if (chats.length > 0) {
+    if (scrollViewRef.current) {
       scrollViewRef.current.scrollToEnd({ animated: true });
     }
   };
@@ -133,17 +192,15 @@ export default function ChatbotScreen() {
           )}
         </View>
         {!speaking && (
-          <View style={tw`p-1 ml-1 rounded-full`}>
-          
-            <TouchableOpacity
-              
-              disabled={loading}
-            >
-              <FontAwesome5 name="microphone" size={24} color={loading ? 'gray' : colors.primary} />
-            </TouchableOpacity>
-          
+        <View style={tw`p-1 ml-1 rounded-full`}>
+          <TouchableOpacity
+            onPress={isRecording ? handleStopRecording : handleStartRecording} // Toggle recording
+            disabled={loading}
+          >
+            <FontAwesome5 name={isRecording ? "stop" : "microphone"} size={24} color={loading ? 'gray' : colors.primary} />
+          </TouchableOpacity>
         </View>
-        )}
+      )}
       </View>
     </View>
   );
