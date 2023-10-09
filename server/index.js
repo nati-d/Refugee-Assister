@@ -25,6 +25,9 @@ app.use("/chat",chatRoutes)
 const audioRoutes = require('./routes/audio');
 app.use('/api/audio', audioRoutes);
 
+const symptomCheckerRoute = require("./routes/symptomCheRoute")
+app.use("/symptomChecker",symptomCheckerRoute)
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
