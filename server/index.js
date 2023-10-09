@@ -27,6 +27,9 @@ app.use("/api/audio", transcribeRoutes);
 
 
 
+const symptomCheckerRoute = require("./routes/symptomCheRoute")
+app.use("/symptomChecker",symptomCheckerRoute)
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
