@@ -1,24 +1,94 @@
-import tw from 'twrnc';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList, Image, StyleSheet, ActivityIndicator } from 'react-native';
+import axios from 'axios';
 
-export default function News () {
-    return (
-        <TouchableOpacity style={tw `flex-row items-center bg-gray-100 mt-3 rounded-3`}>
-            <Image style={tw `w-20 h-20`} source={require('../assets/news.jpg')} resizeMode='cover' />
-            <View style={tw `ml-3`}>
-                <View style={tw `flex-row`}>
-                    <Text>Date: </Text>
-                    <Text>Feb 28, 2023</Text>
-                </View>
-                <View style={tw `flex-row`}>
-                    <Text>Category: </Text>
-                    <Text style={tw `font-bold`}>Politics</Text>
-                </View>
-                <View style={tw `flex-row`}>
-                    <Text>Title: </Text>
-                    <Text numberOfLines={2} style={tw `text-3 w-45`}>The US drops yet another atomic bomb on Japan</Text>
-                </View>
-            </View>
-        </TouchableOpacity>
-    )
-}
+const newsApiKey = '05e33daaf0e545d083f04b8e32a76636';
+
+const News = () => {
+  const [news, setNews] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    fetchAllNews(); 
+  }, []);
+
+  const fetchAllNews = async () => {
+    try {
+      setLoading(true);
+
+      const response = await axios.get(
+        `https://newsapi.org/v2/everything?q=refugees immigration&apiKey=${newsApiKey}`
+      );
+      
+      
+      if (response.data.articles) {
+        setNews(response.data.articles);
+      }
+
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching news:', error);
+      setLoading(false);
+    }
+  };
+
+  const renderNewsItem = ({ item }) => (
+    <View style={styles.newsItem}>
+      <Image source={{ uri: item.urlToImage }} style={styles.image} />
+      <View style={styles.newsContent}>
+        <Text style={styles.date}>{item.publishedAt}</Text>
+        <Text style={styles.source}>{item.source.name}</Text>
+        <Text style={styles.title}>{item.title}</Text>
+      </View>
+    </View>
+  );
+
+  return (
+    <View style={styles.container}>
+      {loading && (
+        <View>
+          <ActivityIndicator size="large" color="blue" />
+        </View>
+      )}
+      <FlatList
+        data={news}
+        renderItem={renderNewsItem}
+        keyExtractor={(item) => item.url}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 20,
+  },
+  newsItem: {
+    flexDirection: 'row',
+    marginBottom: 16,
+  },
+  image: {
+    width: 80,
+    height: 80,
+    marginRight: 12,
+    borderRadius: 4,
+  },
+  newsContent: {
+    flex: 1,
+  },
+  date: {
+    fontSize: 12,
+    marginBottom: 4,
+  },
+  source: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginBottom: 4,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+});
+
+export default News;

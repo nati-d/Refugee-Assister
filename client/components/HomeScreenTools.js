@@ -15,18 +15,17 @@ export default function HomeScreenTool (props) {
             navigation.navigate("Diagnosis");
         } else if (props.name === "Assistant") {
             navigation.navigate("Chatbot");
-        }else if (props.name === "Transcribe"){
-            navigation.navigate("Transcribe")
+        }else if (props.name === "Map"){
+            navigation.navigate("Map")
         }
     }    
     return(
         <View>
-            <TouchableOpacity style={[tw `flex justify-center items-center w-16 h-16 rounded-full mb-2`, {backgroundColor:colors.lightBlack}]} onPress={()=> handlePress()}>                
-                <Ionicons name={props.icon} size={props.iconSize} color={colors.black} />
+            <TouchableOpacity style={[tw `flex-row items-center justify-center w-40 p-5 h-16 rounded-3 mb-3`, {backgroundColor:colors.primary}]} onPress={()=> handlePress()}>                
+                <Ionicons name={props.icon} size={props.iconSize} color='white' />
+                <Text style={tw `text-center text-white font-bold ml-3`}>{props.name}</Text>
             </TouchableOpacity>
-            <Text style={[tw `text-center font-bold`, {color:colors.black}]}>{props.name}</Text>
         </View>
-        
     )
 }
 

@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, ActivityIndicator, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import CheckBoxes from '../components/CheckBoxes';
+import axios from 'axios';
 import SeverityButtons from '../components/SeverityButtons';
-import axios from 'axios'; // Import Axios for making HTTP requests
 
 export default function DiagnosisScreen() {
   const navigation = useNavigation();
 
   const [selectedOptions, setSelectedOptions] = useState([]);
-  const [userSymptom, setUserSymptom] = useState(''); // State to store user input
-  const [inputSymptom, setInputSymptom] = useState(''); // State to track user's input
+  const [userSymptom, setUserSymptom] = useState('');
+  const [inputSymptom, setInputSymptom] = useState('');
+  const [severityLevel, setSeverityLevel] = useState(null);
+  const [loading, setLoading] = useState(false); // Track loading state
 
   const handleCheckboxChange = (optionId) => {
     if (selectedOptions.includes(optionId)) {
@@ -32,52 +34,51 @@ export default function DiagnosisScreen() {
   ];
 
   const handleStartDiagnosing = async () => {
-    // Log the text of selected symptoms
     const selectedSymptoms = options
       .filter((option) => selectedOptions.includes(option.id))
       .map((option) => option.text);
-  
-    console.log('Selected Symptoms:', selectedSymptoms);
-  
-    let response; // Declare the response variable outside of the try block
-  
+
+    if (severityLevel === null) {
+      console.error('Please select a severity level');
+      return;
+    }
+
+    setLoading(true); // Set loading state to true
+
     try {
-      // Send selected symptoms to the backend using Axios
-      response = await axios.post('http://192.168.1.8:3000/symptomChecker', {
+      const response = await axios.post('http://192.168.1.8:3000/symptomChecker', {
         symptoms: selectedSymptoms,
+        severity: severityLevel,
       });
-  
+
       if (response.status === 200) {
         console.log('Backend Response:', response.data.response);
+        navigation.navigate('DiagnosisResult', { diagnosisResult: response.data.response });
       } else {
         console.error('Error sending symptoms to the backend');
       }
     } catch (error) {
       console.error('Error:', error);
-    }
-  
-    // Check if response is defined before navigating
-    if (response) {
-      // Navigate to the DiagnosisResult screen
-      navigation.navigate('DiagnosisResult', { diagnosisResult: response.data.response });
+    } finally {
+      setLoading(false); // Set loading state to false when done
     }
   };
-  
+
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#f5f5f5' }}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#f5f5f5' , paddingHorizontal: 4}}>
       <View style={{ width: '90%' }}>
         <View>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
             <TextInput
               placeholder='Write your symptoms'
-              style={{ padding: 5, width: '75%', backgroundColor: 'white', borderRadius: 3 }}
-              onChangeText={(text) => setInputSymptom(text)} // Update inputSymptom state
-              value={inputSymptom} // Set value to inputSymptom
+              style={[styles.input, { opacity: loading ? 0.5 : 1 }]} // Disable input during loading
+              onChangeText={(text) => setInputSymptom(text)}
+              value={inputSymptom}
+              editable={!loading} // Disable input during loading
             />
-           <TouchableOpacity onPress={() => setUserSymptom(inputSymptom)}> 
-  <Text>Add Symptom</Text>
-</TouchableOpacity>
-
+            <TouchableOpacity onPress={() => setUserSymptom(inputSymptom)} disabled={loading}>
+              <Text>Add Symptom</Text>
+            </TouchableOpacity>
           </View>
           <CheckBoxes options={options} selectedOptions={selectedOptions} onCheckboxChange={handleCheckboxChange} />
         </View>
@@ -85,17 +86,41 @@ export default function DiagnosisScreen() {
           <Text style={{ fontSize: 24, fontWeight: 'bold', textAlign: 'center', color: 'gray' }}>
             Rate the severity of your condition
           </Text>
-          <SeverityButtons />
+          <SeverityButtons onSelectSeverity={(level) => setSeverityLevel(level)} disabled={loading} />
         </View>
         <TouchableOpacity
-          style={{ marginTop: 20, padding: 10, backgroundColor: '#007bff', borderRadius: 4 }}
+          style={[styles.button, { opacity: loading ? 0.5 : 1 }]} // Disable button during loading
           onPress={handleStartDiagnosing}
+          disabled={loading}
         >
-          <Text style={{ fontSize: 24, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
-            Start Diagnosing
-          </Text>
+          {loading ? (
+            <ActivityIndicator size="large" color="#fff" />
+          ) : (
+            <Text style={styles.buttonText}>Start Diagnosing</Text>
+          )}
         </TouchableOpacity>
       </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  input: {
+    padding: 5,
+    width: '75%',
+    backgroundColor: 'white',
+    borderRadius: 3,
+  },
+  button: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: '#007bff',
+    borderRadius: 4,
+  },
+  buttonText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'white',
+  },
+});
