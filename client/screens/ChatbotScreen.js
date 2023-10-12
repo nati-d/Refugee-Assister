@@ -11,6 +11,7 @@ import { Audio } from 'expo-av'; // Import the Audio module
 import { colors } from '../themes/colors';
 import BotImg from '../assets/images/photo_2023-09-22_09-40-16.jpg';
 import ChatMessage from '../components/ChatMessage';
+import MultilingualText from '../components/MultilingualText';
 
 export default function ChatbotScreen() {
   const [message, setMessage] = useState('');
@@ -148,7 +149,7 @@ export default function ChatbotScreen() {
           </TouchableOpacity>
           <Image source={BotImg} style={tw`w-10 h-10 rounded-full`} />
           <Text style={tw`ml-3 font-extrabold text-2xl text-white`}>
-            Assister
+            <MultilingualText text="Assister" />
           </Text>
         </View>
       </View>

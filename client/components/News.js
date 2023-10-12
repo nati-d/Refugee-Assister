@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, Image, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, FlatList, Image, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
 import axios from 'axios';
+import tw from 'twrnc';
+import MultilingualText from './MultilingualText';
 
 const newsApiKey = '';
 
 const News = () => {
+  const [showAllNews, setShowAllNews] = React.useState(false);  
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState([]);
 
@@ -18,7 +21,7 @@ const News = () => {
       setLoading(true);
   
       const response = await axios.get(
-        `https://newsapi.org/v2/top-headlines?country=us&apiKey=${newsApiKey}`
+        `https://newsapi.org/v2/top-headlines?apiKey=${newsApiKey}&language=en`
         );
   
       if (response.data.articles) {
@@ -38,7 +41,12 @@ const News = () => {
     }
   };
 
-  const renderNewsItem = ({ item }) => (
+  const renderNewsItem = ({ item, index }) => {
+    if (!showAllNews && index > 6) {
+      return null;
+    }
+
+    return (
     <View style={styles.newsItem}>
       <Image source={{ uri: item.urlToImage }} style={styles.image} />
       <View style={styles.newsContent}>
@@ -46,11 +54,18 @@ const News = () => {
         <Text style={styles.title}>{item.title}</Text>
       </View>
     </View>
-  );
+    )};
 
   return (
 
-    <View style={styles.container}>
+    <View>
+      <View style={tw `flex-row items-center justify-between`}>
+        <Text style={tw `text-5 font-bold`}><MultilingualText text="RecentNews" /></Text>
+        <TouchableOpacity onPress={() => setShowAllNews(!showAllNews)}>
+          <Text style={tw`text-blue-400`}><MultilingualText text={showAllNews ? "ShowLess" : "SeeAll"} /></Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.container}>
         {loading && (
         <View>
             <ActivityIndicator size="large" color="blue" />
@@ -62,6 +77,8 @@ const News = () => {
         keyExtractor={(item) => item.url}
       />
     </View>
+    </View>
+    
   );
 };
 

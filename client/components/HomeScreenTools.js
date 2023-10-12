@@ -4,6 +4,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 import tw from 'twrnc';
 import { StyleSheet } from "react-native";
 import { colors } from '../themes/colors';
+import MultilingualText from "./MultilingualText";
 
 export default function HomeScreenTool (props) {
     const navigation=useNavigation()
@@ -20,7 +21,7 @@ export default function HomeScreenTool (props) {
         <View>
             <TouchableOpacity style={[tw `flex-row items-center justify-center w-41 p-2 h-16 rounded-3 mb-3`, {backgroundColor:colors.primary}]} onPress={()=> handlePress()}>                
                 <Ionicons name={props.icon} size={props.iconSize} color='white' />
-                <Text style={tw `text-center text-white font-bold ml-3`}>{props.name}</Text>
+               <Text style={tw `text-center text-white font-bold ml-3`}><MultilingualText text={props.name} /></Text> 
             </TouchableOpacity>
         </View>
     )

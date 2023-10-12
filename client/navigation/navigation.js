@@ -12,6 +12,7 @@ import ToolsPage from '../screens/ToolsPage';
 import ProfilePage from '../screens/ProfilePage';
 import DiagnosisResultScreen from '../screens/DiagnosisResultScreen';
 import EmergencyContacts from '../screens/EmergencyContacts';
+import Demo from '../components/LanguagePicker';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -68,6 +69,9 @@ function Navigation() {
           <Stack.Screen name="Diagnosis" component={DiagnosisScreen}  />
           <Stack.Screen name="DiagnosisResult" component={DiagnosisResultScreen}  />
           <Stack.Screen name="Transcribe" component={TranscribeScreen}  />
+
+          {/* <Stack.Screen name="Demo" component={Demo}  /> */}
+
         </Stack.Navigator>
       </NavigationContainer>
     );
