@@ -1,30 +1,39 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, Image, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, FlatList, Image, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
 import axios from 'axios';
+import tw from 'twrnc';
+import MultilingualText from './MultilingualText';
 
 const newsApiKey = '05e33daaf0e545d083f04b8e32a76636';
 
 const News = () => {
+  const [showAllNews, setShowAllNews] = React.useState(false);  
   const [news, setNews] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState([]);
 
   useEffect(() => {
-    fetchAllNews(); 
+
+    fetchNews();
   }, []);
 
-  const fetchAllNews = async () => {
+  const fetchNews = async () => {
     try {
       setLoading(true);
-
+  
       const response = await axios.get(
         `https://newsapi.org/v2/everything?q=refugees immigration&apiKey=${newsApiKey}`
       );
-      
-      
+  
       if (response.data.articles) {
-        setNews(response.data.articles);
+        const filteredNews = response.data.articles.filter(
+          (item) =>
+            item.status !== 'removed' &&
+            item.urlToImage
+        );
+  
+        setNews(filteredNews);
       }
-
+  
       setLoading(false);
     } catch (error) {
       console.error('Error fetching news:', error);
@@ -32,30 +41,44 @@ const News = () => {
     }
   };
 
-  const renderNewsItem = ({ item }) => (
+  const renderNewsItem = ({ item, index }) => {
+    if (!showAllNews && index > 6) {
+      return null;
+    }
+
+    return (
     <View style={styles.newsItem}>
       <Image source={{ uri: item.urlToImage }} style={styles.image} />
       <View style={styles.newsContent}>
         <Text style={styles.date}>{item.publishedAt}</Text>
-        <Text style={styles.source}>{item.source.name}</Text>
         <Text style={styles.title}>{item.title}</Text>
       </View>
     </View>
-  );
+    )};
 
   return (
-    <View style={styles.container}>
-      {loading && (
+
+    <View>
+      <View style={tw `flex-row items-center justify-between`}>
+        <Text style={tw `text-5 font-bold`}><MultilingualText text="RecentNews" /></Text>
+        <TouchableOpacity onPress={() => setShowAllNews(!showAllNews)}>
+          <Text style={tw`text-blue-400`}><MultilingualText text={showAllNews ? "ShowLess" : "SeeAll"} /></Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.container}>
+        {loading && (
         <View>
-          <ActivityIndicator size="large" color="blue" />
+            <ActivityIndicator size="large" color="blue" />
         </View>
-      )}
+        )}
       <FlatList
         data={news}
         renderItem={renderNewsItem}
         keyExtractor={(item) => item.url}
       />
     </View>
+    </View>
+    
   );
 };
 
@@ -77,16 +100,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   date: {
-    fontSize: 12,
-    marginBottom: 4,
-  },
-  source: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    marginBottom: 4,
+    fontSize: 10,
   },
   title: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
   },
 });
