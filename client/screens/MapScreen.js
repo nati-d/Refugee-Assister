@@ -57,41 +57,15 @@ const MapScreen = () => {
             title="Your Location"
           />
 
-          {emergencyCenters.map((center, index) => (
-            <Marker
-              key={index}
-              coordinate={{
-                latitude: center.fields.latitude,
-                longitude: center.fields.longitude,
-              }}
-              title={center.fields.name}
-            />
-          ))}
+          
         </MapView>
       ) : (
         <Text>Loading...</Text>
       )}
 
-      <View style={styles.centeredBox}>
-        {emergencyCenters.map((center, index) => (
-          <Text key={index}>{center.fields.name}</Text>
-        ))}
-      </View>
+      
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  centeredBox: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.7)', // Semi-transparent white background
-  },
-});
 
 export default MapScreen;
