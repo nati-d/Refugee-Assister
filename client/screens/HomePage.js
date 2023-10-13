@@ -9,8 +9,7 @@ import { colors } from '../themes/colors';
 import News from '../components/News';
 import * as Location from 'expo-location';
 import axios from 'axios';
-import MultilingualText from '../components/MultilingualText';
-import LanguagePicker from '../components/LanguagePicker';
+
 
 export default function HomePage() {
   const navigation = useNavigation();
