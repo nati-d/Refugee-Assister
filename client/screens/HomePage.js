@@ -50,7 +50,7 @@ export default function HomePage() {
   };
 
   const handleEmergency = () => {
-    navigation.navigate('EmergencyContacts');
+    navigation.navigate('Emergency');
   }
 
   return (

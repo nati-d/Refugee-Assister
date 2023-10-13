@@ -11,6 +11,7 @@ import HomePage from '../screens/HomePage';
 import ToolsPage from '../screens/ToolsPage';
 import ProfilePage from '../screens/ProfilePage';
 import DiagnosisResultScreen from '../screens/DiagnosisResultScreen';
+import EmergencyContacts from '../screens/EmergencyContacts';
 
 const Stack = createNativeStackNavigator();
 //tab
@@ -69,6 +70,7 @@ function Navigation() {
           <Stack.Screen name="DiagnosisResult" component={DiagnosisResultScreen}  />
           <Stack.Screen name="Transcribe" component={TranscribeScreen}  />
           <Stack.Screen name="Map" component={MapScreen}  />
+          <Stack.Screen name="Emergency" component={EmergencyContacts}  />
           
         </Stack.Navigator>
       </NavigationContainer>
