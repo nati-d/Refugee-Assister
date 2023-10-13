@@ -15,6 +15,7 @@ function formatUserInput(userInput) {
     ...conversationState, // Include previous messages in the conversation
     { role: "user", content: userInput },
   ];
+  
 
   return messages;
 }
