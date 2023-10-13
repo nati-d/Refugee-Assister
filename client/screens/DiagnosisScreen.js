@@ -68,7 +68,7 @@ export default function DiagnosisScreen() {
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#f5f5f5' , paddingHorizontal: 4}}>
       <View style={{ width: '90%' }}>
         <View>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
             <TextInput
               placeholder='Write your symptoms'
               style={[styles.input, { opacity: loading ? 0.5 : 1 }]} // Disable input during loading
@@ -76,29 +76,28 @@ export default function DiagnosisScreen() {
               value={inputSymptom}
               editable={!loading} // Disable input during loading
             />
-           <TouchableOpacity onPress={() => setUserSymptom(inputSymptom)}>
-            <View style={tw `flex-row`}>
-              <Text><MultilingualText text="Add" /></Text>
-              <Ionicons name="md-add" size={20} color="black" />
-            </View>  
-          </TouchableOpacity>
-
+            <TouchableOpacity onPress={() => setUserSymptom(inputSymptom)} disabled={loading}>
+              <Text>Add Symptom</Text>
+            </TouchableOpacity>
           </View>
           <CheckBoxes options={options} selectedOptions={selectedOptions} onCheckboxChange={handleCheckboxChange} />
         </View>
         <View style={{ marginTop: 20 }}>
           <Text style={{ fontSize: 24, fontWeight: 'bold', textAlign: 'center', color: 'gray' }}>
-            <MultilingualText text="Severity" />
+            Rate the severity of your condition
           </Text>
           <SeverityButtons onSelectSeverity={(level) => setSeverityLevel(level)} disabled={loading} />
         </View>
         <TouchableOpacity
           style={[styles.button, { opacity: loading ? 0.5 : 1 }]} // Disable button during loading
           onPress={handleStartDiagnosing}
+          disabled={loading}
         >
-          <Text style={{ fontSize: 24, fontWeight: 'bold', textAlign: 'center', color: 'white' }}>
-            <MultilingualText text="StartDiagnosis" />
-          </Text>
+          {loading ? (
+            <ActivityIndicator size="large" color="#fff" />
+          ) : (
+            <Text style={styles.buttonText}>Start Diagnosing</Text>
+          )}
         </TouchableOpacity>
       </View>
     </View>

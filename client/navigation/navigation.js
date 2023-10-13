@@ -11,8 +11,6 @@ import HomePage from '../screens/HomePage';
 import ToolsPage from '../screens/ToolsPage';
 import ProfilePage from '../screens/ProfilePage';
 import DiagnosisResultScreen from '../screens/DiagnosisResultScreen';
-import EmergencyContacts from '../screens/EmergencyContacts';
-import Demo from '../components/LanguagePicker';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -40,7 +38,6 @@ function HomeTabNavigator() {
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarLabel: () => null,
       })}
       tabBarOptions={{
         activeTintColor: '#007BFF',
@@ -56,8 +53,8 @@ function HomeTabNavigator() {
 }
 
 function Navigation() {
-  // const { user } = useAuth();
-  // if (user) {
+  const { user } = useAuth();
+  if (user) {
     return (
       <NavigationContainer>
         <Stack.Navigator
@@ -75,19 +72,19 @@ function Navigation() {
         </Stack.Navigator>
       </NavigationContainer>
     );
-  // } else {
-  //   return (
-  //     <NavigationContainer>
-  //       <Stack.Navigator
-  //         screenOptions={{
-  //           headerShown: false
-  //         }}>
-  //         <Stack.Screen name="Login" component={LoginScreen} />
-  //         <Stack.Screen name="Signup" component={SignupScreen} />
-  //       </Stack.Navigator>
-  //     </NavigationContainer>
-  //   );
-  // }
+  } else {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false
+          }}>
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Signup" component={SignupScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
 }
 
 export default Navigation;

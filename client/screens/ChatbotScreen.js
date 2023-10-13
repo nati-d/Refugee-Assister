@@ -11,7 +11,6 @@ import { Audio } from 'expo-av'; // Import the Audio module
 import { colors } from '../themes/colors';
 import BotImg from '../assets/images/photo_2023-09-22_09-40-16.jpg';
 import ChatMessage from '../components/ChatMessage';
-import MultilingualText from '../components/MultilingualText';
 
 export default function ChatbotScreen() {
   const [message, setMessage] = useState('');
@@ -41,7 +40,7 @@ export default function ChatbotScreen() {
   
       setLoading(true);
   
-      const response = await axios.post('http://192.168.100.23:3000/chat', {
+      const response = await axios.post('http://192.168.1.8:3000/chat', {
         message: message,
       });
   
@@ -69,58 +68,58 @@ export default function ChatbotScreen() {
   };
 
   const handleStartRecording = async () => {
-    // try {
-    //   const recording = new Audio.Recording(); 
-    //   await recording.prepareToRecordAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
-    //   await recording.startAsync();
-    //   setRecording(recording);
-    //   setIsRecording(true);
-    //   console.log('Recording started');
-    // } catch (error) {
-    //   console.error('Failed to start recording:', error);
-    // }
+    try {
+      const recording = new Audio.Recording(); 
+      await recording.prepareToRecordAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
+      await recording.startAsync();
+      setRecording(recording);
+      setIsRecording(true);
+      console.log('Recording started');
+    } catch (error) {
+      console.error('Failed to start recording:', error);
+    }
   };
 
-
   const handleStopRecording = async () => {
-    // if (recording) {
-    //   try {
-    //     await recording.stopAndUnloadAsync();
-    //     setIsRecording(false);
-    //     console.log('Recording stopped');
+    if (recording) {
+      try {
+        await recording.stopAndUnloadAsync();
+        setIsRecording(false);
+        console.log('Recording stopped');
   
-    //     const uri = recording.getURI();
+        const uri = recording.getURI();
   
-    //     const audioData = new FormData();
-    //     audioData.append('audio', {
-    //       uri,
-    //       name: 'audio.3gp',
-    //       type: 'audio/3gp', 
-    //     });
+        const audioData = new FormData();
+        audioData.append('audio', {
+          uri,
+          name: 'audio.3gp',
+          type: 'audio/3gp', 
+        });
   
-    //     const response = await axios.post('http://192.168.100.23:3000/api/audio/transcribe', audioData, {
-    //       headers: {
-    //         'Content-Type': 'multipart/form-data',
-    //       },
-    //     });
+        // Send the audio data to the backend
+        const response = await axios.post('http://192.168.1.8:3000/api/audio/transcribe', audioData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
   
-    //     if (response?.data?.transcription) {
-    //       const transcribedText = response.data.transcription;
-    //       console.log('Transcribed Text:', transcribedText);
+        if (response?.data?.transcription) {
+          const transcribedText = response.data.transcription;
+          console.log('Transcribed Text:', transcribedText);
   
-    //       const updatedChat = [
-    //         ...chats,
-    //         { role: 'user', content: 'Voice message' },
-    //         { role: 'assistant', content: transcribedText },
-    //       ];
-    //       setChats(updatedChat);
-    //     } else {
-    //       console.log('Transcription data is missing or invalid');
-    //     }
-    //   } catch (error) {
-    //     console.error('Failed to stop recording or transcribe:', error);
-    //   }
-    // }
+          const updatedChat = [
+            ...chats,
+            { role: 'user', content: 'Voice message' },
+            { role: 'assistant', content: transcribedText },
+          ];
+          setChats(updatedChat);
+        } else {
+          console.log('Transcription data is missing or invalid');
+        }
+      } catch (error) {
+        console.error('Failed to stop recording or transcribe:', error);
+      }
+    }
   };
   
   
@@ -135,10 +134,10 @@ export default function ChatbotScreen() {
 
   return (
     <View style={tw`flex-1 relative`}>
-      <View style={[tw`pt-15 pb-10`, styles.container]}>
+      <View style={[tw`h-30 justify-center`, styles.container]}>
         <View style={tw`flex-row items-center`}>
           <TouchableOpacity
-            style={tw`bg-white ml-4 mr-4 rounded-xl`}
+            style={tw`bg-white ml-3 mr-4 rounded-xl`}
             onPress={() => navigation.navigate('Home')}
           >
             <Ionicons
@@ -149,7 +148,7 @@ export default function ChatbotScreen() {
           </TouchableOpacity>
           <Image source={BotImg} style={tw`w-10 h-10 rounded-full`} />
           <Text style={tw`ml-3 font-extrabold text-2xl text-white`}>
-            <MultilingualText text="Assister" />
+            Assister
           </Text>
         </View>
       </View>
@@ -212,6 +211,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
   },
   loadingContainer: {
-    marginTop: 20,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
