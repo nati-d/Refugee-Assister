@@ -21,7 +21,6 @@ import { Ionicons } from '@expo/vector-icons';
 import ChatbotScreen from '../screens/ChatbotScreen';
 import DiagnosisScreen from '../screens/DiagnosisScreen';
 import TranscribeScreen from '../screens/TranscribeScreen';
-import EmergencyContacts from '../screens/EmergencyContacts';
 import MapScreen from '../screens/MapScreen';
 
 function HomeTabNavigator() {
