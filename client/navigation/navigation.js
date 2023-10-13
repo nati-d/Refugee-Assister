@@ -13,6 +13,7 @@ import ProfilePage from '../screens/ProfilePage';
 import DiagnosisResultScreen from '../screens/DiagnosisResultScreen';
 
 const Stack = createNativeStackNavigator();
+//tab
 const Tab = createBottomTabNavigator();
 
 import { Ionicons } from '@expo/vector-icons';
