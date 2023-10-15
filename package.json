@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "expo-av": "^13.6.0"
+    "expo-av": "~13.4.1"
   }
 }
