@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import { View, StyleSheet, ActivityIndicator, Text, ScrollView } from 'react-native';
 import * as Location from 'expo-location';
-import axios from 'axios';
 
 const MapScreen = () => {
   const [location, setLocation] = useState(null);
-  const [emergencyCenters, setEmergencyCenters] = useState([]);
+  const [restaurantNames, setRestaurantNames] = useState([]);
 
   useEffect(() => {
     getLocation();
@@ -23,49 +21,59 @@ const MapScreen = () => {
       const userLocation = await Location.getCurrentPositionAsync({});
       setLocation(userLocation.coords);
 
-      const apiKey = '7SGURFTVzIxPsq7y6DWWqMHLwayKD6b3';
-      const response = await axios.get(
-        `https://www.mapquestapi.com/search/v2/radius?key=${apiKey}&origin=${userLocation.coords.latitude},${userLocation.coords.longitude}&radius=30&maxMatches=10&ambiguities=ignore&hostedData=mqap.ntpois|group_sic_code=?|806203&outFormat=json`
+      console.log('User Location:', userLocation.coords); // Debug user's location
+
+      // Make a request to the MapQuest Search API for restaurants near Nairobi, Kenya
+      const apiKey = '7SGURFTVzIxPsq7y6DWWqMHLwayKD6b3'; // Replace with your MapQuest API key
+      const response = await fetch(
+        `https://www.mapquestapi.com/search/v2/radius?key=${apiKey}&origin=Tokyo,+Japan&radius=3000&maxMatches=10&ambiguities=ignore&hostedData=mqap.ntpois|group_sic_code=?|801101&outFormat=json`
       );
 
-      if (response.data.searchResults) {
-        setEmergencyCenters(response.data.searchResults);
-        console.log(emergencyCenters)
+      const data = await response.json();
+
+      console.log('API Response:', data); // Debug API response
+
+      if (data.searchResults) {
+        const names = data.searchResults.map((restaurant) => restaurant.name);
+        setRestaurantNames(names);
+
+        console.log('Restaurant Names:', names); // Debug restaurant names
       }
     } catch (error) {
-      console.error('Error getting location or emergency centers:', error);
+      console.error('Error getting location or restaurant data:', error);
     }
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       {location ? (
-        <MapView
-          style={{ flex: 1 }}
-          initialRegion={{
-            latitude: location.latitude,
-            longitude: location.longitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-        >
-          <Marker
-            coordinate={{
-              latitude: location.latitude,
-              longitude: location.longitude,
-            }}
-            title="Your Location"
-          />
-
-          
-        </MapView>
+        <ScrollView style={styles.restaurantList}>
+          {restaurantNames.map((name, index) => (
+            <View key={index} style={styles.restaurantItem}>
+              <Text>{name}</Text>
+            </View>
+          ))}
+        </ScrollView>
       ) : (
-        <Text>Loading...</Text>
+        <ActivityIndicator size="large" />
       )}
-
-      
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  restaurantList: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  restaurantItem: {
+    borderBottomWidth: 1,
+    borderBottomColor: 'gray',
+    padding: 10,
+  },
+});
 
 export default MapScreen;

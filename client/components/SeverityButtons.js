@@ -1,60 +1,58 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
+import Slider from '@react-native-community/slider';
+import MultilingualText from './MultilingualText';
 
-export default function SeverityButtons({ onSelectSeverity }) {
-  const [selectedOption, setSelectedOption] = useState('');
+export default function SeveritySlider({ onSelectSeverity }) {
+  const [selectedSeverity, setSelectedSeverity] = useState(1);
 
-  const handleOptionSelect = (option) => {
-    setSelectedOption(option);
-    onSelectSeverity(option); // Pass the selected severity back to the parent component
+  const handleSliderChange = (value) => {
+    setSelectedSeverity(value);
+    onSelectSeverity(value); // Pass the selected severity back to the parent component
   };
 
-  const options = [
-    { id: 'option1', text: 'Mild', severity: 1, bgcolor: '#34C759' },
-    { id: 'option2', text: 'Medium', severity: 2, bgcolor: '#FFD60A' },
-    { id: 'option3', text: 'Worse', severity: 3, bgcolor: '#FF3B30' },
-  ];
+  const minSeverity = 1;
+  const maxSeverity = 3;
+
+  const severityLevels = ['Mild', 'Medium', 'Severe']; // Define your severity level labels
 
   return (
     <View style={styles.container}>
-      {options.map((option) => (
-        <TouchableOpacity
-          key={option.id}
-          style={[
-            styles.radioButton,
-            selectedOption === option.id && styles.radioButtonSelected,
-            { backgroundColor: option.bgcolor },
-          ]}
-          onPress={() => handleOptionSelect(option.severity)} // Pass the severity level on button press
-        >
-          <Text style={styles.radioButtonText}>{option.text}</Text>
-        </TouchableOpacity>
-      ))}
+      <Text style={styles.label}><MultilingualText text='SelectSeverity'/>:</Text>
+      <Slider
+        style={styles.slider}
+        minimumValue={minSeverity}
+        maximumValue={maxSeverity}
+        step={1}
+        value={selectedSeverity}
+        onValueChange={handleSliderChange}
+        minimumTrackTintColor="#007bff"
+        maximumTrackTintColor="#ccc"
+        thumbTintColor="#007bff"
+      />
+      <Text style={styles.sliderValue}>
+        {severityLevels[Math.round(selectedSeverity) - 1]}
+      </Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    justifyContent: 'center',
     paddingHorizontal: 20,
+    marginTop: 20,
   },
-  radioButton: {
-    width: 100, // Adjust the width to accommodate the longer button text
-    height: 50,
-    borderRadius: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 20,
+  label: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
-  radioButtonText: {
+  slider: {
+    width: '100%',
+  },
+  sliderValue: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: 'white',
-  },
-  radioButtonSelected: {
-    borderWidth: 5,
-    borderColor: '#888888',
+    textAlign: 'center',
   },
 });

@@ -11,6 +11,8 @@ import { Audio } from 'expo-av'; // Import the Audio module
 import { colors } from '../themes/colors';
 import BotImg from '../assets/images/photo_2023-09-22_09-40-16.jpg';
 import ChatMessage from '../components/ChatMessage';
+import MultilingualText from '../components/MultilingualText';
+
 
 export default function ChatbotScreen() {
   const [message, setMessage] = useState('');
@@ -40,7 +42,7 @@ export default function ChatbotScreen() {
   
       setLoading(true);
   
-      const response = await axios.post('http://192.168.1.8:3000/chat', {
+      const response = await axios.post('http://192.168.1.16:3000/chat', {
         message: message,
       });
   
@@ -148,7 +150,7 @@ export default function ChatbotScreen() {
           </TouchableOpacity>
           <Image source={BotImg} style={tw`w-10 h-10 rounded-full`} />
           <Text style={tw`ml-3 font-extrabold text-2xl text-white`}>
-            Assister
+          <MultilingualText text="Assister" />
           </Text>
         </View>
       </View>
@@ -169,13 +171,13 @@ export default function ChatbotScreen() {
         )}
       </ScrollView>
 
-      <View style={tw`bg-white flex-row w-full absolute bottom-0 h-15 items-center py-3 px-3 pr-9 z-10`}>
-        <View style={tw`flex-row h-10 w-full border border-gray-400 items-center rounded-3xl overflow-hidden px-2`}>
+      <View style={tw`bg-white flex-row w-full absolute bottom-0 h-17 items-center py-3 px-3 z-10`}>
+        <View style={tw`flex-row h-13 w-full border border-gray-400 items-center rounded-3xl overflow-hidden px-3`}>
           <TextInput
             placeholder='Type your message...'
             value={message}
             onChangeText={(text) => setMessage(text)}
-            style={[tw`flex-1 h-9`, styles.grayContainer]}
+            style={[tw`flex-1 h-13 mr-2`, styles.grayContainer]}
             editable={!loading}
           />
           {speaking ? (
@@ -188,16 +190,7 @@ export default function ChatbotScreen() {
             </TouchableOpacity>
           )}
         </View>
-        {!speaking && (
-        <View style={tw`p-1 ml-1 rounded-full`}>
-          <TouchableOpacity
-            onPress={isRecording ? handleStopRecording : handleStartRecording} // Toggle recording
-            disabled={loading}
-          >
-            <FontAwesome5 name={isRecording ? "stop" : "microphone"} size={24} color={loading ? 'gray' : colors.primary} />
-          </TouchableOpacity>
-        </View>
-      )}
+        
       </View>
     </View>
   );
