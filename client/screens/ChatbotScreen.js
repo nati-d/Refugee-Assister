@@ -42,7 +42,7 @@ export default function ChatbotScreen() {
   
       setLoading(true);
   
-      const response = await axios.post('http://192.168.1.16:3000/chat', {
+      const response = await axios.post('http://192.168.100.38:3000/chat', {
         message: message,
       });
   
@@ -99,7 +99,7 @@ export default function ChatbotScreen() {
         });
   
         // Send the audio data to the backend
-        const response = await axios.post('http://192.168.1.8:3000/api/audio/transcribe', audioData, {
+        const response = await axios.post('http://192.168.100.38:3000/api/audio/transcribe', audioData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },

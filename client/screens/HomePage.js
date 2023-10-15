@@ -66,22 +66,22 @@ export default function HomePage() {
           <View style={tw `flex w-85`}>
             <View style={tw `flex-row items-center justify-between mt-5 mr-7`}>
               <View>
-                <Text style={[tw `text-6 font-bold`, {color:colors.black}]}> <MultilingualText text='HomePageTitle1' /> </Text>
-                <Text style={[tw `text-6 font-bold`, {color:colors.primary}]}> <MultilingualText text='HomePageTitle2' /></Text>
+                <Text style={[tw `text-5 font-bold`, {color:colors.black}]}> <MultilingualText text='HomePageTitle1' /> </Text>
+                <Text style={[tw `text-5 font-bold`, {color:colors.primary}]}> <MultilingualText text='HomePageTitle2' /></Text>
               </View>
               <View style={tw `flex-row w-18 justify-between items-center`}>
               <TouchableOpacity>
-                  <Ionicons name="language" size={30} color="black" />
+                  <Ionicons name="language" size={24} color="black" />
                 </TouchableOpacity>
               <LanguagePicker onLanguageChange={handleLanguageChange} />
                 <TouchableOpacity onPress={handleEmergency}>
-                  <Ionicons name="md-alert-circle" size={30} color="black" />
+                  <Ionicons name="md-alert-circle" size={24} color="black" />
                 </TouchableOpacity>
 
               </View>
             </View>
             <View style={tw `flex-row mt-6 items-center`}>
-              <Ionicons name="md-pin" size={32} color={colors.primary} />
+              <Ionicons name="md-pin" size={26} color={colors.primary} />
               <View>
                 {city && country ? (
                   <View>
@@ -94,7 +94,7 @@ export default function HomePage() {
                 )}
               </View>
             </View>
-            <View style={tw `mt-10`}>
+            <View style={tw `mt-8`}>
               <View>
                 <View style={tw `flex-row justify-between`}>
                   <HomeScreenTool name="Diagnose" icon="md-medkit" iconSize={25} />
@@ -106,8 +106,7 @@ export default function HomePage() {
                 </View>
               </View>
             </View>
-            <View style={tw `mt-10`}>
-              <SubTitle title={<MultilingualText text='RecentNews'/>} />
+            <View style={tw `mt-8`}>
               <News />
             </View>
           </View>

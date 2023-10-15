@@ -55,8 +55,8 @@ function HomeTabNavigator() {
 }
 
 function Navigation() {
-  const { user } = useAuth();
-  if (user) {
+  // const { user } = useAuth();
+  // if (user) {
     return (
       <NavigationContainer>
         <Stack.Navigator
@@ -75,19 +75,19 @@ function Navigation() {
         </Stack.Navigator>
       </NavigationContainer>
     );
-  } else {
-    return (
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false
-          }}>
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Signup" component={SignupScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    );
-  }
+  // } else {
+  //   return (
+  //     <NavigationContainer>
+  //       <Stack.Navigator
+  //         screenOptions={{
+  //           headerShown: false
+  //         }}>
+  //         <Stack.Screen name="Login" component={LoginScreen} />
+  //         <Stack.Screen name="Signup" component={SignupScreen} />
+  //       </Stack.Navigator>
+  //     </NavigationContainer>
+  //   );
+  // }
 }
 
 export default Navigation;

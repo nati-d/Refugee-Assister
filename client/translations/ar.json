@@ -15,8 +15,6 @@
     "Result": "النتيجة",
     "Add": "إضافة",
     "Diagnose": "تشخيص",
-    "Assistant": "مساعد",
-    "Learn": "تعلم",
     "Map": "الخريطة",
     "EnterYourSymptoms": "أدخل أعراضك",
     "AdditionalInformation": "معلومات إضافية",
@@ -25,7 +23,6 @@
     "RateTheSeverityOfYourCondition": "قيم شدة حالتك",
     "SelectSeverity": "اختر الشدة",
     "TypeYourMessage": "اكتب رسالتك",
-    "EmergencyContactsInYourArea": "جهات الاتصال الطارئة في منطقتك",
-    "RecentNews": "أخبار حديثة"
+    "EmergencyContactsInYourArea": "جهات الاتصال الطارئة في منطقتك"
   }
   

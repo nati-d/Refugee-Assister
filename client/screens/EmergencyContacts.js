@@ -28,7 +28,7 @@ export default function EmergencyContacts ({route}) {
 
           setLoading(true);
             
-          const response = await axios.post('http://192.168.1.9:3000/emergency', {
+          const response = await axios.post('http://192.168.100.38:3000/emergency', {
             message: message,
           });
 

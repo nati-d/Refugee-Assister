@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, Image, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import tw from 'twrnc';
 import axios from 'axios';
 import MultilingualText from './MultilingualText';
 
 const newsApiKey = '05e33daaf0e545d083f04b8e32a76636';
 
 const News = () => {
+  const [showAllNews, setShowAllNews] = React.useState(false);  
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -39,7 +41,12 @@ const News = () => {
   };
   
 
-  const renderNewsItem = ({ item }) => (
+  const renderNewsItem = ({ item, index }) => {
+    if (!showAllNews && index > 6) {
+      return null;
+    }
+
+    return (
     <View style={styles.newsItem}>
       <Image source={{ uri: item.urlToImage }} style={styles.image} />
       <View style={styles.newsContent}>
@@ -48,20 +55,28 @@ const News = () => {
         <Text style={styles.title}><MultilingualText text={item.title}/></Text>
       </View>
     </View>
-  );
+  )};
 
   return (
-    <View style={styles.container}>
-      {loading && (
-        <View>
-          <ActivityIndicator size="large" color="blue" />
-        </View>
-      )}
-      <FlatList
-        data={news}
-        renderItem={renderNewsItem}
-        keyExtractor={(item) => item.url}
-      />
+    <View>
+      <View style={tw `flex-row items-center justify-between`}>
+        <Text style={tw `text-4 font-bold`}><MultilingualText text="RecentNews" /></Text>
+        <TouchableOpacity onPress={() => setShowAllNews(!showAllNews)}>
+          <Text style={tw`text-blue-400`}><MultilingualText text={showAllNews ? "ShowLess" : "SeeAll"} /></Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.container}>
+        {loading && (
+          <View>
+            <ActivityIndicator size="large" color="blue" />
+          </View>
+        )}
+        <FlatList
+          data={news}
+          renderItem={renderNewsItem}
+          keyExtractor={(item) => item.url}
+        />
+      </View>
     </View>
   );
 };
@@ -77,23 +92,24 @@ const styles = StyleSheet.create({
   image: {
     width: 80,
     height: 80,
-    marginRight: 12,
+    marginRight: 10,
     borderRadius: 4,
   },
   newsContent: {
     flex: 1,
   },
   date: {
-    fontSize: 12,
-    marginBottom: 4,
+    fontSize: 10,
+    marginBottom: 2,
   },
   source: {
-    fontSize: 14,
+    fontSize: 10,
     fontWeight: 'bold',
-    marginBottom: 4,
+    marginBottom: 2,
+    color: '#666666',
   },
   title: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: 'bold',
   },
 });

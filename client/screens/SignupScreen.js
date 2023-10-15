@@ -61,7 +61,7 @@ export default function SignupScreen() {
     };
 
     return (
-        <View style={[tw`flex flex-1 `, styles.container]}>
+        <View style={[tw`flex-1 mt-10`, styles.container]}>
             <View style={tw`w-full p-5`}>
                 <Text style={tw`font-extrabold text-2xl text-center text-gray-800`}>Let's Get Started!</Text>
                 <Text style={tw`text-base text-center text-gray-800`}>Begin Your Journey, Sign Up Now.</Text>
