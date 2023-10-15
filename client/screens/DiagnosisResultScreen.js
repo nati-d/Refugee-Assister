@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, ScrollView } from "react-native";
 import tw from 'twrnc';
 import { colors } from "../themes/colors";
+import MultilingualText from '../components/MultilingualText';
 
 export default function DiagnosisResultScreen({ route }) {
     const { diagnosisResult } = route.params;
