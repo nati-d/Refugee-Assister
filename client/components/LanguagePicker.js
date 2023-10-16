@@ -70,7 +70,7 @@ const Demo = () => {
       <Picker
         selectedValue={i18n.language}
         onValueChange={handleLanguageChange}
-        style={{ width: 35 }}
+        style={{ width: 30 }}
       >
         {renderOptions()}
       </Picker>

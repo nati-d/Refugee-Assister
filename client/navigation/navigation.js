@@ -14,7 +14,7 @@ import DiagnosisResultScreen from '../screens/DiagnosisResultScreen';
 import EmergencyContacts from '../screens/EmergencyContacts';
 
 const Stack = createNativeStackNavigator();
-//tab
+// Tab
 const Tab = createBottomTabNavigator();
 
 import { Ionicons } from '@expo/vector-icons';
@@ -22,6 +22,7 @@ import ChatbotScreen from '../screens/ChatbotScreen';
 import DiagnosisScreen from '../screens/DiagnosisScreen';
 import TranscribeScreen from '../screens/TranscribeScreen';
 import MapScreen from '../screens/MapScreen';
+import NewsDetail from '../screens/NewsDetail';
 
 function HomeTabNavigator() {
   return (
@@ -30,11 +31,11 @@ function HomeTabNavigator() {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === 'HomeTab') {
+          if (route.name === 'Home') {
             iconName = focused ? 'md-home' : 'md-home-outline';
-          } else if (route.name === 'ToolsTab') {
+          } else if (route.name === 'Tools') {
             iconName = focused ? 'md-build' : 'md-build-outline';
-          } else if (route.name === 'ProfileTab') {
+          } else if (route.name === 'Profile') {
             iconName = focused ? 'md-person' : 'md-person-outline';
           }
 
@@ -47,47 +48,45 @@ function HomeTabNavigator() {
       }}
       tabBarStyle={{ display: 'flex' }}
     >
-      <Tab.Screen name="HomeTab" component={HomePage} options={{ headerShown: false }} />
-      <Tab.Screen name="ToolsTab" component={ToolsPage} options={{ headerShown: false }} />
-      <Tab.Screen name="ProfileTab" component={ProfilePage} options={{ headerShown: false }} />
+      <Tab.Screen name="Home" component={HomePage} options={{ headerShown: false }} />
+      <Tab.Screen name="Tools" component={ToolsPage} options={{ headerShown: false }} />
+      <Tab.Screen name="Profile" component={ProfilePage} options={{ headerShown: false }} />
     </Tab.Navigator>
   );
 }
 
 function Navigation() {
-  // const { user } = useAuth();
-  // if (user) {
-    return (
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false
-          }}>
-          <Stack.Screen name="Home" component={HomeTabNavigator}  />
-          <Stack.Screen name="EmergencyContacts" component={EmergencyContacts} />
-          <Stack.Screen name="Chatbot" component={ChatbotScreen}  />
-          <Stack.Screen name="Diagnosis" component={DiagnosisScreen}  />
-          <Stack.Screen name="DiagnosisResult" component={DiagnosisResultScreen}  />
-          <Stack.Screen name="Transcribe" component={TranscribeScreen}  />
-          <Stack.Screen name="Map" component={MapScreen}  />
-          <Stack.Screen name="Emergency" component={EmergencyContacts}  />
-          
-        </Stack.Navigator>
-      </NavigationContainer>
-    );
-  // } else {
-  //   return (
-  //     <NavigationContainer>
-  //       <Stack.Navigator
-  //         screenOptions={{
-  //           headerShown: false
-  //         }}>
-  //         <Stack.Screen name="Login" component={LoginScreen} />
-  //         <Stack.Screen name="Signup" component={SignupScreen} />
-  //       </Stack.Navigator>
-  //     </NavigationContainer>
-  //   );
-  // }
+  const { user } = useAuth();
+  return (
+    <NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        {user ? (
+          <>
+            <Stack.Screen name="Home" component={HomeTabNavigator} />
+            <Stack.Screen name="EmergencyContacts" component={EmergencyContacts} />
+            <Stack.Screen name="Chatbot" component={ChatbotScreen} />
+            <Stack.Screen name="Diagnosis" component={DiagnosisScreen} />
+            <Stack.Screen name="DiagnosisResult" component={DiagnosisResultScreen} />
+            <Stack.Screen name="Transcribe" component={TranscribeScreen} />
+            <Stack.Screen name="Map" component={MapScreen} />
+            <Stack.Screen name="Emergency" component={EmergencyContacts} />
+            <Stack.Screen name="NewsDetail" component={NewsDetail} />
+          </>
+        ) : (
+          <>
+            <Stack.Screen name="Opening" component={OpeningScreen} />
+            <Stack.Screen name="Splash" component={SplashScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Signup" component={SignupScreen} />
+          </>
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }
 
 export default Navigation;

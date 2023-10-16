@@ -61,7 +61,7 @@ export default function HomePage() {
 
   return (
     <View style={[tw `flex-1 w-full`, { backgroundColor: colors.background }]}>
-      <ScrollView style={tw `mt-9`}>
+      <ScrollView style={tw `mt-1`}>
         <View style={tw `flex items-center`}>
           <View style={tw `flex w-85`}>
             <View style={tw `flex-row items-center justify-between mt-5 mr-7`}>

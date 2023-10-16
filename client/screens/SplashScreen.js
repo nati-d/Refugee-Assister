@@ -50,15 +50,15 @@ const Done = ({ ...props }) => (
   </TouchableOpacity>
 );
 
-const OnboardingScreen = ({ navigation }) => {
+const SplashScreen = ({ navigation }) => {
   return (
     <Onboarding
       SkipButtonComponent={Skip}
       NextButtonComponent={Next}
       DoneButtonComponent={Done}
       DotComponent={Dots}
-      onSkip={() => navigation.replace("")}
-      onDone={() => navigation.navigate("")}
+      onSkip={() => navigation.replace("Login")}
+      onDone={() => navigation.navigate("Login")}
       pages={[
         {
           backgroundColor: '#fff',
@@ -105,7 +105,7 @@ const OnboardingScreen = ({ navigation }) => {
   );
 };
 
-export default OnboardingScreen;
+export default SplashScreen;
 
 const styles = StyleSheet.create({
   container: {
