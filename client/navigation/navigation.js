@@ -17,7 +17,7 @@ const Stack = createNativeStackNavigator();
 // Tab
 const Tab = createBottomTabNavigator();
 
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import ChatbotScreen from '../screens/ChatbotScreen';
 import DiagnosisScreen from '../screens/DiagnosisScreen';
 import TranscribeScreen from '../screens/TranscribeScreen';
@@ -28,29 +28,27 @@ function HomeTabNavigator() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
+        activeTintColor: '#007BFF',
+        inactiveTintColor: 'gray',
+        tabBarStyle: { justifyContent: 'center' },
+        tabBarIcon: ({ color, size }) => {
           let iconName;
 
           if (route.name === 'Home') {
-            iconName = focused ? 'md-home' : 'md-home-outline';
+            iconName = 'home';
           } else if (route.name === 'Tools') {
-            iconName = focused ? 'md-build' : 'md-build-outline';
+            iconName = 'settings';
           } else if (route.name === 'Profile') {
-            iconName = focused ? 'md-person' : 'md-person-outline';
+            iconName = 'person';
           }
-
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
+        
+          return <MaterialIcons name={iconName} size={size} color={color} />;
+        }
       })}
-      tabBarOptions={{
-        activeTintColor: '#007BFF',
-        inactiveTintColor: 'gray',
-      }}
-      tabBarStyle={{ display: 'flex' }}
     >
-      <Tab.Screen name="Home" component={HomePage} options={{ headerShown: false }} />
-      <Tab.Screen name="Tools" component={ToolsPage} options={{ headerShown: false }} />
-      <Tab.Screen name="Profile" component={ProfilePage} options={{ headerShown: false }} />
+      <Tab.Screen name="Home" component={HomePage} options={{ tabBarLabel:() => null, headerShown: false }} />
+      <Tab.Screen name="Tools" component={ToolsPage} options={{ tabBarLabel:() => null, headerShown: false }} />
+      <Tab.Screen name="Profile" component={ProfilePage} options={{ tabBarLabel:() => null, headerShown: false }} />
     </Tab.Navigator>
   );
 }
@@ -64,7 +62,7 @@ function Navigation() {
           headerShown: false,
         }}
       >
-        {user ? (
+        {/* {user ? ( */}
           <>
             <Stack.Screen name="Home" component={HomeTabNavigator} />
             <Stack.Screen name="EmergencyContacts" component={EmergencyContacts} />
@@ -76,14 +74,14 @@ function Navigation() {
             <Stack.Screen name="Emergency" component={EmergencyContacts} />
             <Stack.Screen name="NewsDetail" component={NewsDetail} />
           </>
-        ) : (
+        {/* ) : (
           <>
             <Stack.Screen name="Opening" component={OpeningScreen} />
             <Stack.Screen name="Splash" component={SplashScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Signup" component={SignupScreen} />
           </>
-        )}
+        )} */}
       </Stack.Navigator>
     </NavigationContainer>
   );

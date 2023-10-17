@@ -22,31 +22,30 @@ export default function HomeScreenTool (props) {
     }    
     return(
         <View>
-            <LinearGradient
-  colors={[colors.primary, '#FF6A6A']}
-  start={{ x: 0, y: 0 }}
-  end={{ x: 1, y: 1 }}
-  style={{
-    borderRadius: 50,
-    padding: 10,
-    paddingVertical: 15,
-    width: 154,
-    marginBottom: 20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.32,
-    shadowRadius: 5.46,
-    elevation: 9,
-  }}
->
-  <TouchableOpacity style={[tw `flex-row items-center pl-2`]} onPress={() => handlePress()}>                
-    <Ionicons name={props.icon} size={props.iconSize} color='white' />
-    <Text style={tw `text-center text-white font-bold ml-3`}><MultilingualText text={props.name} /></Text>
-  </TouchableOpacity>
-</LinearGradient>
+          <LinearGradient
+            colors={[colors.primary, '#FF6A6A']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={{
+              borderRadius: 50,
+              marginBottom: 20,
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 4,
+              },
+              shadowOpacity: 0.5,
+              shadowRadius: 6,
+              elevation: 8,
+              borderWidth: 1,
+              borderColor: '#ccc',
+            }}
+          >
+            <TouchableOpacity style={[tw `flex-row items-center h-15 w-40 pl-5`]} onPress={() => handlePress()}>                
+              <Ionicons name={props.icon} size={props.iconSize} color='white' />
+              <Text style={tw `text-center text-white font-bold ml-3`}><MultilingualText text={props.name} /></Text>
+            </TouchableOpacity>
+          </LinearGradient>
 
         </View>
     )

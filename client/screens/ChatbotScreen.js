@@ -42,7 +42,7 @@ export default function ChatbotScreen() {
   
       setLoading(true);
   
-      const response = await axios.post('http://192.168.1.16:3000/chat', {
+      const response = await axios.post('http://192.168.100.38:3000/chat', {
         message: message,
       });
   
@@ -136,7 +136,7 @@ export default function ChatbotScreen() {
 
   return (
     <View style={tw`flex-1 relative`}>
-      <View style={[tw`h-30 justify-center`, styles.container]}>
+      <View style={[tw`pb-10 pt-5 justify-center`, styles.container]}>
         <View style={tw`flex-row items-center`}>
           <TouchableOpacity
             style={tw`bg-white ml-3 mr-4 rounded-xl`}

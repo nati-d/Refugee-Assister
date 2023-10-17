@@ -31,7 +31,7 @@ const NewsDetail = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    paddingTop:20
+    marginTop: 40
   },
   image: {
     width: '100%',
@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginTop: 8,
+    color: "#555"
   },
   title: {
     fontSize: 20,

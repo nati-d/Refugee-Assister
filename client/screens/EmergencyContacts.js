@@ -1,6 +1,5 @@
 import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator } from "react-native";
 import tw from 'twrnc';
-import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState, useRef } from "react";
 import { colors } from "../themes/colors";
 import axios from 'axios';
@@ -24,7 +23,6 @@ export default function EmergencyContacts ({route}) {
           if (!message) {
             return;
           }
-          console.log(message)
 
           setLoading(true);
             
@@ -56,7 +54,7 @@ export default function EmergencyContacts ({route}) {
                 style={tw `mt-5`}
             >
                 <View style={tw `mt-10`}>
-                    <Text style={tw `text-6 font-bold text-center`}><MultilingualText text='EmergencyContactsInYourArea'/></Text>
+                    <Text style={tw `text-5 font-bold text-center`}><MultilingualText text='EmergencyContactsInYourArea'/></Text>
                 </View>
                 <View style={tw `flex items-center mt-15`}>
                     <View style={tw `w-90 rounded-3 bg-blue-100 p-8`}>

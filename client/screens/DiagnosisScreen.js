@@ -80,9 +80,7 @@ export default function DiagnosisScreen() {
     const severityText = severityLabels[severityLevel - 1];
   
     const diagnosisMessage = `Patient (Age: ${age}, Gender: ${gender}) presents with the following symptoms: ${selectedSymptoms.join(', ')}. Additional Information: ${additionalInput}. Severity: ${severityText}`;
-  
-    console.log('Diagnosis Message:', diagnosisMessage);
-  
+    
     setLoading(true);
   
     try {
@@ -111,7 +109,7 @@ export default function DiagnosisScreen() {
 
         <Text style={styles.header}><MultilingualText text='AdditionalInformation'/></Text>
         <TextInput
-          placeholder="Enter any additional information here"
+          placeholder="Ex: Medical history, habits, current habitat..."
           style={styles.input}
           onChangeText={(text) => setAdditionalInput(text)}
           value={additionalInput}

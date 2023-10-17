@@ -26,14 +26,19 @@ const News = () => {
       );
 
       if (response.data.articles) {
-        // Sort articles by publication date (newest first)
-        const sortedNews = response.data.articles.sort((a, b) => {
+        const sortedAndFilteredNews = response.data.articles
+        .filter(
+          (item) =>
+            item.status !== 'removed' &&
+            item.urlToImage
+        )
+        .sort((a, b) => {
           // Parse the publishedAt strings as dates and compare
           return new Date(b.publishedAt) - new Date(a.publishedAt);
         });
-
-        setNews(sortedNews);
-      }
+    
+      setNews(sortedAndFilteredNews);
+    }
 
       setLoading(false);
     } catch (error) {
@@ -42,7 +47,13 @@ const News = () => {
     }
   };
 
-  const renderNewsItem = ({ item }) => (
+  const renderNewsItem = ({ item, index }) => {
+
+    if (!showAllNews && index > 6) {
+      return null;
+    }
+
+    return (
     <TouchableOpacity
       style={styles.newsItem}
       onPress={() => {
@@ -53,10 +64,11 @@ const News = () => {
       <View style={styles.newsContent}>
         <Text style={styles.date}>{item.publishedAt}</Text>
         <Text style={styles.source}>{item.source.name}</Text>
-        <Text style={styles.title}>{item.title}</Text>
+        <Text numberOfLines={3} style={styles.title}>{item.title}</Text>
       </View>
     </TouchableOpacity>
-  );
+    
+    )};
 
   return (
     <View>
