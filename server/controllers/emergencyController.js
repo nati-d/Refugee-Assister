@@ -11,9 +11,8 @@ app.use(express.json());
 app.post('/emergency', async (req, res) => {
   const userMessage = req.body.message;
 
-  // Format user input for the OpenAI API
   const messages = [
-    { role: 'system', content: 'Your system message here...' },
+    { role: 'system', content: 'Act as Emergency contact provider for a given location.' },
     { role: 'user', content: userMessage },
   ];
 
@@ -23,7 +22,6 @@ app.post('/emergency', async (req, res) => {
       messages,
     });
 
-    // Extract the chatbot's response
     const chatbotResponse = response.choices[0].message.content;
 
     res.json({ response: chatbotResponse });
