@@ -18,7 +18,7 @@ export default function HomePage() {
   const navigation = useNavigation();
 
   const handleEmergency = () => {
-    navigation.navigate('Emergency', { country });
+    navigation.navigate('Emergency', { city, country });
   }
 
   return (

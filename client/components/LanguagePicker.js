@@ -47,7 +47,6 @@ const Demo = () => {
     { label: 'Hausa', value: 'ha' },
     { label: 'Zulu', value: 'zu' },
     { label: 'Swahili', value: 'sw' },
-   
   ];
 
   const handleLanguageChange = (language) => {

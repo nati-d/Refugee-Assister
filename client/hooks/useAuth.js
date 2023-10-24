@@ -7,9 +7,10 @@ export default function useAuth() {
 
     useEffect(() => {
         const unsub = onAuthStateChanged(auth, (user) => {
-            console.log('getUser:', user)
             if (user) {
                 setUser(user)
+                const userEmail = user.email;
+                console.log('User Email:', userEmail);
             } else {
                 setUser(null)
             }

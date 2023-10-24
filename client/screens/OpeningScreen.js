@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import tw from 'twrnc';
 import { useNavigation } from '@react-navigation/native';
 import useAuth from '../hooks/useAuth';
@@ -24,7 +24,7 @@ const OpeningScreen = () => {
 
   return (
     <View style={[styles.container, tw`flex flex-1`]}>
-      <Text>Name</Text>
+     <Image source={{uri:'https://res.cloudinary.com/dm9wxgkgg/image/upload/v1698052578/Assister-Images/i1uda7rxav9y00uywtr8.jpg'}} style={styles.img}/>
     </View>
   );
 };
@@ -35,9 +35,13 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#28c2ff',
+    backgroundColor: '#007bff',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
   },
+  img: {
+   width:290,
+   height:290
+  }
 });

@@ -4,7 +4,7 @@ import tw from 'twrnc';
 import { useNavigation } from '@react-navigation/native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../config/firebase';
-import WelcomeImage from '../assets/images/Welcome.png'
+const WelcomeImage = 'https://res.cloudinary.com/dm9wxgkgg/image/upload/v1698052762/Assister-Images/m7lniks0c6tb5hk9hsm5.png'
 
 export default function LoginScreen() {
     const navigation = useNavigation();
@@ -47,7 +47,7 @@ export default function LoginScreen() {
     return (
         <View style={[tw`flex flex-1`, styles.container]}>
             <View style={tw`w-full`}>
-                <Image source={WelcomeImage} style={[tw`w-[100%] h-50`, styles.img]} />
+                <Image source={{uri:WelcomeImage}} style={[tw`w-[100%] h-50`, styles.img]} />
             </View>
             <View>
                 <Text style={tw`font-extrabold text-2xl text-center text-gray-800`}>Welcome Back!</Text>

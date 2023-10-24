@@ -4,6 +4,7 @@ import tw from 'twrnc';
 import { useNavigation } from '@react-navigation/native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../config/firebase';
+import axios from 'axios';
 
 export default function SignupScreen() {
     const navigation = useNavigation();
@@ -24,7 +25,7 @@ export default function SignupScreen() {
         } else {
             setEmailError('');
         }
-
+    
         // Validate password
         if (!password) {
             setPasswordError('Password is required');
@@ -32,7 +33,7 @@ export default function SignupScreen() {
         } else {
             setPasswordError('');
         }
-
+    
         // Validate confirm password
         if (!confirmPassword || confirmPassword !== password) {
             setConfirmPasswordError('Passwords do not match');
@@ -40,20 +41,21 @@ export default function SignupScreen() {
         } else {
             setConfirmPasswordError('');
         }
-
+    
         try {
+            const response = await axios.post('http://192.168.1.17:3000/addUser', { email: email });
+
             await createUserWithEmailAndPassword(auth, email, password);
+            console.log('User added successfully:', response.data);
         } catch (error) {
-            if (error.code === 'auth/email-already-in-use') {
-                setEmailError('Email is already registered');
-            }  else if (error.code === 'auth/invalid-email') {
-                setEmailError('Invalid email address');
-            }  else {
-                console.error('Signup error:', error);
+            if (error.response) {
+                console.error('Signup error:', error.response.data);
+            } else {
+                console.error('Signup error:', error.message);
             }
         }
     };
-
+    
     const isValidEmail = (email) => {
         // Regular expression for checking valid email address
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

@@ -1,164 +1,149 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, ActivityIndicator, Text, TouchableOpacity } from 'react-native';
+import MapView, { Marker, Callout } from 'react-native-maps';
+import * as Location from 'expo-location';
+import tw from 'twrnc'
 import { FontAwesome5 } from '@expo/vector-icons';
-import * as Speech from 'expo-speech';
-import axios from 'axios';
-import tw from 'twrnc';
 
-import { colors } from '../themes/colors';
-import BotImg from '../assets/images/photo_2023-09-22_09-40-16.jpg';
-import ChatMessage from '../components/ChatMessage';
+const MapScreen = ({ route }) => {
+  const { latitude, longitude ,hospitalName, city} = route.params;
+ const [location, setLocation] = useState(null);
+  const [distance, setDistance] = useState(null); // State variable for storing the distance
+  const [loading, setLoading] = useState(true);
+  const [infoView, setInfoView] = useState(false)
 
-export default function ChatbotScreen() {
-  const [message, setMessage] = useState('');
-  const [chats, setChats] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [speaking, setSpeaking] = useState(false);
-  const [isListening, setIsListening] = useState(false);
-  const navigation = useNavigation();
-  const scrollViewRef = useRef();
+  useEffect(() => {
+    getLocation();
+  }, []);
 
-
-
-
-  const speak = (aiText) => {
-    Speech.speak(aiText);
-  };
-
-  const stopSpeaking = () => {
-    Speech.stop();
-    setSpeaking(false);
-  };
-
-  const handleSend = async () => {
+  const getLocation = async () => {
     try {
-      if (!message) {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Permission to access location was denied');
+        setLoading(false);
         return;
       }
+
+      const userLocation = await Location.getCurrentPositionAsync();
+      setLocation(userLocation.coords);
+
+      console.log('User Location:', userLocation.coords);
+
+      // Calculate and set the initial distance when user location is available
+      calculateDistance(userLocation.coords.latitude, userLocation.coords.longitude);
+
+      setLoading(false);
+    } catch (error) {
+      console.error('Error getting location:', error);
+      setLoading(false);
+    }
+  };
+
+  const calculateDistance = (lat1, lon1) => {
+    if (latitude && longitude) {
+      const earthRadius = 6371; // Earth's radius in kilometers
+      const lat2 = latitude;
+      const lon2 = longitude;
   
-      setLoading(true);
+      // Convert latitude and longitude from degrees to radians
+      const lat1Rad = (Math.PI * lat1) / 180;
+      const lon1Rad = (Math.PI * lon1) / 180;
+      const lat2Rad = (Math.PI * lat2) / 180;
+      const lon2Rad = (Math.PI * lon2) / 180;
   
-      const response = await axios.post('http://192.168.1.8:3000/chat', {
-        message: message,
-      });
+      // Haversine formula
+      const dLat = lat2Rad - lat1Rad;
+      const dLon = lon2Rad - lon1Rad;
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      const calculatedDistance = earthRadius * c; // Distance in kilometers
   
-      if (response?.data?.response) {
-        const aiResponse = response.data.response;
-        speak(aiResponse);
-        setSpeaking(true);
-  
-        const updatedChat = [
-          ...chats,
-          { role: 'user', content: message },
-          { role: 'assistant', content: aiResponse },
-        ];
-        setChats(updatedChat);
-      } else {
-        console.log('Response data is missing or invalid');
+      // Set distance only if it's a number and round it to two decimal places
+      if (!isNaN(calculatedDistance)) {
+        setDistance(calculatedDistance.toFixed(2));
       }
-  
-      setMessage('');
-      setLoading(false);
-    } catch (err) {
-      console.error('Error:', err.message);
-      setLoading(false);
     }
   };
-  
-
-  const scrollToBottom = () => {
-    if (chats.length > 0) {
-      scrollViewRef.current.scrollToEnd({ animated: true });
-    }
-  };
-
-  useEffect(scrollToBottom, [chats]);
 
   return (
-    <View style={tw`flex-1 relative`}>
-      <View style={[tw`h-30 justify-center`, styles.container]}>
-        <View style={tw`flex-row items-center`}>
-          <TouchableOpacity
-            style={tw`bg-white ml-3 mr-4 rounded-xl`}
-            onPress={() => navigation.navigate('Home')}
-          >
-            <Ionicons
-              name="arrow-back-outline"
-              size={35}
-              color={colors.primary}
-            />
-          </TouchableOpacity>
-          <Image source={BotImg} style={tw`w-10 h-10 rounded-full`} />
-          <Text style={tw`ml-3 font-extrabold text-2xl text-white`}>
-            Assister
-          </Text>
-        </View>
-      </View>
-
-      <ScrollView
-        style={[tw`flex-1 px-2 z-5 rounded-t-2xl -mt-6 border`, styles.grayContainer]}
-        ref={scrollViewRef}
-        onContentSizeChange={scrollToBottom}
-        contentContainerStyle={{ paddingBottom: 100 }}
-      >
-        {chats.map((chat, index) => (
-          <ChatMessage key={index} role={chat.role} content={chat.content} />
-        ))}
-        {loading && (
-          <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color={colors.primary} />
-          </View>
-        )}
-      </ScrollView>
-
-      <View style={tw`bg-white flex-row w-full absolute bottom-0 h-15 items-center py-3 px-3 pr-9 z-10`}>
-        <View style={tw`flex-row h-10 w-full border border-gray-400 items-center rounded-3xl overflow-hidden px-2`}>
-          <TextInput
-            placeholder='Type your message...'
-            value={message}
-            onChangeText={(text) => setMessage(text)}
-            style={[tw`flex-1 h-9`, styles.grayContainer]}
-            editable={!loading}
+    <View style={styles.container}>
+      {location ? (
+        <MapView
+          style={styles.map}
+          initialRegion={{
+            latitude: location.latitude,
+            longitude: location.longitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+        >
+          <Marker
+            coordinate={{
+              latitude: location.latitude,
+              longitude: location.longitude,
+            }}
+            title="Your Location"
           />
-          {speaking ? (
-            <TouchableOpacity onPress={stopSpeaking}>
-              <Ionicons name="stop" size={24} color="red" />
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity onPress={handleSend} disabled={loading}>
-              <Ionicons name="md-send" size={24} color={colors.black} />
-            </TouchableOpacity>
-          )}
-        </View>
-        {!speaking && (
-          <View style={tw`p-1 ml-1 rounded-full`}>
-          
-            <TouchableOpacity
-              
-              disabled={loading}
+
+          {/* Check if latitude and longitude are not null before creating the custom marker */}
+          {latitude && longitude && (
+            <Marker
+              coordinate={{
+                latitude: latitude,
+                longitude: longitude,
+              }}
+              title="Custom Location"
+              onPress={() => {
+                calculateDistance(location.latitude, location.longitude);
+                setInfoView(!infoView)
+              }}
             >
-              <FontAwesome5 name="microphone" size={24} color={loading ? 'gray' : colors.primary} />
-            </TouchableOpacity>
-          
+              <Callout>
+                <Text>{hospitalName}</Text>
+              </Callout>
+            </Marker>
+          )}
+        </MapView>
+      ) : (
+        <ActivityIndicator size="large" />
+      )}
+      {infoView &&
+              <TouchableOpacity>
+
+      <View style={[tw`absolute bottom-3 py-6 w-[90%] flex flex-row justify-center items-center mx-5 rounded-xl`, {backgroundColor:'#007bff'}]}>
+        <FontAwesome5 name="hospital-symbol" size={45} color="white" style={tw``}/>
+
+      <View style={tw `ml-3`}>
+        <Text style={tw`font-bold text-lg text-white`}>{hospitalName}</Text>
+        <View style={tw`flex flex-row items-center justify-between`}>
+        <Text style={tw`text-sm font-light text-white`}>{city}</Text>
+        <Text style={tw`text-sm font-bold text-white`}>{distance} Km</Text>
+
+
+        
+
         </View>
-        )}
       </View>
+        
+      </View>
+      </TouchableOpacity>
+
+    }   
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.primary,
-  },
-  grayContainer: {
-    backgroundColor: colors.background,
-  },
-  loadingContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+
+  },
+  map: {
+    flex: 1,
   },
 });
+
+export default MapScreen;

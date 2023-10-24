@@ -9,12 +9,12 @@ import tw from 'twrnc';
 import { Audio } from 'expo-av'; // Import the Audio module
 
 import { colors } from '../themes/colors';
-import BotImg from '../assets/images/photo_2023-09-22_09-40-16.jpg';
+const BotImg = 'https://res.cloudinary.com/dm9wxgkgg/image/upload/v1698052763/Assister-Images/cdj2c2sukp065ofvt1ub.jpg';
 import ChatMessage from '../components/ChatMessage';
 import MultilingualText from '../components/MultilingualText';
 
 
-export default function ChatbotScreen() {
+export default function ChatbotScreen({ user }) {
   const [message, setMessage] = useState('');
   const [chats, setChats] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -34,6 +34,22 @@ export default function ChatbotScreen() {
     setSpeaking(false);
   };
 
+  const fetchChatHistory = async () => {
+    try {
+      const response = await axios.get(`http://192.168.1.9:3000/chatHistory?userEmail=${user.email}`);
+      
+      if (response?.data?.chatHistory) {
+        // Set the fetched chat history in the state
+        setChats(response.data.chatHistory);
+      }
+    } catch (err) {
+      console.error('Error fetching chat history:', err.message);
+    }
+  };
+  
+  useEffect(() => {
+    fetchChatHistory(); 
+  }, []); 
   const handleSend = async () => {
     try {
       if (!message) {
@@ -42,8 +58,9 @@ export default function ChatbotScreen() {
   
       setLoading(true);
   
-      const response = await axios.post('http://192.168.100.38:3000/chat', {
+      const response = await axios.post('http://192.168.1.9:3000/chat', {
         message: message,
+        userEmail: user.email, 
       });
   
       if (response?.data?.response) {
@@ -148,7 +165,7 @@ export default function ChatbotScreen() {
               color={colors.primary}
             />
           </TouchableOpacity>
-          <Image source={BotImg} style={tw`w-10 h-10 rounded-full`} />
+          <Image source={{uri:BotImg}} style={tw`w-10 h-10 rounded-full`} />
           <Text style={tw`ml-3 font-extrabold text-2xl text-white`}>
           <MultilingualText text="Assister" />
           </Text>
@@ -162,7 +179,7 @@ export default function ChatbotScreen() {
         contentContainerStyle={{ paddingBottom: 100 }}
       >
         {chats.map((chat, index) => (
-          <ChatMessage key={index} role={chat.role} content={chat.content} />
+          <ChatMessage key={index} role={chat.role} content={chat.content} timestamp={chat.timestamp} />
         ))}
         {loading && (
           <View style={styles.loadingContainer}>

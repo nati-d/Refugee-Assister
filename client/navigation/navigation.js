@@ -66,7 +66,9 @@ function Navigation() {
           <>
             <Stack.Screen name="Home" component={HomeTabNavigator} />
             <Stack.Screen name="EmergencyContacts" component={EmergencyContacts} />
-            <Stack.Screen name="Chatbot" component={ChatbotScreen} />
+            <Stack.Screen name="Chatbot">
+                {() => <ChatbotScreen user={user} />}
+            </Stack.Screen>
             <Stack.Screen name="Diagnosis" component={DiagnosisScreen} />
             <Stack.Screen name="DiagnosisResult" component={DiagnosisResultScreen} />
             <Stack.Screen name="Transcribe" component={TranscribeScreen} />

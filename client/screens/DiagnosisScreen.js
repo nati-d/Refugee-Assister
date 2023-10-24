@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {
   View,
   Text,
@@ -14,10 +14,13 @@ import CheckBoxes from '../components/CheckBoxes';
 import axios from 'axios';
 import SeverityButtons from '../components/SeverityButtons';
 import MultilingualText from '../components/MultilingualText';
+import * as Location from 'expo-location';
+
 
 export default function DiagnosisScreen() {
   const navigation = useNavigation();
-
+  const [location, setLocation] = useState(null);
+  const [city, setCity] = useState(null);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [inputSymptom, setInputSymptom] = useState('');
   const [additionalInput, setAdditionalInput] = useState('');
@@ -39,6 +42,37 @@ export default function DiagnosisScreen() {
       setInputSymptom(
         inputSymptom ? `${inputSymptom}, ${selectedOption.text}` : selectedOption.text
       );
+    }
+  };
+  useEffect(() => {
+    getLocation();
+  }, []);
+
+  const getLocation = async () => {
+    try {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Permission to access location was denied');
+        return;
+      }
+
+      const location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+
+      // Use MapQuest API to get city and country
+      const { coords } = location;
+      const apiKey = '7SGURFTVzIxPsq7y6DWWqMHLwayKD6b3';
+
+      const response = await axios.get(
+        `https://www.mapquestapi.com/geocoding/v1/reverse?key=${apiKey}&location=${coords.latitude},${coords.longitude}&includeRoadMetadata=true&includeNearestIntersection=true`
+      );
+
+      if (response.data.results && response.data.results[0].locations) {
+        const address = response.data.results[0].locations[0];
+        setCity(address.adminArea4);
+      }
+    } catch (error) {
+      console.error('Error getting location:', error);
     }
   };
 
@@ -79,18 +113,26 @@ export default function DiagnosisScreen() {
     const severityLabels = ['Mild', 'Medium', 'Severe'];
     const severityText = severityLabels[severityLevel - 1];
   
-    const diagnosisMessage = `Patient (Age: ${age}, Gender: ${gender}) presents with the following symptoms: ${selectedSymptoms.join(', ')}. Additional Information: ${additionalInput}. Severity: ${severityText}`;
-    
+    const diagnosisMessage = `currently i am living in ${city} City and this are my symtopms and personal datas Patient (Age: ${age}, Gender: ${gender}) presents with the following symptoms: ${selectedSymptoms.join(', ')}. Additional Information: ${additionalInput}. Severity: ${severityText} `;
+  
+    console.log('Diagnosis Message:', diagnosisMessage);
+  
     setLoading(true);
   
     try {
-      const response = await axios.post('http://192.168.100.38:3000/symptomChecker', {
+      const response = await axios.post('http://192.168.1.16:3000/symptomChecker', {
         message: diagnosisMessage,
       });
   
       if (response.status === 200) {
         console.log('Backend Response:', response.data.response);
-        navigation.navigate('DiagnosisResult', { diagnosisResult: response.data.response });
+        navigation.navigate('DiagnosisResult', {
+          diagnosisResult: response.data.response,
+          latitude: response.data.latitude,
+          longitude: response.data.longitude,
+          hospitalName: response.data.hospitalName,
+          city: city,
+        });      
       } else {
         console.error('Error sending symptoms to the backend');
       }

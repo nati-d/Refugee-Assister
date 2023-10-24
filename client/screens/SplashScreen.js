@@ -62,7 +62,7 @@ const SplashScreen = ({ navigation }) => {
       pages={[
         {
           backgroundColor: '#fff',
-          image: <Image style={{ width: '90%', height: 250 }} source={require('../assets/images/photo_2023-09-22_09-40-10.jpg')} />,
+          image: <Image style={{ width: '90%', height: 250 }} source={{uri:'https://res.cloudinary.com/dm9wxgkgg/image/upload/v1698052763/Assister-Images/e2qd9z274lct7hkwgnxa.jpg'}} />,
           title: (
             <Text style={{fontSize:26, fontWeight:'bold', marginBottom:8}}>
               <Text style={{ color: '#28c2ff' }}>Guiding</Text> Resilience
@@ -72,7 +72,7 @@ const SplashScreen = ({ navigation }) => {
         },
         {
           backgroundColor: '#fff',
-          image: <Image style={{ width: '90%', height: 250 }} source={require('../assets/images/photo_2023-09-22_09-40-04.jpg')} />,
+          image: <Image style={{ width: '90%', height: 250 }} source={{uri:'https://res.cloudinary.com/dm9wxgkgg/image/upload/v1698052763/Assister-Images/muc6y0ehuon8jluhqxhp.jpg'}} />,
           title: (
             <Text style={{fontSize:26, fontWeight:'bold', marginBottom:8}}>
               <Text style={{ color: '#28c2ff' }}>Healing</Text> Paths
@@ -82,7 +82,7 @@ const SplashScreen = ({ navigation }) => {
         },
         {
           backgroundColor: '#fff',
-          image: <Image style={{ width: '90%', height: 250 }} source={require('../assets/images/photo_2023-09-22_09-39-59.jpg')} />,
+          image: <Image style={{ width: '90%', height: 250 }} source={{uri:'https://res.cloudinary.com/dm9wxgkgg/image/upload/v1698052764/Assister-Images/mju0t4iuqxmqwkmyoeuv.jpg'}} />,
           title: (
             <Text style={{fontSize:26, fontWeight:'bold', marginBottom:8}}>
               <Text style={{ color: '#28c2ff' }}>Chatbot</Text> Compass
@@ -92,7 +92,7 @@ const SplashScreen = ({ navigation }) => {
         },
         {
           backgroundColor: '#fff',
-          image: <Image style={{ width: '90%', height: 250 }} source={require('../assets/images/photo_2023-09-22_09-39-52.jpg')} />,
+          image: <Image style={{ width: '90%', height: 250 }} source={{uri:'https://res.cloudinary.com/dm9wxgkgg/image/upload/v1698052764/Assister-Images/q5wvn2nkja0hzecx4iwz.jpg'}} />,
           title: (
             <Text style={{fontSize:26, fontWeight:'bold', marginBottom:8}}>
               <Text style={{ color: '#28c2ff' }}>Universal</Text> Connection
