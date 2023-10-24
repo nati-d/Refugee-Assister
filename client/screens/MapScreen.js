@@ -2,16 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
-import { WebView } from 'react-native-webview';
 
 const MapScreen = () => {
   const [location, setLocation] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  const destinationCoordinate = {
-    latitude: 9.1450, // Replace with the actual destination latitude
-    longitude: 40.489673, // Replace with the actual destination longitude
-  };
 
   useEffect(() => {
     getLocation();
@@ -37,17 +31,26 @@ const MapScreen = () => {
 
   return (
     <View style={styles.container}>
-      {location ? (
-        <WebView
-        source={{
-          uri: `https://locationiq.com/maps?key=YOUR_LOCATIONIQ_API_KEY&center=${location.latitude},${location.longitude}&zoom=15&markers=${location.latitude},${location.longitude};${destinationCoordinate.latitude},${destinationCoordinate.longitude}`,
-        }}
+      <MapView
         style={styles.map}
-      />
-      
-      ) : (
-        <ActivityIndicator size="large" />
-      )}
+        initialRegion={{
+          latitude: location ? location.latitude : 0,
+          longitude: location ? location.longitude : 0,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+      >
+        {location && (
+          <Marker
+            coordinate={{
+              latitude: location.latitude,
+              longitude: location.longitude,
+            }}
+            title="Your Location"
+            description="You are here!"
+          />
+        )}
+      </MapView>
     </View>
   );
 };
