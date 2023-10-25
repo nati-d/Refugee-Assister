@@ -1,5 +1,5 @@
 const { OpenAI } = require("openai");
-const prompts = require("../prompts"); // Import your prompt module
+const symptomCheckerPromptTemplate = require("../prompts"); // Import your prompt module
 const openai = new OpenAI({
   apiKey: process.env.API_KEY,
 });
@@ -13,7 +13,7 @@ async function generateChatResponse(userSymptom) {
   try {
     const completion = await openai.chat.completions.create({
       messages: [
-        { role: "system", content: prompts.symptomCheckerPromptTemplate },
+        { role: "system", content: symptomCheckerPromptTemplate },
         { role: "user", content: userSymptom },
       ],
       model: "gpt-3.5-turbo",

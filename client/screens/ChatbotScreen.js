@@ -2,43 +2,26 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
-import * as Speech from 'expo-speech';
 import axios from 'axios';
 import tw from 'twrnc';
 
 import { colors } from '../themes/colors';
 const BotImg = 'https://res.cloudinary.com/dm9wxgkgg/image/upload/v1698052763/Assister-Images/cdj2c2sukp065ofvt1ub.jpg';
 import ChatMessage from '../components/ChatMessage';
-import MultilingualText from '../components/MultilingualText';
-
 
 export default function ChatbotScreen({ user }) {
   const [message, setMessage] = useState('');
   const [chats, setChats] = useState([]);
   const [loading, setLoading] = useState(false);
   const [speaking, setSpeaking] = useState(false);
-  const [isListening, setIsListening] = useState(false);
-  const [isRecording, setIsRecording] = useState(false); // Track recording status
-  const [recording, setRecording] = useState(null); // Store recording object
   const navigation = useNavigation();
   const scrollViewRef = useRef();
-
-  const speak = (aiText) => {
-    Speech.speak(aiText);
-  };
-
-  const stopSpeaking = () => {
-    Speech.stop();
-    setSpeaking(false);
-  };
 
   const fetchChatHistory = async () => {
     try {
       const response = await axios.get(`https://assisterapp.onrender.com/chatHistory?userEmail=${user.email}`);
       
       if (response?.data?.chatHistory) {
-        // Set the fetched chat history in the state
         setChats(response.data.chatHistory);
       }
     } catch (err) {
@@ -49,6 +32,7 @@ export default function ChatbotScreen({ user }) {
   useEffect(() => {
     fetchChatHistory(); 
   }, []); 
+
   const handleSend = async () => {
     try {
       if (!message) {
@@ -64,8 +48,6 @@ export default function ChatbotScreen({ user }) {
   
       if (response?.data?.response) {
         const aiResponse = response.data.response;
-        speak(aiResponse);
-        setSpeaking(true);
   
         const updatedChat = [
           ...chats,
@@ -74,7 +56,7 @@ export default function ChatbotScreen({ user }) {
         ];
         setChats(updatedChat);
       } else {
-        console.log('Response data is missing or invalid');
+        console.error('Response data is missing or invalid');
       }
   
       setMessage('');
@@ -107,9 +89,9 @@ export default function ChatbotScreen({ user }) {
               color={colors.primary}
             />
           </TouchableOpacity>
-          <Image source={{uri:BotImg}} style={tw`w-10 h-10 rounded-full`} />
+          <Image source={{uri: BotImg}} style={tw`w-10 h-10 rounded-full`} />
           <Text style={tw`ml-3 font-extrabold text-2xl text-white`}>
-          <MultilingualText text="Assister" />
+            Assister
           </Text>
         </View>
       </View>
@@ -139,17 +121,10 @@ export default function ChatbotScreen({ user }) {
             style={[tw`flex-1 h-13 mr-2`, styles.grayContainer]}
             editable={!loading}
           />
-          {speaking ? (
-            <TouchableOpacity onPress={stopSpeaking}>
-              <Ionicons name="stop" size={24} color="red" />
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity onPress={handleSend} disabled={loading}>
-              <Ionicons name="md-send" size={24} color={colors.black} />
-            </TouchableOpacity>
-          )}
+          <TouchableOpacity onPress={handleSend} disabled={loading}>
+            <Ionicons name="md-send" size={24} color={colors.black} />
+          </TouchableOpacity>
         </View>
-        
       </View>
     </View>
   );
@@ -168,3 +143,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+
