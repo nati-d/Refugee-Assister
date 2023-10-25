@@ -1,6 +1,6 @@
 const User = require('../models/userModel');
 const { OpenAI } = require("openai");
-const chatbotPromptTemplate = require('../prompts')
+const chatbotPromptTemplate = require('../prompts');
 
 const apiKey = process.env.API_KEY;
 const openai = new OpenAI({
@@ -11,59 +11,57 @@ let conversationState = [];
 
 function formatUserInput(userInput) {
   const messages = [
-    { role: "system", content: chatbotPromptTemplate },
-    ...conversationState, 
+    { role: "system", content: "You are a helpful mental health assistant" },
+    ...conversationState,
     { role: "user", content: userInput },
   ];
 
   return messages;
 }
 
-
-
 exports.chat = async (req, res) => {
   try {
     const userInput = req.body.message;
     const userEmail = req.body.userEmail;
 
-    
-      const messages = formatUserInput(userInput);
-      const response = await openai.chat.completions.create({
-        model: 'gpt-3.5-turbo',
-        messages,
-        max_tokens: 50,
-        temperature: 0.7,
-      });
-      const chatbotResponse = response.choices[0].message.content;
-      conversationState = [...messages, { role: 'assistant', content: chatbotResponse }];
+    const messages = formatUserInput(userInput);
+    const response = await openai.chat.completions.create({
+      model: 'gpt-3.5-turbo',
+      messages,
+      max_tokens: 50,
+      temperature: 0.7,
+    });
 
-      // Add timestamp to each message
-      const timestamp = new Date();
-      const userMessage = { role: 'user', content: userInput, timestamp };
-      const assistantMessage = { role: 'assistant', content: chatbotResponse, timestamp };
+    const chatbotResponse = response.choices[0].message.content;
+    conversationState = [...messages, { role: 'assistant', content: chatbotResponse }];
 
-      User.findOneAndUpdate(
-        { email: userEmail },
-        {
-          $push: {
-            chatHistory: [userMessage, assistantMessage],
-          },
+    // Add timestamp to each message
+    const timestamp = new Date();
+    const userMessage = { role: 'user', content: userInput, timestamp };
+    const assistantMessage = { role: 'assistant', content: chatbotResponse, timestamp };
+
+    User.findOneAndUpdate(
+      { email: userEmail },
+      {
+        $push: {
+          chatHistory: [userMessage, assistantMessage],
         },
-        { new: true }
-      )
-        .then((user) => {
-          if (user) {
-            res.json({ response: chatbotResponse });
-          } else {
-            // User not found
-            res.status(404).json({ error: 'User not found' });
-          }
-        })
-        .catch((error) => {
-          console.error('Error updating chat history:', error);
-          res.status(500).json({ error: 'An error occurred' });
-        });
-    
+      },
+      { new: true }
+    )
+      .then((user) => {
+        if (user) {
+          res.json({ response: chatbotResponse });
+        } else {
+          // User not found
+          res.status(404).json({ error: 'User not found' });
+        }
+      })
+      .catch((error) => {
+        console.error('Error during OpenAI API call:', error);
+        console.error('Error updating chat history:', error);
+        res.status(500).json({ error: 'An error occurred' });
+      });
   } catch (error) {
     console.error('Error:', error.message);
     if (error instanceof SyntaxError) {
@@ -74,5 +72,4 @@ exports.chat = async (req, res) => {
       res.status(500).json({ error: 'An error occurred' });
     }
   }
-}
-
+};

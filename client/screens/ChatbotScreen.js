@@ -38,17 +38,22 @@ export default function ChatbotScreen({ user }) {
       if (!message) {
         return;
       }
-  
+
       setLoading(true);
-  
-      const response = await axios.post('https://assisterapp.onrender.com/chat', {
+      setSpeaking(true); // Set speaking to true
+
+      const response = await axios.post('http://192.168.1.9:3000/chat', {
         message: message,
-        userEmail: user.email, 
+        userEmail: user.email,
+      }, {
+        headers: {
+          'Content-Type': 'application/json', // Set Content-Type header
+        },
       });
-  
+
       if (response?.data?.response) {
         const aiResponse = response.data.response;
-  
+
         const updatedChat = [
           ...chats,
           { role: 'user', content: message },
@@ -58,14 +63,17 @@ export default function ChatbotScreen({ user }) {
       } else {
         console.error('Response data is missing or invalid');
       }
-  
+
       setMessage('');
       setLoading(false);
+      setSpeaking(false); // Reset speaking to false
     } catch (err) {
       console.error('Error:', err.message);
       setLoading(false);
+      setSpeaking(false); // Reset speaking to false
     }
-  };
+  }
+  
 
   const scrollToBottom = () => {
     if (scrollViewRef.current) {
