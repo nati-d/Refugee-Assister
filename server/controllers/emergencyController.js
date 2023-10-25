@@ -63,7 +63,7 @@ function parseEmergencyList(emergencyList) {
 }
 exports.getEmergencyContacts = async (req, res) => {
   try {
-    const city = req.body.city;
+    const {city} = req.body;
 
     const emergencies = await generateEmergencyContact(city);
 
