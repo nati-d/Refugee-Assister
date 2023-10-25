@@ -62,7 +62,7 @@ function Navigation() {
           headerShown: false,
         }}
       >
-        {/* {user ? ( */}
+        {user ? ( 
           <>
             <Stack.Screen name="Home" component={HomeTabNavigator} />
             <Stack.Screen name="EmergencyContacts" component={EmergencyContacts} />
@@ -76,14 +76,14 @@ function Navigation() {
             <Stack.Screen name="Emergency" component={EmergencyContacts} />
             <Stack.Screen name="NewsDetail" component={NewsDetail} />
           </>
-        {/* ) : (
+         ) : (
           <>
             <Stack.Screen name="Opening" component={OpeningScreen} />
             <Stack.Screen name="Splash" component={SplashScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Signup" component={SignupScreen} />
           </>
-        )} */}
+        )} 
       </Stack.Navigator>
     </NavigationContainer>
   );

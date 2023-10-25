@@ -36,8 +36,6 @@ app.use("/api/audio", transcribeRoutes);
 const symptomCheckerRoute = require("./routes/symptomCheRoute")
 app.use("/symptomChecker",symptomCheckerRoute)
 
-const emergencyRoute = require("./routes/emergencyRoute")
-app.use("/emergency",emergencyRoute)
 
 const hospitalRoutes = require("./routes/hospitalRoute");
 app.use("/hospitals", hospitalRoutes);

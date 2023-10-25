@@ -36,7 +36,7 @@ export default function ChatbotScreen({ user }) {
 
   const fetchChatHistory = async () => {
     try {
-      const response = await axios.get(`http://192.168.1.9:3000/chatHistory?userEmail=${user.email}`);
+      const response = await axios.get(`http://192.168.1.17:3000/chatHistory?userEmail=${user.email}`);
       
       if (response?.data?.chatHistory) {
         // Set the fetched chat history in the state
@@ -58,7 +58,7 @@ export default function ChatbotScreen({ user }) {
   
       setLoading(true);
   
-      const response = await axios.post('http://192.168.1.9:3000/chat', {
+      const response = await axios.post('http://192.168.1.17:3000/chat', {
         message: message,
         userEmail: user.email, 
       });

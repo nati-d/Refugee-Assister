@@ -120,7 +120,7 @@ export default function DiagnosisScreen() {
     setLoading(true);
   
     try {
-      const response = await axios.post('http://192.168.1.16:3000/symptomChecker', {
+      const response = await axios.post('http://192.168.1.17:3000/symptomChecker', {
         message: diagnosisMessage,
       });
   
