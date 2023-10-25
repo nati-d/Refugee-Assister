@@ -2,7 +2,7 @@ const express = require('express');
 const axios = require('axios');
 const { OpenAI } = require('openai');
 
-const apiKey = 'YOUR_OPENAI_API_KEY'; // Replace with your OpenAI API key
+const apiKey = process.env.API_KEY;
 const openai = new OpenAI({ apiKey });
 
 const app = express();
