@@ -1,4 +1,5 @@
 const { OpenAI } = require("openai");
+const prompts = require("../prompts")
 
 const openai = new OpenAI({
   apiKey: process.env.API_KEY,
@@ -11,10 +12,7 @@ async function generateHospitalsInCity(city) {
     const completion = await openai.chat.completions.create({
       messages: [
         {
-          role: "system",
-          content:
-            "Assume you have knowledge about places also consider your self as google map all over the world and when u have asked fetch hospitals with their latitude and longitude in array form as your knowledge as of 2021 it shoulld not be accurate. Your response format example: Hospital-name =  , Latitude =  , Longitude= ",
-        },
+          role: "system",content:prompts.hospitalListPromptTemplate   },
         { role: "user", content: prompt },
       ],
       model: "gpt-3.5-turbo",
@@ -68,8 +66,6 @@ exports.generateHospitals = async (req, res) => {
     const {city} = req.body;
 
     const hospitals = await generateHospitalsInCity(city);
-
-    console.log(hospitals)
 
     res.json({ hospitals });
   } catch (error) {

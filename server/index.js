@@ -30,6 +30,9 @@ app.use('/addUser', userRoutes);
 const chatRoutes = require("./routes/chatRoutes");
 app.use("/chat",chatRoutes)
 
+const emergencyRoutes = require("./routes/emergencyRoute")
+app.use("/emergency",emergencyRoutes)
+
 
 const symptomCheckerRoute = require("./routes/symptomCheRoute")
 app.use("/symptomChecker",symptomCheckerRoute)

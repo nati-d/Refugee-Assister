@@ -1,37 +1,75 @@
-const express = require('express');
-const axios = require('axios');
-const { OpenAI } = require('openai');
+const { OpenAI } = require("openai");
+const prompts = require("../prompts")
 
-const apiKey = process.env.API_KEY;
-const openai = new OpenAI({ apiKey });
+const openai = new OpenAI({
+  apiKey: process.env.API_KEY,
+});
 
-const app = express();
-app.use(express.json());
-
-app.post('/emergency', async (req, res) => {
-  const userMessage = req.body.message;
-
-  const messages = [
-    { role: 'system', content: 'Act as Emergency contact provider for a given location.' },
-    { role: 'user', content: userMessage },
-  ];
-
+async function generateEmergencyContact(city) {
   try {
-    const response = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
-      messages,
+    const prompt = `list 10 emergency contact in ${city} with their name and phone number `;
+
+    const completion = await openai.chat.completions.create({
+      messages: [
+        {
+          role: "system",content:prompts.emergencyContactPromptTemplate   },
+        { role: "user", content: prompt },
+      ],
+      model: "gpt-3.5-turbo",
     });
 
-    const chatbotResponse = response.choices[0].message.content;
+    const emergencyList = completion.choices[0].message.content;
+    console.log(emergencyList)
 
-    res.json({ response: chatbotResponse });
+
+   
+    const emergencies = parseEmergencyList(emergencyList);
+
+    return emergencies;
   } catch (error) {
-    console.error('Error:', error.message);
-    res.status(500).json({ error: 'An error occurred' });
+    console.error("Error generating emergency contact:", error);
+    throw error;
   }
-});
+}
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+function parseEmergencyList(emergencyList) {
+      // Extract hospital details from the response
+  if(!emergencyList || emergencyList.trim() === ""){
+    // Return an empty array if emergencyList is undefined or empty
+       return [];}
+  const emergencies = [];
+
+  // Split the emergencyList string by line breaks
+  const lines = emergencyList.trim().split("\n");
+
+  for (const line of lines) {
+    // Split each line by commas
+    const parts = line.split(",");
+
+    // Extract the hospital name, latitude, and longitude from the parts array
+    const name = parts[0].split("=")[1].trim();
+    const phoneNo = parts[1].split("=")[1].trim();
+
+    // Create a new hospital object and add it to the hospitals array
+    const emergency = {
+      name,
+      phoneNo,
+    };
+
+    emergencies.push(emergency);
+  }
+
+  return emergencies;
+}
+exports.getEmergencyContacts = async (req, res) => {
+  try {
+    const {city} = req.body;
+
+    const emergencies = await generateEmergencyContact(city);
+
+    res.json({ emergencies });
+  } catch (error) {
+    console.error("Error generating hospital data:", error);
+    res.status(500).json({ error: "An error occurred" });
+  }
+};
