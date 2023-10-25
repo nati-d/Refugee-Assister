@@ -1,5 +1,5 @@
 const { OpenAI } = require("openai");
-const prompts = require("../prompt/prompts"); // Import your prompt module
+const prompts = require("../prompts"); // Import your prompt module
 const openai = new OpenAI({
   apiKey: process.env.API_KEY,
 });
