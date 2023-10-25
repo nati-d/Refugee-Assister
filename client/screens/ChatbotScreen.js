@@ -6,7 +6,6 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import * as Speech from 'expo-speech';
 import axios from 'axios';
 import tw from 'twrnc';
-import { Audio } from 'expo-av'; // Import the Audio module
 
 import { colors } from '../themes/colors';
 const BotImg = 'https://res.cloudinary.com/dm9wxgkgg/image/upload/v1698052763/Assister-Images/cdj2c2sukp065ofvt1ub.jpg';
@@ -36,7 +35,7 @@ export default function ChatbotScreen({ user }) {
 
   const fetchChatHistory = async () => {
     try {
-      const response = await axios.get(`http://192.168.1.17:3000/chatHistory?userEmail=${user.email}`);
+      const response = await axios.get(`https://assisterapp.onrender.com/chatHistory?userEmail=${user.email}`);
       
       if (response?.data?.chatHistory) {
         // Set the fetched chat history in the state
@@ -58,7 +57,7 @@ export default function ChatbotScreen({ user }) {
   
       setLoading(true);
   
-      const response = await axios.post('http://192.168.1.17:3000/chat', {
+      const response = await axios.post('https://assisterapp.onrender.com/chat', {
         message: message,
         userEmail: user.email, 
       });
@@ -85,63 +84,6 @@ export default function ChatbotScreen({ user }) {
       setLoading(false);
     }
   };
-
-  const handleStartRecording = async () => {
-    try {
-      const recording = new Audio.Recording(); 
-      await recording.prepareToRecordAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
-      await recording.startAsync();
-      setRecording(recording);
-      setIsRecording(true);
-      console.log('Recording started');
-    } catch (error) {
-      console.error('Failed to start recording:', error);
-    }
-  };
-
-  const handleStopRecording = async () => {
-    if (recording) {
-      try {
-        await recording.stopAndUnloadAsync();
-        setIsRecording(false);
-        console.log('Recording stopped');
-  
-        const uri = recording.getURI();
-  
-        const audioData = new FormData();
-        audioData.append('audio', {
-          uri,
-          name: 'audio.3gp',
-          type: 'audio/3gp', 
-        });
-  
-        // Send the audio data to the backend
-        const response = await axios.post('http://192.168.100.38:3000/api/audio/transcribe', audioData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-  
-        if (response?.data?.transcription) {
-          const transcribedText = response.data.transcription;
-          console.log('Transcribed Text:', transcribedText);
-  
-          const updatedChat = [
-            ...chats,
-            { role: 'user', content: 'Voice message' },
-            { role: 'assistant', content: transcribedText },
-          ];
-          setChats(updatedChat);
-        } else {
-          console.log('Transcription data is missing or invalid');
-        }
-      } catch (error) {
-        console.error('Failed to stop recording or transcribe:', error);
-      }
-    }
-  };
-  
-  
 
   const scrollToBottom = () => {
     if (scrollViewRef.current) {
