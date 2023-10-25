@@ -1,6 +1,5 @@
 const User = require('../models/userModel');
 const { OpenAI } = require("openai");
-const chatbotPromptTemplate = require('../prompts');
 
 const apiKey = process.env.API_KEY;
 const openai = new OpenAI({
