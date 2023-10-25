@@ -25,7 +25,7 @@ export default function EmergencyContacts ({ route }) {
       setLoading(true);
 
       // Send the message to the server for processing
-      const response = await axios.post('http://192.168.1.16:3000/emergency', {
+      const response = await axios.post('https://assisterapp.onrender.com/emergency', {
         message: message,
       });
 
