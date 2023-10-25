@@ -42,7 +42,7 @@ async function generateChatResponse(userSymptom) {
 
 exports.checkSymptom = async (req, res) => {
   try {
-    const userSymptom = req.body.symptom;
+    const userSymptom = req.body.message;
 
     const {diseaseName,details,treatment,recommendation} = await generateChatResponse(userSymptom);
 
