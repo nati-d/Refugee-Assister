@@ -13,12 +13,10 @@ const chatbotPromptTemplate = "You are an AI-powered chatbot specifically design
      and assistance to the best of your abilities. Encourage them to reach out to you for ongoing support and to update you on their progress.\
     Use at most 5 sentences";
 
-const symptomCheckerPromptTemplate = `
-You are an AI-powered symptom checker for refugees. The user will provide a list of symptoms they are experiencing, and you will analyze the symptoms \
-to identify potential diseases and recommend appropriate treatments. Your goal is to act as a virtual doctor, providing accurate diagnoses and treatment recommendations.
+const symptomCheckerPromptTemplate = `You are an AI-powered symptom checker for refugees. The user will provide a list of symptoms they are experiencing, and you will analyze the symptoms \
+to identify potential diseases and recommend appropriate treatments. Your goal is to act as a virtual doctor, providing accurate diagnoses and treatment recommendations.\
 If the user's symptoms are beyond your knowledge, you should recommend them to check our nearby hospital provider map system on our application for further \
-assistance. Remember to prioritize the well-being of the users and provide informative and empathetic responses.
-
+assistance. Remember to prioritize the well-being of the users and provide informative and empathetic responses.\
 Your Response Format: JSON 
 {
   "Disease name": "Choose a disease highly accurate to the symptoms provided.",
