@@ -2,12 +2,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
+import * as Speech from 'expo-speech';
 import axios from 'axios';
 import tw from 'twrnc';
+import { Audio } from 'expo-av'; // Import the Audio module
 
 import { colors } from '../themes/colors';
 const BotImg = 'https://res.cloudinary.com/dm9wxgkgg/image/upload/v1698052763/Assister-Images/cdj2c2sukp065ofvt1ub.jpg';
 import ChatMessage from '../components/ChatMessage';
+import MultilingualText from '../components/MultilingualText';
 
 export default function ChatbotScreen({ user }) {
   const [message, setMessage] = useState('');
@@ -33,6 +37,16 @@ export default function ChatbotScreen({ user }) {
     fetchChatHistory(); 
   }, []); 
 
+  const speak = (aiText) => {
+    Speech.speak(aiText);
+  };
+
+  const stopSpeaking = () => {
+    Speech.stop();
+    setSpeaking(false);
+  };
+
+
   const handleSend = async () => {
     try {
       if (!message) {
@@ -40,9 +54,9 @@ export default function ChatbotScreen({ user }) {
       }
 
       setLoading(true);
-      setSpeaking(true); // Set speaking to true
+      
 
-      const response = await axios.post('http://192.168.1.9:3000/chat', {
+      const response = await axios.post('https://assisterapp.onrender.com/chat', {
         message: message,
         userEmail: user.email,
       }, {
@@ -53,6 +67,8 @@ export default function ChatbotScreen({ user }) {
 
       if (response?.data?.response) {
         const aiResponse = response.data.response;
+        speak(aiResponse);
+        setSpeaking(true);
 
         const updatedChat = [
           ...chats,
@@ -66,11 +82,10 @@ export default function ChatbotScreen({ user }) {
 
       setMessage('');
       setLoading(false);
-      setSpeaking(false); // Reset speaking to false
+
     } catch (err) {
       console.error('Error:', err.message);
       setLoading(false);
-      setSpeaking(false); // Reset speaking to false
     }
   }
   
@@ -85,7 +100,7 @@ export default function ChatbotScreen({ user }) {
 
   return (
     <View style={tw`flex-1 relative`}>
-      <View style={[tw`pb-10 pt-5 justify-center`, styles.container]}>
+      <View style={[tw`h-30 justify-center`, styles.container]}>
         <View style={tw`flex-row items-center`}>
           <TouchableOpacity
             style={tw`bg-white ml-3 mr-4 rounded-xl`}
@@ -99,7 +114,7 @@ export default function ChatbotScreen({ user }) {
           </TouchableOpacity>
           <Image source={{uri: BotImg}} style={tw`w-10 h-10 rounded-full`} />
           <Text style={tw`ml-3 font-extrabold text-2xl text-white`}>
-            Assister
+            <MultilingualText text="Assister" />
           </Text>
         </View>
       </View>
@@ -129,9 +144,15 @@ export default function ChatbotScreen({ user }) {
             style={[tw`flex-1 h-13 mr-2`, styles.grayContainer]}
             editable={!loading}
           />
+          {speaking ? (
+            <TouchableOpacity onPress={stopSpeaking}>
+              <Ionicons name="stop" size={24} color="red" />
+            </TouchableOpacity>
+          ) : (
           <TouchableOpacity onPress={handleSend} disabled={loading}>
             <Ionicons name="md-send" size={24} color={colors.black} />
           </TouchableOpacity>
+          )}
         </View>
       </View>
     </View>
