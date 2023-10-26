@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
 const { OpenAI } = require("openai");
+const prompts = require("../prompts");
 
 const apiKey = process.env.API_KEY;
 const openai = new OpenAI({
@@ -10,7 +11,7 @@ let conversationState = [];
 
 function formatUserInput(userInput) {
   const messages = [
-    { role: "system", content: "You are a helpful mental health assistant" },
+    { role: "system", content: prompts.chatbotPromptTemplate },
     ...conversationState,
     { role: "user", content: userInput },
   ];
