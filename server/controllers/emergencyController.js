@@ -80,11 +80,12 @@ function parseEmergencyList(emergencyList) {
 
 exports.getEmergencyContacts = async (req, res) => {
   try {
-    const emergencyMsg = req.body.city;
+    const emergencyMsg = req.body.message;
 
     const emergencies = await generateEmergencyContact(emergencyMsg);
 
     res.json({ emergencies });
+    console.log(emergencies);
   } catch (error) {
     console.error("Error generating hospital data:", error);
     res.status(500).json({ error: "An error occurred" });
