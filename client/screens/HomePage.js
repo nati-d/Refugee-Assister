@@ -25,6 +25,7 @@ export default function HomePage() {
 
   const handleEmergency = () => {
     navigation.navigate('Emergency', { city, country });
+    console.log(i18n.language)
   }
 
   useEffect(() => {

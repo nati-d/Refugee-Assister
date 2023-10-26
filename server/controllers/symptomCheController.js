@@ -6,14 +6,14 @@ const openai = new OpenAI({
 
 const cache = {};
 
-async function generateChatResponse(userSymptom) {
+async function generateChatResponse(userSymptom, language) {
   if (cache[userSymptom]) {
     return cache[userSymptom];
   }
   try {
     const completion = await openai.chat.completions.create({
       messages: [
-        { role: "system", content: symptomCheckerPromptTemplate },
+        { role: "system", content: symptomCheckerPromptTemplate + ` Translate to ${language}` },
         { role: "user", content: userSymptom },
       ],
       model: "gpt-3.5-turbo",
@@ -43,8 +43,9 @@ async function generateChatResponse(userSymptom) {
 exports.checkSymptom = async (req, res) => {
   try {
     const userSymptom = req.body.message;
+    const language = req.body.language;
 
-    const {diseaseName,details,treatment,recommendation} = await generateChatResponse(userSymptom);
+    const {diseaseName,details,treatment,recommendation} = await generateChatResponse(userSymptom, language);
 
     res.json({ diseaseName,details,treatment,recommendation});
 

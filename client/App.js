@@ -1,7 +1,6 @@
 import React from 'react';
 import { colors } from './themes/colors';
 import { StatusBar } from 'react-native';
-import 'intl-pluralrules';
 import Navigation from './navigation/navigation';
 
 const App = ()=> {

@@ -47,6 +47,8 @@ app.use("/hospital-info", hospitalInfoRoute);
 const chatHistoryRoute = require('./routes/chatHistoryRoute'); 
 app.use('/chatHistory', chatHistoryRoute);
 
+const getUserRoute = require('./routes/getUserRoute');
+app.use('/getUser', getUserRoute);
 
 
 app.listen(port, () => {

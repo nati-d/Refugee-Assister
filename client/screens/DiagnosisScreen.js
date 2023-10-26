@@ -17,7 +17,8 @@ import MultilingualText from '../components/MultilingualText';
 import * as Location from 'expo-location';
 
 
-export default function DiagnosisScreen() {
+export default function DiagnosisScreen({route}) {
+  const {language} = route.params.language
   const navigation = useNavigation();
   const [location, setLocation] = useState(null);
   const [city, setCity] = useState(null);
@@ -120,19 +121,22 @@ export default function DiagnosisScreen() {
     setLoading(true);
   
     try {
-      const response = await axios.post('https://assisterapp.onrender.com/symptomChecker', {
+      const response = await axios.post('http://192.168.1.9:3000/symptomChecker', {
         message: diagnosisMessage,
+        language:language
       });
   
       if (response.status === 200) {
-        console.log('Backend Response:', response.data.response);
+        const { diseaseName, details, treatment, recommendation } = response.data; // Extract these values from the response
+
+        console.log('Backend Response:', response.data);
+
         navigation.navigate('DiagnosisResult', {
-          diagnosisResult: response.data.response,
-          latitude: response.data.latitude,
-          longitude: response.data.longitude,
-          hospitalName: response.data.hospitalName,
-          city: city,
-        });      
+          diseaseName,
+          details,
+          treatment,
+          recommendation,
+        });  
       } else {
         console.error('Error sending symptoms to the backend');
       }

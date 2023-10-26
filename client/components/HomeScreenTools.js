@@ -6,6 +6,7 @@ import { StyleSheet } from "react-native";
 import { colors } from '../themes/colors';
 import { LinearGradient } from 'expo-linear-gradient';
 import MultilingualText from "./MultilingualText";
+import i18n from 'i18next';
 
 
 
@@ -13,7 +14,7 @@ export default function HomeScreenTool (props) {
     const navigation=useNavigation()
     const handlePress = () => {
         if (props.name === "Diagnose") {
-            navigation.navigate("Diagnosis");
+            navigation.navigate("Diagnosis", { language: i18n.language });
         } else if (props.name === "Assistant") {
             navigation.navigate("Chatbot");
         }else if (props.name === "Map"){
