@@ -1,5 +1,5 @@
 const { OpenAI } = require("openai");
-const symptomCheckerPromptTemplate = require("../prompts"); // Import your prompt module
+const symptomCheckerPromptTemplate = require("../prompts").symptomCheckerPromptTemplate; // Import your prompt module
 const openai = new OpenAI({
   apiKey: process.env.API_KEY,
 });
