@@ -25,6 +25,8 @@ import MapScreen from '../screens/MapScreen';
 import NewsDetail from '../screens/NewsDetail';
 
 function HomeTabNavigator() {
+  const { user } = useAuth();
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -48,7 +50,10 @@ function HomeTabNavigator() {
     >
       <Tab.Screen name="Home" component={HomePage} options={{ tabBarLabel:() => null, headerShown: false }} />
       <Tab.Screen name="Tools" component={ToolsPage} options={{ tabBarLabel:() => null, headerShown: false }} />
-      <Tab.Screen name="Profile" component={ProfilePage} options={{ tabBarLabel:() => null, headerShown: false }} />
+      <Tab.Screen name="Profile" >
+        {() => <ProfilePage options={{ tabBarLabel:() => null, headerShown: false }} user={user}/>}
+        
+        </Tab.Screen>
     </Tab.Navigator>
   );
 }
