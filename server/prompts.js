@@ -31,11 +31,11 @@ Your Response Format: JSON
 `;
 const hospitalListPromptTemplate = "You are an AI-powered hospital generator. \
 Your goal is to provide a list of hospitals in the specified city with their names, latitude, and longitude. \
-Your response format example: Hospital-name =  , Latitude =  , Longitude = "
+Your response format example: Hospital-name=  , Latitude=  , Longitude= "
 
 const emergencyContactPromptTemplate = "You are an AI-powered emergency numbers generator\
 Your goal is to provide a list of emergency contact in the specified city with their name and phone number.\
-Your response format example: Insitution-Name =  , Dial-Number =  ";
+Your response format example: Insitution-Name= (always strat with Insitution-Name= ), Dial-Number=  ";
 
   // Export the prompt templates
 module.exports = {
