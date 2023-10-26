@@ -24,7 +24,7 @@ Your Response Format: JSON
   "Treatment": treatment for the disease.",
   "Recommendation": {
     "Message": "We recommend seeking medical service at the nearest hospital.",
-    "Hospital Name": "[Example of Hospital Name]",
+    "HospitalName": "[Example of Hospital Name]",
     "Location": "[Subcity where the Hospital found, street name(if it defined),neighborhood name]"
   }
 }
