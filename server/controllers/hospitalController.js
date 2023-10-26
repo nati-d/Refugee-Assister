@@ -5,9 +5,9 @@ const openai = new OpenAI({
   apiKey: process.env.API_KEY,
 });
 
-async function generateHospitalsInCity(city) {
+async function generateHospitalsInCity(hospitalMsg) {
   try {
-    const prompt = `list 10 Hospitals in ${city} with their latitude and longtiude `;
+    const prompt = `list 10 Hospitals in ${hospitalMsg} with their latitude and longtiude `;
 
     const completion = await openai.chat.completions.create({
       messages: [
@@ -63,9 +63,9 @@ function parseHospitalList(hospitalList) {
 }
 exports.generateHospitals = async (req, res) => {
   try {
-    const {city} = req.body;
+    const hospitalMsg = req.body.city;
 
-    const hospitals = await generateHospitalsInCity(city);
+    const hospitals = await generateHospitalsInCity(hospitalMsg);
 
     res.json({ hospitals });
   } catch (error) {
