@@ -8,9 +8,15 @@ import LanguagePicker from '../components/LanguagePicker';
 import { useNavigation } from '@react-navigation/native';
 import { colors } from '../themes/colors';
 import News from '../components/News';
-import LocationTool from '../components/LocationTool';
+import * as Location from 'expo-location';
+import axios from 'axios';
 
 export default function HomePage() {
+  const [location, setLocation] = useState(null);
+  const [city, setCity] = useState(null);
+  const [country, setCountry] = useState(null);
+  const [loadingLocation, setLoadingLocation] = useState(true); // Initialize loading state
+
   const handleLanguageChange = (language) => {
     setCurrentLanguage(language);
   };
@@ -21,41 +27,90 @@ export default function HomePage() {
     navigation.navigate('Emergency', { city, country });
   }
 
+  useEffect(() => {
+    getLocation();
+  }, []);
+
+  const getLocation = async () => {
+    try {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Permission to access location was denied');
+        setLoadingLocation(false); // Update loading state
+        return;
+      }
+
+      const userLocation = await Location.getCurrentPositionAsync({});
+      setLocation(userLocation);
+
+      // Use MapQuest API to get city and country
+      const { coords } = userLocation;
+      const apiKey = '7SGURFTVzIxPsq7y6DWWqMHLwayKD6b3';
+
+      const response = await axios.get(
+        `https://www.mapquestapi.com/geocoding/v1/reverse?key=${apiKey}&location=${coords.latitude},${coords.longitude}&includeRoadMetadata=true&includeNearestIntersection=true`
+      );
+
+      if (response.data.results && response.data.results[0].locations) {
+        const address = response.data.results[0].locations[0];
+        setCity(address.adminArea4);
+        setCountry(address.adminArea1);
+      }
+
+      setLoadingLocation(false); // Update loading state when location is fetched
+    } catch (error) {
+      console.error('Error getting location:', error);
+      setLoadingLocation(false); // Update loading state on error
+    }
+  }
+
   return (
-    <View style={[tw `flex-1 w-full`, { backgroundColor: colors.background }]}>
+    <View style={[tw`flex-1 w-full`, { backgroundColor: colors.background }]}>
       <ScrollView>
-        <View style={tw `flex items-center`}>
-          <View style={tw `flex w-85`}>
-            <View style={tw `flex-row items-start justify-between mt-2 mr-7`}>
-              <View style={tw `w-60`}>
-                <Text style={[tw `text-5 font-bold`, {color:colors.black}]}><MultilingualText text='HomePageTitle1' /> </Text>
-                <Text style={[tw `text-5 font-bold`, {color:colors.primary}]}><MultilingualText text='HomePageTitle2' /></Text>
+        <View style={tw`flex items-center`}>
+          <View style={tw`flex w-85`}>
+            <View style={tw`flex-row items-start justify-between mt-2 mr-7`}>
+              <View style={tw`w-60`}>
+                <Text style={[tw`text-5 font-bold`, { color: colors.black }]}><MultilingualText text='HomePageTitle1' /> </Text>
+                <Text style={[tw`text-5 font-bold`, { color: colors.primary }]}><MultilingualText text='HomePageTitle2' /></Text>
               </View>
-              <View style={tw `flex-row w-18 justify-between items-center`}>
-              <TouchableOpacity>
+              <View style={tw`flex-row w-18 justify-between items-center`}>
+                <TouchableOpacity>
                   <Ionicons name="language" size={20} color="black" />
                 </TouchableOpacity>
-              <LanguagePicker onLanguageChange={handleLanguageChange} />
+                <LanguagePicker onLanguageChange={handleLanguageChange} />
                 <TouchableOpacity onPress={handleEmergency}>
                   <Ionicons name="md-alert-circle" size={24} color="gray" />
                 </TouchableOpacity>
-
               </View>
             </View>
-            <LocationTool />
-            <View style={tw `mt-8`}>
+            <View style={tw`flex-row mt-6 items-center`}>
+              <Ionicons name="md-pin" size={26} color={colors.primary} />
               <View>
-                <View style={tw `flex-row justify-between`}>
+                {loadingLocation ? ( // Show loading message if still fetching location
+                  <Text style={tw`text-3 font-bold`}>Fetching location...</Text>
+                ) : (
+                  <View>
+                    <Text style={tw`text-3 font-bold`}>
+                      {city}, {country}
+                    </Text>
+                  </View>
+                )}
+              </View>
+            </View>
+            <View style={tw`mt-8`}>
+              <View>
+                <View style={tw`flex-row justify-between`}>
                   <HomeScreenTool name="Diagnose" icon="md-medkit" iconSize={25} />
                   <HomeScreenTool name="Assistant" icon="md-chatbox" iconSize={25} />
                 </View>
-                <View style={tw `flex-row justify-between`}>
+                <View style={tw`flex-row justify-between`}>
                   <HomeScreenTool name="Learn" icon="md-school" iconSize={27} />
                   <HomeScreenTool name="Map" icon="md-map" iconSize={25} />
                 </View>
               </View>
             </View>
-            <View style={tw `mt-8`}>
+            <View style={tw`mt-8`}>
               <News />
             </View>
           </View>

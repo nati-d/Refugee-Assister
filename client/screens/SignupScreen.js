@@ -43,7 +43,11 @@ export default function SignupScreen() {
         }
     
         try {
-            const response = await axios.post('http://192.168.1.17:3000/addUser', { email: email });
+            const response = await axios.post('http://192.168.1.17:3000/addUser', { 
+                email: email,
+                firstName:firstName,
+                lastName:lastName 
+            });
 
             await createUserWithEmailAndPassword(auth, email, password);
             console.log('User added successfully:', response.data);

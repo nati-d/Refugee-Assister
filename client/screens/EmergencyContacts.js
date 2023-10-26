@@ -25,12 +25,12 @@ export default function EmergencyContacts ({ route }) {
       setLoading(true);
 
       // Send the message to the server for processing
-      const response = await axios.post('https://assisterapp.onrender.com/emergency', {
+      const response = await axios.post('http://192.168.1.9:3000/emergency', {
         message: message,
       });
 
       if (response?.data?.response) {
-        const aiResponse = response.data.response;
+        const aiResponse = response.data.emergencies;
         setContacts(aiResponse);
       } else {
         console.log('Response data is missing or invalid');
