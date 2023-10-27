@@ -5,6 +5,6 @@ const userSchema = new mongoose.Schema({
   lastName: String,  
   email: String,
   chatHistory: [{ role: String, content: String, timestamp: Date }],
-});
+}, { collection: 'users' });
 
 module.exports = mongoose.model('User', userSchema);

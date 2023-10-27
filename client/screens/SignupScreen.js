@@ -43,7 +43,7 @@ export default function SignupScreen() {
         }
     
         try {
-            const response = await axios.post('http://192.168.1.9:3000/addUser', { 
+            const response = await axios.post('https://assisterapp.onrender.com/addUser', { 
                 email: email,
                 firstName:firstName,
                 lastName:lastName 

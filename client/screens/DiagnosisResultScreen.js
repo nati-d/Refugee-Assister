@@ -45,7 +45,7 @@ export default function DiagnosisResultScreen({ route, navigation }) {
                 <Image source={require('../assets/health-checklist-svgrepo-com.png')} style={tw`w-10 h-10 `}/>
               </View>
               <Text style={tw`text-base text-black font-bold mt-4`}>Details</Text>
-              <Text style={tw`text-sm text-gray-600 font-regular mt-3`}>{details}</Text>
+              <Text style={tw`text-sm text-gray-600 mt-3`}>{details}</Text>
             </View>
           )}
           {activeTab === 'Treatment' && (
@@ -55,7 +55,7 @@ export default function DiagnosisResultScreen({ route, navigation }) {
                 <Image source={require('../assets/heal-svgrepo-com.png')} style={tw`w-10 h-10 `}/>
               </View>
               <Text style={tw`text-base text-black font-bold mt-3`}>Treatment</Text>
-              <Text style={tw`text-sm text-gray-600 font-regular mt-3`}>{treatment}</Text>
+              <Text style={tw`text-sm text-gray-600 mt-3`}>{treatment}</Text>
             </View>
           )}
           {activeTab === 'Recommendation' && (
@@ -65,10 +65,10 @@ export default function DiagnosisResultScreen({ route, navigation }) {
                 <Image source={require('../assets/location-svgrepo-com.png')} style={tw`w-10 h-10 `}/>
               </View>
               <Text style={tw`text-base text-black font-bold mt-3`}>Recommendation</Text>
-              <Text style={tw`text-sm text-gray-600 font-regular mt-3`}>{recommendation.Message}</Text>
+              <Text style={tw`text-sm text-gray-600 mt-3`}>{recommendation.Message}</Text>
               <TouchableOpacity style={[tw`w-[90%] flex ml-auto py-2 rounded-full mt-5 bg-blue-400`]}>
                 <Text style={tw`text-center text-base font-bold text-white`}>{recommendation.HospitalInfo.HospitalName}</Text>
-                <Text style={tw`text-center text-sm font-regular text-white`}>{recommendation.HospitalInfo.Location}</Text>
+                <Text style={tw`text-center text-sm text-white`}>{recommendation.HospitalInfo.Location}</Text>
               </TouchableOpacity>
             </View>
           )}

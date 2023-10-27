@@ -15,7 +15,7 @@ const OpeningScreen = () => {
       } else {
         navigation.navigate('Splash'); // Navigate to the splash screen
       }
-    }, 3000);
+    }, 4000);
 
     return () => {
       clearTimeout(timeout);

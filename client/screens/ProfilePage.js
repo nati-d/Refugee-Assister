@@ -15,7 +15,7 @@ export default function ProfilePage({ user }) {
   const fetchUser = async () => {
     try {
       // Replace 'your-api-endpoint' with your actual API endpoint
-      const response = await axios.get('http://192.168.1.9:3000/getUser', {
+      const response = await axios.get('https://assisterapp.onrender.com/getUser', {
         params: { userEmail: user.email }, // Pass the user's email as a query parameter
       });
 
@@ -33,9 +33,9 @@ export default function ProfilePage({ user }) {
     return (
         <View style={tw`flex-1 items-center bg-white `}>
             <View style={tw`w-full h-100 `}>
-                <Image source={require("../assets/portrait.jpg")} style={tw`w-full h-full bg-cover`} />
+                <Image source={require("../assets/portrait.jpg")} style={tw`w-full h-full`} />
             </View>
-            <View style={tw`relative bg-red  flex-1 flex-column w-full`}>
+            <View style={tw`relative bg-white flex-1 w-full`}>
 
             <View style={tw`absolute w-full flex-1 -mt-6 bg-white p-5 rounded-t-3xl`}>
                 <Text style={tw`font-bold text-3xl`}>{userData.firstName}</Text>

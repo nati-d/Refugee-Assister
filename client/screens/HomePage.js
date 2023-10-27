@@ -16,6 +16,12 @@ export default function HomePage() {
   const [city, setCity] = useState(null);
   const [country, setCountry] = useState(null);
   const [loadingLocation, setLoadingLocation] = useState(true); // Initialize loading state
+  const [fetching, setFetching] = useState('Fetching...');
+  const [contacts, setContacts] = useState();
+  const [loadingContacts, setLoadingContacts] = useState(false);
+
+  const emergencyMessage = `Give me all the necessary emergency contacts in ${city} ${country} as a list and do not include any other sentences as a response outside of the list`;
+
 
   const handleLanguageChange = (language) => {
     setCurrentLanguage(language);
@@ -24,13 +30,55 @@ export default function HomePage() {
   const navigation = useNavigation();
 
   const handleEmergency = () => {
-    navigation.navigate('Emergency', { city, country });
-    console.log(i18n.language)
+    if(!loadingContacts){
+      navigation.navigate('Emergency', { contacts });
+    }
   }
 
   useEffect(() => {
+
     getLocation();
-  }, []);
+    generateContacts();
+    const timeout = setTimeout(() => {
+      if (city && country) {
+        return; 
+      } else {
+        setFetching('Unavailable');
+      }
+    }, 4000);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+
+
+  }, [city, country]);
+
+  const generateContacts = async () => {
+    try {
+      if (!emergencyMessage) {
+        return;
+      }
+      setLoadingContacts(true);
+
+      // Send the message to the server for processing
+      const response = await axios.post('https://assisterapp.onrender.com/emergency/', {
+        message: emergencyMessage,
+      });
+
+      if (response?.data?.emergencies) {
+        const aiResponse = response.data.emergencies;
+        setContacts(aiResponse);
+      } else {
+        console.log('Response data is missing or invalid');
+      }
+
+      setLoadingContacts(false);
+    } catch (err) {
+      console.error('Error:', err.message);
+      setLoadingContacts(false);
+    }
+  };
 
   const getLocation = async () => {
     try {
@@ -71,7 +119,7 @@ export default function HomePage() {
         <View style={tw`flex items-center`}>
           <View style={tw`flex w-85`}>
             <View style={tw`flex-row items-start justify-between mt-2 mr-7`}>
-              <View style={tw`w-60`}>
+              <View style={tw`flex w-55 justify-start`}>
                 <Text style={[tw`text-5 font-bold`, { color: colors.black }]}><MultilingualText text='HomePageTitle1' /> </Text>
                 <Text style={[tw`text-5 font-bold`, { color: colors.primary }]}><MultilingualText text='HomePageTitle2' /></Text>
               </View>
@@ -89,7 +137,7 @@ export default function HomePage() {
               <Ionicons name="md-pin" size={26} color={colors.primary} />
               <View>
                 {loadingLocation ? ( // Show loading message if still fetching location
-                  <Text style={tw`text-3 font-bold`}>Fetching location...</Text>
+                  <Text style={tw`text-3 font-bold`}>{fetching}</Text>
                 ) : (
                   <View>
                     <Text style={tw`text-3 font-bold`}>
