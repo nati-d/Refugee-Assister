@@ -155,7 +155,7 @@ export default function HomePage() {
                 </View>
                 <View style={tw`flex-row justify-between`}>
                   <HomeScreenTool name="Learn" icon="md-school" iconSize={27} />
-                  <HomeScreenTool name="Map" icon="md-map" iconSize={25} />
+                  <HomeScreenTool name="Journal" icon="md-map" iconSize={25} />
                 </View>
               </View>
             </View>

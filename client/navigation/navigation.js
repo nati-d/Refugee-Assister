@@ -12,6 +12,7 @@ import ToolsPage from '../screens/ToolsPage';
 import ProfilePage from '../screens/ProfilePage';
 import DiagnosisResultScreen from '../screens/DiagnosisResultScreen';
 import EmergencyContacts from '../screens/EmergencyContacts';
+import JournalScreen from '../screens/JournalScreen';
 
 const Stack = createNativeStackNavigator();
 // Tab
@@ -23,6 +24,8 @@ import DiagnosisScreen from '../screens/DiagnosisScreen';
 import TranscribeScreen from '../screens/TranscribeScreen';
 import MapScreen from '../screens/MapScreen';
 import NewsDetail from '../screens/NewsDetail';
+import CreateJournal from '../screens/CreateJournal';
+import JournalDetail from '../screens/JournalDetail';
 
 function HomeTabNavigator() {
   const { user } = useAuth();
@@ -80,6 +83,15 @@ function Navigation() {
             <Stack.Screen name="Map" component={MapScreen} />
             <Stack.Screen name="Emergency" component={EmergencyContacts} />
             <Stack.Screen name="NewsDetail" component={NewsDetail} />
+            <Stack.Screen name="Journal">
+                {() => <JournalScreen user={user} />}
+            </Stack.Screen>
+            <Stack.Screen name="CreateJournal">
+                {() => <CreateJournal user={user} />}
+            </Stack.Screen>
+            <Stack.Screen name="JournalDetail" component={JournalDetail} />
+
+            
           </>
          ) : (
           <>

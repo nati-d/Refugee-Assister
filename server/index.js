@@ -50,6 +50,10 @@ app.use('/chatHistory', chatHistoryRoute);
 const getUserRoute = require('./routes/getUserRoute');
 app.use('/getUser', getUserRoute);
 
+const journalRoutes = require('./routes/journalRoute');
+app.use('/journals', journalRoutes);
+
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

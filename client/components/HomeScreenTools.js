@@ -19,6 +19,8 @@ export default function HomeScreenTool (props) {
             navigation.navigate("Chatbot");
         }else if (props.name === "Map"){
             navigation.navigate("Map")
+        }else if (props.name === "Journal"){
+            navigation.navigate("Journal")
         }
     }    
     return(
