@@ -9,6 +9,7 @@ const App = ()=> {
     <>
       <StatusBar backgroundColor={colors.background} barStyle="dark-content" />
       <Navigation/>
+
     </>
   );
 };

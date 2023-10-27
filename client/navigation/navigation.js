@@ -53,8 +53,8 @@ function HomeTabNavigator() {
     >
       <Tab.Screen name="Home" component={HomePage} options={{ tabBarLabel:() => null, headerShown: false }} />
       <Tab.Screen name="Tools" component={ToolsPage} options={{ tabBarLabel:() => null, headerShown: false }} />
-      <Tab.Screen name="Profile" >
-        {() => <ProfilePage options={{ tabBarLabel:() => null, headerShown: false }} user={user}/>}
+      <Tab.Screen name="Profile" options={{ tabBarLabel:() => null, headerShown: false }}>
+        {() => <ProfilePage user={user}/>}
         
         </Tab.Screen>
     </Tab.Navigator>

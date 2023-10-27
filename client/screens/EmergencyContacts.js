@@ -57,7 +57,7 @@ export default function EmergencyContacts({ route }) {
         ref={scrollViewRef}
         contentContainerStyle={tw `p-4`}
       >
-        <View style={tw `mt-6 mb-4`}>
+        <View style={tw `mt-10 mb-10`}>
           <Text style={tw `text-4 font-bold text-center`}>
             <MultilingualText text="EmergencyContactsInYourArea" />
           </Text>
@@ -77,7 +77,7 @@ export default function EmergencyContacts({ route }) {
                     onPress={() => handleContactPress(contact.phoneNo)}
                   >
                     <MaterialIcons name="phone" size={24} color={colors.primary} style={tw `mr-2`} />
-                    <Text style={tw `text-lg font-bold text-blue-700`}>
+                    <Text style={tw `text-4 font-bold text-blue-700 mr-8`}>
                       {contact.name}: {contact.phoneNo}
                     </Text>
                   </TouchableOpacity>

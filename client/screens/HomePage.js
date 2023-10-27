@@ -89,7 +89,7 @@ export default function HomePage() {
 
   return (
     <View style={[tw`flex-1 w-full`, { backgroundColor: colors.background }]}>
-      <ScrollView>
+      <View>
         <View style={tw`flex items-center`}>
           <View style={tw`flex w-85`}>
             <View style={tw`flex-row items-start justify-between mt-2 mr-7`}>
@@ -121,15 +121,11 @@ export default function HomePage() {
                 )}
               </View>
             </View>
-            <View style={tw`mt-8`}>
-              <View>
-                <View style={tw`flex-row justify-between`}>
+            <View style={tw`mt-8 flex items-center`}>
+              <View style={tw `w-60`}>
                   <HomeScreenTool name="Diagnose" icon="md-medkit" iconSize={25} />
                   <HomeScreenTool name="Assistant" icon="md-chatbox" iconSize={25} />
-                </View>
-                <View style={tw`flex-row justify-between`}>
-                  <HomeScreenTool name="Journal" icon="md-map" iconSize={25} />
-                </View>
+                  <HomeScreenTool name="Journal" icon="md-book" iconSize={25} />
               </View>
             </View>
             <View style={tw`mt-8`}>
@@ -137,7 +133,7 @@ export default function HomePage() {
             </View>
           </View>
         </View>
-      </ScrollView>
+      </View>
     </View>
   );
 }
