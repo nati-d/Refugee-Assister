@@ -22,7 +22,7 @@ export default function JournalScreen({ user }) {
 
   const fetchUserJournals = async () => {
     try {
-      const response = await fetch(`http://192.168.1.17:3000/journals/${user.email}`);
+      const response = await fetch(`https://assisterapp.onrender.com/journals/${user.email}`);
       if (response.status === 200) {
         const data = await response.json();
         setJournals(data);
@@ -48,7 +48,7 @@ export default function JournalScreen({ user }) {
 
   const deleteJournal = async (journalId) => {
     try {
-      const response = await fetch(`http://192.168.1.17:3000/journals/${journalId}`, {
+      const response = await fetch(`https://assisterapp.onrender.com/journals/${journalId}`, {
         method: 'DELETE',
       });
       if (response.status === 204) {
@@ -63,7 +63,7 @@ export default function JournalScreen({ user }) {
 
   const updateJournal = async (journalId, updatedContent) => {
     try {
-      const response = await fetch(`http://192.168.1.17:3000/journals/${journalId}`, {
+      const response = await fetch(`https://assisterapp.onrender.com/journals/${journalId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

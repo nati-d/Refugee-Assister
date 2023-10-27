@@ -10,7 +10,7 @@ export default function CreateJournal({user}) {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch('http://192.168.1.17:3000/journals', {
+      const response = await fetch('https://assisterapp.onrender.com/journals', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

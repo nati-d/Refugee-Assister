@@ -5768,7 +5768,7 @@ internal-ip@4.3.0:
 
 intl-pluralrules@^2.0.1:
   version "2.0.1"
-  resolved "https://registry.npmmirror.com/intl-pluralrules/-/intl-pluralrules-2.0.1.tgz"
+  resolved "https://registry.npmjs.org/intl-pluralrules/-/intl-pluralrules-2.0.1.tgz"
   integrity sha512-astxTLzIdXPeN0K9Rumi6LfMpm3rvNO0iJE+h/k8Kr/is+wPbRe4ikyDjlLr6VTh/mEfNv8RjN+gu3KwDiuhqg==
 
 invariant@*, invariant@^2.2.4, invariant@2.2.4:
