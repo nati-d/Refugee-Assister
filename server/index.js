@@ -30,19 +30,19 @@ app.use('/addUser', userRoutes);
 const chatRoutes = require("./routes/chatRoutes");
 app.use("/chat",chatRoutes)
 
-const emergencyRoutes = require("./routes/emergencyRoute")
-app.use("/emergency",emergencyRoutes)
+// const emergencyRoutes = require("./routes/emergencyRoute")
+// app.use("/emergency",emergencyRoutes)
 
 
 const symptomCheckerRoute = require("./routes/symptomCheRoute")
 app.use("/symptomChecker",symptomCheckerRoute)
 
 
-const hospitalRoutes = require("./routes/hospitalRoute");
-app.use("/hospitals", hospitalRoutes);
+// const hospitalRoutes = require("./routes/hospitalRoute");
+// app.use("/hospitals", hospitalRoutes);
 
-const hospitalInfoRoute = require("./routes/hospitalInfoRoute");
-app.use("/hospital-info", hospitalInfoRoute);
+// const hospitalInfoRoute = require("./routes/hospitalInfoRoute");
+// app.use("/hospital-info", hospitalInfoRoute);
 
 const chatHistoryRoute = require('./routes/chatHistoryRoute'); 
 app.use('/chatHistory', chatHistoryRoute);
