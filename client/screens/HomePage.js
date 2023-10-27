@@ -19,11 +19,8 @@ export default function HomePage() {
   const [country, setCountry] = useState(null);
   const [loadingLocation, setLoadingLocation] = useState(true); // Initialize loading state
   const [fetching, setFetching] = useState('Fetching...');
-  const [contacts, setContacts] = useState();
-  const [loadingContacts, setLoadingContacts] = useState(false);
 
 
-  const emergencyMessage = `Give me all the necessary emergency contacts in ${city} ${country} as a list and do not include any other sentences as a response outside of the list`;
 
 
   const handleLanguageChange = (language) => {
@@ -33,15 +30,14 @@ export default function HomePage() {
   const navigation = useNavigation();
 
   const handleEmergency = () => {
-    if(!loadingContacts){
-      navigation.navigate('Emergency', { contacts });
-    }
+   
+      navigation.navigate('Emergency', { city, country });
+   
   }
 
   useEffect(() => {
 
     getLocation();
-    generateContacts();
     const timeout = setTimeout(() => {
       if (city && country) {
         return; 
@@ -57,32 +53,7 @@ export default function HomePage() {
 
   }, [city, country]);
 
-  const generateContacts = async () => {
-    try {
-      if (!emergencyMessage) {
-        return;
-      }
-      setLoadingContacts(true);
-
-      // Send the message to the server for processing
-      const response = await axios.post('https://assisterapp.onrender.com/emergency/', {
-        message: emergencyMessage,
-      });
-
-      if (response?.data?.emergencies) {
-        const aiResponse = response.data.emergencies;
-        setContacts(aiResponse);
-      } else {
-        console.log('Response data is missing or invalid');
-      }
-
-      setLoadingContacts(false);
-    } catch (err) {
-      console.error('Error:', err.message);
-      setLoadingContacts(false);
-    }
-  };
-
+ 
   const getLocation = async () => {
     try {
       let { status } = await Location.requestForegroundPermissionsAsync();
