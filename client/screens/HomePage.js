@@ -10,6 +10,8 @@ import { colors } from '../themes/colors';
 import News from '../components/News';
 import * as Location from 'expo-location';
 import axios from 'axios';
+import i18n from 'i18next';
+
 
 export default function HomePage() {
   const [location, setLocation] = useState(null);
@@ -19,6 +21,7 @@ export default function HomePage() {
   const [fetching, setFetching] = useState('Fetching...');
   const [contacts, setContacts] = useState();
   const [loadingContacts, setLoadingContacts] = useState(false);
+
 
   const emergencyMessage = `Give me all the necessary emergency contacts in ${city} ${country} as a list and do not include any other sentences as a response outside of the list`;
 

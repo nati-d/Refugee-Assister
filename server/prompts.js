@@ -21,7 +21,7 @@ Remember to prioritize the well-being of the users and provide informative and e
 You can use predefined lists or prompts for common symptoms.
 Step 2 -Based on the provided symptoms, generate an appropriate response with the following format:
 {
-  "Language": "it should be in {{userLanguage}} language."
+  "Language": "Translate this into {{userLanguage}}"
   "Disease name": "Choose a disease highly accurate to the symptoms provided.",
   "Details": "Provide information about the disease and its other symptoms.",
   "Treatment": "Treatment for the disease.",
