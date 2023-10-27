@@ -6,20 +6,23 @@ const openai = new OpenAI({
 
 const cache = {};
 
-async function generateChatResponse(userSymptom, language) {
+async function generateChatResponse(userSymptom, userLanguage) {
   if (cache[userSymptom]) {
     return cache[userSymptom];
   }
   try {
+    // Replace the placeholder with the user's language in the prompt
+    const promptWithLanguage = symptomCheckerPromptTemplate.replace("{{userLanguage}}", userLanguage);
     const completion = await openai.chat.completions.create({
       messages: [
-        { role: "system", content: symptomCheckerPromptTemplate + ` Translate to ${language}` },
+        { role: "system", content: promptWithLanguage},
         { role: "user", content: userSymptom },
       ],
       model: "gpt-3.5-turbo",
     });
 
     const responseContent = completion.choices[0].message.content;
+    console.log(promptWithLanguage)
     // Extract disease name, details, treatment, and recommendation from the response
     const jsonResponse = JSON.parse(responseContent);
     const { "Disease name": diseaseName, Details: details, Treatment: treatment, Recommendation: recommendation } = jsonResponse;
@@ -43,9 +46,9 @@ async function generateChatResponse(userSymptom, language) {
 exports.checkSymptom = async (req, res) => {
   try {
     const userSymptom = req.body.message;
-    const language = req.body.language;
+    const userLanguage = req.body.language;
 
-    const {diseaseName,details,treatment,recommendation} = await generateChatResponse(userSymptom, language);
+    const {diseaseName,details,treatment,recommendation} = await generateChatResponse(userSymptom, userLanguage);
 
     res.json({ diseaseName,details,treatment,recommendation});
 
