@@ -63,19 +63,21 @@ export default function EmergencyContacts({ route }) {
           </Text>
         </View>
         <View style={tw `items-center`}>
-          <View style={tw `w-96 rounded-lg bg-blue-200 p-4`}>
+          <View style={tw `w-96 rounded-lg bg-purple-300 p-4`}>
             {loading ? (
-              <ActivityIndicator size="large" color={colors.primary} />
+              <View>
+                <ActivityIndicator size="large" color={colors.primary} />
+              </View>
             ) : (
               <ScrollView>
                 {contacts.map((contact, index) => (
                   <TouchableOpacity
                     key={index}
-                    style={tw `flex-row items-center p-2 rounded-md bg-blue-300 mb-2`}
+                    style={tw `flex-row items-center p-2 rounded-md bg-yellow-200 mb-2`}
                     onPress={() => handleContactPress(contact.phoneNo)}
                   >
                     <MaterialIcons name="phone" size={24} color={colors.primary} style={tw `mr-2`} />
-                    <Text style={tw `text-lg font-bold text-gray-700`}>
+                    <Text style={tw `text-lg font-bold text-blue-700`}>
                       {contact.name}: {contact.phoneNo}
                     </Text>
                   </TouchableOpacity>

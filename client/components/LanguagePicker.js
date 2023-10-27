@@ -13,6 +13,7 @@ import arTranslation from '../translations/ar.json';
 import haTranslation from '../translations/ha.json';
 import swTranslation from '../translations/sw.json';
 import zuTranslation from '../translations/zu.json';
+import amTranslation from '../translations/am.json';
 
 // Initialize i18next
 import i18n from 'i18next';
@@ -27,6 +28,7 @@ i18n.use(initReactI18next).init({
     ha: { translation: haTranslation },
     sw: { translation: swTranslation },
     zu: { translation: zuTranslation },
+    am: { translation: amTranslation },
     
   },
   lng: 'en',
@@ -47,6 +49,7 @@ const Demo = () => {
     { label: 'Hausa', value: 'ha' },
     { label: 'Zulu', value: 'zu' },
     { label: 'Swahili', value: 'sw' },
+    { label: 'Amharic', value: 'am' },
   ];
 
   const handleLanguageChange = (language) => {

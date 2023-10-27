@@ -12,8 +12,7 @@ export default function ToolsPage () {
                   <HomeScreenTool name="Assistant" icon="md-chatbox" iconSize={25} />
                 </View>
                 <View style={tw `flex-row justify-between gap-4`}>
-                  <HomeScreenTool name="Learn" icon="md-school" iconSize={25} />
-                  <HomeScreenTool name="Map" icon="md-trending-up" iconSize={25} />
+                  <HomeScreenTool name="Journal" icon="md-trending-up" iconSize={25} />
                 </View>
               </View>
             </View>

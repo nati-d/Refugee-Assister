@@ -128,7 +128,6 @@ export default function HomePage() {
                   <HomeScreenTool name="Assistant" icon="md-chatbox" iconSize={25} />
                 </View>
                 <View style={tw`flex-row justify-between`}>
-                  <HomeScreenTool name="Learn" icon="md-school" iconSize={27} />
                   <HomeScreenTool name="Journal" icon="md-map" iconSize={25} />
                 </View>
               </View>
