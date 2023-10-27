@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
-import { View, Text, ScrollView, ActivityIndicator } from "react-native";
+import { View, Text, ScrollView, ActivityIndicator, TouchableOpacity } from "react-native";
 import tw from 'twrnc';
 import axios from 'axios';
-
+import { Linking } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 import { colors } from "../themes/colors";
 import MultilingualText from "../components/MultilingualText";
 
@@ -26,7 +27,7 @@ export default function EmergencyContacts({ route }) {
       setLoading(true);
 
       // Send the message to the server for processing
-      const response = await axios.post('https://assisterapp.onrender.com/emergency', {
+      const response = await axios.post('https://assisterapp.onrender.com/emergency/', {
         message: message,
       });
 
@@ -44,32 +45,40 @@ export default function EmergencyContacts({ route }) {
     }
   };
 
+  const handleContactPress = (phoneNo) => {
+    const phoneNumber = phoneNo.replace(/\D/g, "");
+    const phoneUrl = `tel:${phoneNumber}`;
+    Linking.openURL(phoneUrl);
+  };
+
   return (
     <View style={[tw `flex-1`, { backgroundColor: colors.background }]}>
       <ScrollView
         ref={scrollViewRef}
-        contentContainerStyle={{ paddingBottom: 100 }}
-        style={tw `mt-5`}
+        contentContainerStyle={tw `p-4`}
       >
-        <View style={tw `mt-10`}>
-          <Text style={tw `text-6 font-bold text-center`}>
+        <View style={tw `mt-6 mb-4`}>
+          <Text style={tw `text-4 font-bold text-center`}>
             <MultilingualText text="EmergencyContactsInYourArea" />
           </Text>
         </View>
-        <View style={tw `flex items-center mt-15`}>
-          <View style={tw `w-90 rounded-3 bg-blue-100 p-8`}>
+        <View style={tw `items-center`}>
+          <View style={tw `w-96 rounded-lg bg-blue-200 p-4`}>
             {loading ? (
-              <View>
-                <ActivityIndicator size="large" color="blue" />
-              </View>
+              <ActivityIndicator size="large" color={colors.primary} />
             ) : (
               <ScrollView>
                 {contacts.map((contact, index) => (
-                  <View key={index} style={tw `mb-3`}>
-                    <Text style={tw `text-4 font-bold text-gray-700`}>
+                  <TouchableOpacity
+                    key={index}
+                    style={tw `flex-row items-center p-2 rounded-md bg-blue-300 mb-2`}
+                    onPress={() => handleContactPress(contact.phoneNo)}
+                  >
+                    <MaterialIcons name="phone" size={24} color={colors.primary} style={tw `mr-2`} />
+                    <Text style={tw `text-lg font-bold text-gray-700`}>
                       {contact.name}: {contact.phoneNo}
                     </Text>
-                  </View>
+                  </TouchableOpacity>
                 ))}
               </ScrollView>
             )}
