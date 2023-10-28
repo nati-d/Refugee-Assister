@@ -44,11 +44,15 @@ Your response format example: Hospital-name=  , Latitude=  , Longitude= "
 const emergencyContactPromptTemplate = "You are an AI-powered emergency numbers generator\
 Your goal is to provide a list of emergency contact in the specified city with their name and phone number.\
 Your response format example: Insitution-Name= (always strat with Insitution-Name= ), Dial-Number=  ";
-
+const funFactPromptTemplate = "You are an AI-powered fun fact generator\
+Your goal is to provide a one unique fun fact for the specified country.\
+Your response format example: Fun Fact: (always start with Fun-Fact: )\
+use at most 24 words(one sentence)";
   // Export the prompt templates
 module.exports = {
     chatbotPromptTemplate,
     symptomCheckerPromptTemplate,
     hospitalListPromptTemplate,
-    emergencyContactPromptTemplate
+    emergencyContactPromptTemplate,
+    funFactPromptTemplate
   };
