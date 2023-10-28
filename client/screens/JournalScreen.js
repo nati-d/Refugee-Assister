@@ -85,6 +85,21 @@ export default function JournalScreen({ user }) {
     }
   };
 
+  useEffect(() => {
+    // Fetch data initially
+    fetchUserJournals();
+
+    // Set up an interval to fetch data every 1 second
+    const intervalId = setInterval(() => {
+      fetchUserJournals();
+    }, 1000);
+
+    // Clear the interval when the component is unmounted
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
   
 
   const filteredJournals = selectedButton === 'All'

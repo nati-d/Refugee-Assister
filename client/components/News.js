@@ -84,7 +84,7 @@ const News = () => {
   };
 
   const renderNewsItem = ({ item, index }) => {
-    if (!showAllNews && index > 10) {
+    if (!showAllNews && index > 8) {
       return null;
     }
 
@@ -132,7 +132,6 @@ const News = () => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 20,
-    height: 420,
   },
   newsItem: {
     flexDirection: 'row',

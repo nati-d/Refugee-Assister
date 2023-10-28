@@ -26,27 +26,27 @@ export default function HomeScreenTool (props) {
     return(
         <View>
           <LinearGradient
-            colors={['#00F', '#F66']}
+            colors={[colors.primary, '#FF6A6A']}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={{
               borderRadius: 50,
               marginBottom: 20,
-              shadowColor: '#333',
+              shadowColor: '#000',
               shadowOffset: {
-                width: 3,
+                width: 0,
                 height: 4,
               },
-              shadowOpacity: 0.3,
-              shadowRadius: 4,
+              shadowOpacity: 0.5,
+              shadowRadius: 6,
               elevation: 8,
               borderWidth: 1,
               borderColor: '#ccc',
             }}
           >
-            <TouchableOpacity style={[tw `flex-row items-center h-15 w-40 pl-10`]} onPress={() => handlePress()}>                
+            <TouchableOpacity style={[tw `flex-row items-center h-15 w-40 pl-5`]} onPress={() => handlePress()}>                
               <Ionicons name={props.icon} size={props.iconSize} color='white' />
-              <Text style={tw `text-center text-white font-bold ml-7`}><MultilingualText text={props.name} /></Text>
+              <Text style={tw `text-center text-white font-bold ml-3`}><MultilingualText text={props.name} /></Text>
             </TouchableOpacity>
           </LinearGradient>
 

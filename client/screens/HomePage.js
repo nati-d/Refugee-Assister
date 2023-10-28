@@ -11,6 +11,7 @@ import News from '../components/News';
 import * as Location from 'expo-location';
 import axios from 'axios';
 import i18n from 'i18next';
+import FunFact from '../components/FunFact';
 
 
 export default function HomePage() {
@@ -89,7 +90,7 @@ export default function HomePage() {
 
   return (
     <View style={[tw`flex-1 w-full`, { backgroundColor: colors.background }]}>
-      <View>
+      <ScrollView>
         <View style={tw`flex items-center`}>
           <View style={tw`flex w-85`}>
             <View style={tw`flex-row items-start justify-between mt-2 mr-7`}>
@@ -108,24 +109,33 @@ export default function HomePage() {
               </View>
             </View>
             <View style={tw`flex-row mt-6 items-center`}>
-              <Ionicons name="md-pin" size={26} color={colors.primary} />
+            <View style={tw`flex-row items-center`}>
+                <Ionicons name="md-pin" size={26} color={colors.primary} />
+                <View>
+                  {loadingLocation ? ( // Show loading message if still fetching location
+                    <Text style={tw`text-3 font-bold`}>{fetching}</Text>
+                  ) : (
+                    <View>
+                      <Text style={tw`text-3 font-bold`}>
+                        {city}, {country}
+                      </Text>
+                    </View>
+                  )}
+                </View>
+              </View>
               <View>
-                {loadingLocation ? ( // Show loading message if still fetching location
-                  <Text style={tw`text-3 font-bold`}>{fetching}</Text>
-                ) : (
-                  <View>
-                    <Text style={tw`text-3 font-bold`}>
-                      {city}, {country}
-                    </Text>
-                  </View>
-                )}
+                    <FunFact country={country} />
               </View>
             </View>
-            <View style={tw`mt-8 flex items-center`}>
-              <View style={tw `w-60`}>
+            <View style={tw`mt-8`}>
+              <View>
+                <View style={tw`flex-row justify-between`}>
                   <HomeScreenTool name="Diagnose" icon="md-medkit" iconSize={25} />
                   <HomeScreenTool name="Assistant" icon="md-chatbox" iconSize={25} />
-                  <HomeScreenTool name="Journal" icon="md-book" iconSize={25} />
+                </View>
+                <View style={tw`flex-row justify-between`}>
+                  <HomeScreenTool name="Journal" icon="md-map" iconSize={25} />
+                </View>
               </View>
             </View>
             <View style={tw`mt-8`}>
@@ -133,7 +143,7 @@ export default function HomePage() {
             </View>
           </View>
         </View>
-      </View>
+      </ScrollView>
     </View>
   );
 }
