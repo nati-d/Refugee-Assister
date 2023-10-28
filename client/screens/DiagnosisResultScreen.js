@@ -31,7 +31,7 @@ export default function DiagnosisResultScreen({ route, navigation }) {
           <Image source={require('../assets/Doctor.png')} style={tw`w-full h-80`} />
         </View>
         <View style={tw`h-20 bg-blue-400 w-full -mt-7 rounded-t-3xl flex px-4`}>
-          <Text style={tw`mt-4 text-lg font-bold text-white`}>{diseaseName}</Text>
+          <Text style={tw`mt-4 text-lg font-bold text-white`}>Possible Disease: {diseaseName}</Text>
         </View>
         <View style={tw`h-20 bg-white w-full -mt-5 rounded-t-3xl h-[100%] py-3 px-3`}>
           <View style={tw`flex flex-row justify-around`}>

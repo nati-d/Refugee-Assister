@@ -3,7 +3,7 @@ import { View, Text, ScrollView, ActivityIndicator, TouchableOpacity, StyleSheet
 import tw from 'twrnc';
 import axios from 'axios';
 import { Linking } from "react-native";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { colors } from "../themes/colors";
 import MultilingualText from "../components/MultilingualText";
 
@@ -23,7 +23,7 @@ export default function FunFact(props) {
       setLoading(true);
 
       // Send the message to the server for processing
-      const response = await axios.post('http://192.168.1.17:3000/funFact', {
+      const response = await axios.post('https://assisterapp.onrender.com/funFact', {
         message: defaultMessage,
       });
 
@@ -99,8 +99,8 @@ return (
       style={styles.circle}
       onPress={handleCirclePress}
     >
-        <Ionicons name="md-question" size={14} color="white" />
-    </TouchableOpacity>
+<AntDesign name="questioncircle" size={18} color="white" />    
+</TouchableOpacity>
   </View>
 );
 };

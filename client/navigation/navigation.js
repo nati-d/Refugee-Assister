@@ -26,6 +26,7 @@ import MapScreen from '../screens/MapScreen';
 import NewsDetail from '../screens/NewsDetail';
 import CreateJournal from '../screens/CreateJournal';
 import JournalDetail from '../screens/JournalDetail';
+import About from '../screens/About';
 
 function HomeTabNavigator() {
   const { user } = useAuth();
@@ -45,6 +46,8 @@ function HomeTabNavigator() {
             iconName = 'settings';
           } else if (route.name === 'Profile') {
             iconName = 'person';
+          }else if (route.name === 'Book') {
+            iconName = '';
           }
         
           return <MaterialIcons name={iconName} size={size} color={color} />;
@@ -55,8 +58,9 @@ function HomeTabNavigator() {
       <Tab.Screen name="Tools" component={ToolsPage} options={{ tabBarLabel:() => null, headerShown: false }} />
       <Tab.Screen name="Profile" options={{ tabBarLabel:() => null, headerShown: false }}>
         {() => <ProfilePage user={user}/>}
-        
         </Tab.Screen>
+        <Tab.Screen name="About" component={About} options={{ tabBarLabel:() => null, headerShown: false }} />
+
     </Tab.Navigator>
   );
 }

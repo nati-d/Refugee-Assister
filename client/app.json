@@ -7,7 +7,7 @@
     "icon": "./assets/splash.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "../assets",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -18,14 +18,25 @@
       "supportsTablet": true
     },
     "android": {
-      "permissions": ["RECORD_AUDIO", "MODIFY_AUDIO_SETTINGS","READ_EXTERNAL_STORAGE","WRITE_EXTERNAL_STORAGE"],
+      "permissions": [
+        "RECORD_AUDIO",
+        "MODIFY_AUDIO_SETTINGS",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ],
       "adaptiveIcon": {
-        "foregroundImage": "./assets/splash.png",
+        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.nathy94.assister"
     },
     "web": {
-      "favicon": "../assets"
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "429611be-ea7a-4c9a-b9d5-0a4f658beb66"
+      }
     }
   }
 }
