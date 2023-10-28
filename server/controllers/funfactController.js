@@ -7,13 +7,13 @@ const openai = new OpenAI({
 
 async function generateFunFact(funFactMsg) {
   try {
-    const prompt = funFactMsg;
+    const prompt = `Give me an interesting fun fact about the ${funFactMsg} `;
 
     const completion = await openai.chat.completions.create({
       messages: [
         {
           role: "system",
-          content: "You are ai based fun fact generator for a given country the given country is in short form like france Fr, USA us",
+          content: prompts.funFactPromptTemplate,
         },
         { role: "user", content: prompt },
       ],
