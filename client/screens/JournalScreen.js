@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import tw from 'twrnc';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -7,22 +7,23 @@ import { useNavigation } from '@react-navigation/native';
 export default function JournalScreen({ user }) {
   const currentDate = new Date();
   const dayNumbers = [];
-  const [selectedButton, setSelectedButton] = useState("All");
+  const [selectedButton, setSelectedButton] = useState('All');
   const [journals, setJournals] = useState([]);
   const navigation = useNavigation();
 
   const handleButtonSelection = (day) => {
     setSelectedButton(day);
   };
+  
   for (let i = 0; i < 4; i++) {
     const date = new Date(currentDate);
     date.setDate(currentDate.getDate() - i);
     dayNumbers.push(date.getDate());
   }
-
+  // Fetch user journals
   const fetchUserJournals = async () => {
     try {
-      const response = await fetch(`https://assisterapp.onrender.com/journals/${user.email}`);
+      const response = await fetch('https://assisterapp.onrender.com/journals/' + user.email);
       if (response.status === 200) {
         const data = await response.json();
         setJournals(data);
@@ -38,6 +39,10 @@ export default function JournalScreen({ user }) {
     fetchUserJournals();
   }, []);
 
+  const navigateToCreateJournal = () => {
+    navigation.navigate('CreateJournal');
+  };
+  
   const navigateToJournalDetail = (journal) => {
     navigation.navigate('JournalDetail', {
       journal,
@@ -48,7 +53,7 @@ export default function JournalScreen({ user }) {
 
   const deleteJournal = async (journalId) => {
     try {
-      const response = await fetch(`https://assisterapp.onrender.com/journals/${journalId}`, {
+      const response = await fetch('https://assisterapp.onrender.com/journals/' + journalId, {
         method: 'DELETE',
       });
       if (response.status === 204) {
@@ -63,7 +68,7 @@ export default function JournalScreen({ user }) {
 
   const updateJournal = async (journalId, updatedContent) => {
     try {
-      const response = await fetch(`https://assisterapp.onrender.com/journals/${journalId}`, {
+      const response = await fetch('https://assisterapp.onrender.com/journals/' + journalId, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -80,9 +85,11 @@ export default function JournalScreen({ user }) {
     }
   };
 
+  
+
   const filteredJournals = selectedButton === 'All'
     ? journals
-    : journals.filter(journal => {
+    : journals.filter((journal) => {
         const journalDate = new Date(journal.date);
         return journalDate.getDate() === selectedButton;
       });
@@ -91,7 +98,7 @@ export default function JournalScreen({ user }) {
     <View style={[tw`flex w-full h-full py-3 `, { backgroundColor: '#007bff' }]}>
       <View style={tw`flex flex-row items-center justify-between mx-4`}>
         <Text style={tw`text-2xl font-extrabold text-white`}>Journal</Text>
-        <TouchableOpacity onPress={() => navigation.navigate("CreateJournal")}>
+        <TouchableOpacity onPress={navigateToCreateJournal}>
           <Feather name="plus-square" size={30} color="white" />
         </TouchableOpacity>
       </View>

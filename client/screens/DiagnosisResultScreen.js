@@ -80,6 +80,7 @@ export default function DiagnosisResultScreen({ route, navigation }) {
                 </TouchableOpacity>
                 <Modal visible={isModalVisible} transparent animationType="slide">
                   <View style={tw`flex-1 justify-center items-center bg-gray-900 bg-opacity-90`}>
+                    <ScrollView>
                     <View style={styles.modalContent}>
                       <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
                         <Ionicons name="close-circle" size={40} color="#000" />
@@ -92,6 +93,7 @@ export default function DiagnosisResultScreen({ route, navigation }) {
                         <InfoItem label="Additional Info" value={recommendation.HospitalInfo.AdditionalInfo} />
                       </View>
                     </View>
+                    </ScrollView>
                   </View>
                 </Modal>
               </View>
@@ -107,7 +109,7 @@ const styles = StyleSheet.create({
   modalContent: {
     backgroundColor: 'white',
     padding: 16,
-    width: '90%', 
+    width: '100%', 
     borderRadius: 10,
     elevation: 5, 
   },

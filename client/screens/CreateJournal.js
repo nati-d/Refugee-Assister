@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-export default function CreateJournal({user}) {
+export default function CreateJournal({ user, route }) {
   const [title, setTitle] = useState('');
   const [story, setStory] = useState('');
   const navigation = useNavigation();
@@ -42,7 +42,7 @@ export default function CreateJournal({user}) {
         <Text style={styles.label}>Title:</Text>
         <TextInput
           style={styles.input}
-          placeholder="Enter a title for your jornal"
+          placeholder="Enter a title for your journal"
           value={title}
           onChangeText={(text) => setTitle(text)}
         />
@@ -51,7 +51,7 @@ export default function CreateJournal({user}) {
         <Text style={styles.label}>Story:</Text>
         <TextInput
           style={styles.storyInput}
-          placeholder="Write Something about story"
+          placeholder="Write something about the story"
           multiline
           value={story}
           onChangeText={(text) => setStory(text)}
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   storyInput: {
-    height: '100%', 
+    height: '100%',
     borderColor: '#007bff',
     borderWidth: 1,
     paddingLeft: 10,
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 10,
     alignSelf: 'flex-end',
-    width:'60%',
+    width: '60%',
   },
   submitText: {
     color: 'white',
