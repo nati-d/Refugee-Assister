@@ -43,6 +43,7 @@ export default function SignupScreen() {
         }
     
         try {
+
             const response = await axios.post('https://assisterapp.onrender.com/addUser', { 
                 email: email,
                 firstName:firstName,
@@ -50,6 +51,8 @@ export default function SignupScreen() {
             });
 
             await createUserWithEmailAndPassword(auth, email, password);
+
+
             console.log('User added successfully:', response.data);
         } catch (error) {
             if (error.response) {

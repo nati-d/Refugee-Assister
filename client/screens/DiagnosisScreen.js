@@ -18,7 +18,6 @@ import * as Location from 'expo-location';
 
 
 export default function DiagnosisScreen({route}) {
-  const {language} = route.params.language
   const navigation = useNavigation();
   const [location, setLocation] = useState(null);
   const [city, setCity] = useState(null);
@@ -123,7 +122,6 @@ export default function DiagnosisScreen({route}) {
     try {
       const response = await axios.post('https://assisterapp.onrender.com/symptomChecker', {
         message: diagnosisMessage,
-        language:language
       });
   
       if (response.status === 200) {

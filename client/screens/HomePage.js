@@ -10,7 +10,6 @@ import { colors } from '../themes/colors';
 import News from '../components/News';
 import * as Location from 'expo-location';
 import axios from 'axios';
-import i18n from 'i18next';
 import FunFact from '../components/FunFact';
 
 

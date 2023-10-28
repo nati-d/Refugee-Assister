@@ -46,8 +46,8 @@ function HomeTabNavigator() {
             iconName = 'settings';
           } else if (route.name === 'Profile') {
             iconName = 'person';
-          }else if (route.name === 'Book') {
-            iconName = '';
+          }else if (route.name === 'About') {
+            iconName = 'book';
           }
         
           return <MaterialIcons name={iconName} size={size} color={color} />;

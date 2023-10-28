@@ -14,7 +14,7 @@ export default function HomeScreenTool (props) {
     const navigation=useNavigation()
     const handlePress = () => {
         if (props.name === "Diagnose") {
-            navigation.navigate("Diagnosis", { language: i18n.language });
+            navigation.navigate("Diagnosis");
         } else if (props.name === "Assistant") {
             navigation.navigate("Chatbot");
         }else if (props.name === "Map"){
