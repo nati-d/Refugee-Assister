@@ -22,7 +22,7 @@ You can use predefined lists or prompts for common symptoms.
 Step 2 -Based on the provided symptoms, generate an appropriate response with the following format:
 {
   "Language": "Translate this into {{userLanguage}}",
-  "Disease name": "Choose a disease highly accurate to the symptoms provided.",
+  "Disease name": "Choose a disease highly accurate to the symptoms provided.(only disease name don't add anything)",
   "Details": "Provide information about the disease and its other symptoms.",
   "Treatment": "Treatment for the disease.",
   "Recommendation": {
