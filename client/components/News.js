@@ -8,6 +8,9 @@ import { useNavigation } from '@react-navigation/native';
 
 const newsApiKey = '05e33daaf0e545d083f04b8e32a76636';
 
+/**
+ * News component that displays recent news articles.
+ */
 const News = () => {
   const [showAllNews, setShowAllNews] = useState(false);
   const [news, setNews] = useState([]);
@@ -24,6 +27,9 @@ const News = () => {
 
   const cacheKey = '@NewsComponent:NewsData';
 
+  /**
+   * Load news data from AsyncStorage cache.
+   */
   const loadNewsFromCache = async () => {
     try {
       const cachedData = await AsyncStorage.getItem(cacheKey);
@@ -36,6 +42,10 @@ const News = () => {
     }
   };
 
+  /**
+   * Save news data to AsyncStorage cache.
+   * @param {Array} data - The news data to be cached.
+   */
   const saveNewsToCache = async (data) => {
     try {
       const jsonValue = JSON.stringify(data);
@@ -45,14 +55,22 @@ const News = () => {
     }
   };
 
-    function shuffleNews(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
+  /**
+   * Shuffle the order of news articles in an array.
+   * @param {Array} array - The array of news articles to shuffle.
+   * @returns {Array} - The shuffled array.
+   */
+  function shuffleNews(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
     }
+    return array;
+  }
 
+  /**
+   * Fetch news articles from an API and update the state.
+   */
   const fetchAllNews = async () => {
     try {
       setLoading(true);
@@ -83,6 +101,11 @@ const News = () => {
     }
   };
 
+  /**
+   * Render a news article item.
+   * @param {Object} item - The news article object to render.
+   * @param {number} index - The index of the news article in the list.
+   */
   const renderNewsItem = ({ item, index }) => {
     if (!showAllNews && index > 8) {
       return null;

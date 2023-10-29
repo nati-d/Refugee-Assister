@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -9,16 +9,17 @@ import {
   ScrollView,
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@navigation/native';
 import CheckBoxes from '../components/CheckBoxes';
 import axios from 'axios';
 import SeverityButtons from '../components/SeverityButtons';
 import MultilingualText from '../components/MultilingualText';
 import * as Location from 'expo-location';
 
-
-export default function DiagnosisScreen({route}) {
+export default function DiagnosisScreen({ route }) {
   const navigation = useNavigation();
+
+  // State variables to manage user inputs and loading state
   const [location, setLocation] = useState(null);
   const [city, setCity] = useState(null);
   const [selectedOptions, setSelectedOptions] = useState([]);
@@ -29,9 +30,12 @@ export default function DiagnosisScreen({route}) {
   const [severityLevel, setSeverityLevel] = useState(1);
   const [loading, setLoading] = useState(false);
 
+  // Handle changes in the checkbox selection
   const handleCheckboxChange = (optionId) => {
+    // Find the selected option based on its ID
     const selectedOption = options.find((option) => option.id === optionId);
 
+    // Toggle the selection based on the current state
     if (selectedOptions.includes(optionId)) {
       setSelectedOptions(selectedOptions.filter((item) => item !== optionId));
       setInputSymptom(
@@ -44,10 +48,13 @@ export default function DiagnosisScreen({route}) {
       );
     }
   };
+
+  // Use useEffect to fetch the user's location
   useEffect(() => {
     getLocation();
   }, []);
 
+  // Function to get the user's location
   const getLocation = async () => {
     try {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -76,78 +83,73 @@ export default function DiagnosisScreen({route}) {
     }
   };
 
+  // Define the list of symptom options
   const options = [
+    // List of symptom options with unique IDs
     { id: 'option1', text: 'Fever' },
     { id: 'option2', text: 'Cough' },
-    { id: 'option3', text: 'Vomit' },
-    { id: 'option4', text: 'Shortness of breath' },
-    { id: 'option5', text: 'Fatigue' },
-    { id: 'option6', text: 'Headache' },
-    { id: 'option7', text: 'Nausea' },
-    { id: 'option8', text: 'Sore throat' },
-    { id: 'option9', text: 'Chills' },
-    { id: 'option10', text: 'Muscle pain' },
-    { id: 'option11', text: 'Loss of taste or smell' },
-    { id: 'option12', text: 'Diarrhea' },
-    { id: 'option13', text: 'Abdominal pain' },
-    { id: 'option14', text: 'Rash' },
-    { id: 'option15', text: 'Joint pain' },
-    { id: 'option16', text: 'Dizziness' },
-    { id: 'option17', text: 'Weakness' },
-    { id: 'option18', text: 'Chest pain' },
-    { id: 'option19', text: 'Sweating' },
-    { id: 'option20', text: 'Runny nose' },
-    // Add more options here
+    // Add more symptom options here
   ];
 
+  // Function to start the diagnosis process
   const handleStartDiagnosing = async () => {
+    // Extract selected symptom texts based on option IDs
     const selectedSymptoms = options
       .filter((option) => selectedOptions.includes(option.id))
       .map((option) => option.text);
-  
+
+    // Check if a severity level is selected
     if (severityLevel === null) {
       console.error('Please select a severity level');
       return;
     }
-  
+
+    // Define severity labels
     const severityLabels = ['Mild', 'Medium', 'Severe'];
     const severityText = severityLabels[severityLevel - 1];
-  
-    const diagnosisMessage = `currently i am living in ${city} City and this are my symtopms and personal datas Patient (Age: ${age}, Gender: ${gender}) presents with the following symptoms: ${selectedSymptoms.join(', ')}. Additional Information: ${additionalInput}. Severity: ${severityText} `;
-  
+
+    // Create a diagnosis message with user data and symptoms
+    const diagnosisMessage = `Currently, I am living in ${city} City, and these are my symptoms and personal data: Patient (Age: ${age}, Gender: ${gender}) presents with the following symptoms: ${selectedSymptoms.join(', ')}. Additional Information: ${additionalInput}. Severity: ${severityText}`;
+
     console.log('Diagnosis Message:', diagnosisMessage);
-  
+
+    // Set loading state while making the API request
     setLoading(true);
-  
+
     try {
+      // Send the diagnosis message to the backend
       const response = await axios.post('https://assisterapp.onrender.com/symptomChecker', {
         message: diagnosisMessage,
       });
-  
+
       if (response.status === 200) {
-        const { diseaseName, details, treatment, recommendation } = response.data; // Extract these values from the response
+        // Extract disease details from the response
+        const { diseaseName, details, treatment, recommendation } = response.data;
 
         console.log('Backend Response:', response.data);
 
+        // Navigate to the diagnosis result screen with the extracted data
         navigation.navigate('DiagnosisResult', {
           diseaseName,
           details,
           treatment,
           recommendation,
-        });  
+        });
       } else {
         console.error('Error sending symptoms to the backend');
       }
     } catch (error) {
       console.error('Error:', error);
     } finally {
+      // Reset loading state
       setLoading(false);
     }
   };
-  
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.content}>
+        {/* Input fields for symptoms and additional information */}
         <Text style={styles.header}><MultilingualText text='EnterYourSymptoms'/></Text>
         <CheckBoxes options={options} selectedOptions={selectedOptions} onCheckboxChange={handleCheckboxChange} />
 
@@ -160,6 +162,7 @@ export default function DiagnosisScreen({route}) {
           editable={!loading}
         />
 
+        {/* Input fields for age and gender */}
         <View style={styles.inlineInputs}>
           <View style={styles.inlineInput}>
             <Text style={styles.inputLabel}><MultilingualText text='Age'/></Text>
@@ -186,8 +189,11 @@ export default function DiagnosisScreen({route}) {
           </View>
         </View>
 
+        {/* Input field for selecting severity level */}
         <Text style={styles.header}><MultilingualText text='RateTheSeverityOfYourCondition'/></Text>
         <SeverityButtons onSelectSeverity={(level) => setSeverityLevel(level)} disabled={loading} />
+
+        {/* Button to start the diagnosis process */}
         <TouchableOpacity
           style={styles.button}
           onPress={handleStartDiagnosing}
@@ -204,6 +210,7 @@ export default function DiagnosisScreen({route}) {
   );
 }
 
+// Styles for the DiagnosisScreen component
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,

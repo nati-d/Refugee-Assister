@@ -5,12 +5,14 @@ import { Ionicons, Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 export default function JournalScreen({ user }) {
+  // Initialize current date and state for selected button and journals
   const currentDate = new Date();
   const dayNumbers = [];
   const [selectedButton, setSelectedButton] = useState('All');
   const [journals, setJournals] = useState([]);
   const navigation = useNavigation();
 
+  // Handle button selection to filter journals
   const handleButtonSelection = (day) => {
     setSelectedButton(day);
   };
@@ -20,7 +22,8 @@ export default function JournalScreen({ user }) {
     date.setDate(currentDate.getDate() - i);
     dayNumbers.push(date.getDate());
   }
-  // Fetch user journals
+
+  // Fetch user journals from the server
   const fetchUserJournals = async () => {
     try {
       const response = await fetch('https://assisterapp.onrender.com/journals/' + user.email);
@@ -35,14 +38,28 @@ export default function JournalScreen({ user }) {
     }
   };
 
+  // Fetch user journals on initial load and set up a periodic refresh
   useEffect(() => {
+    // Fetch data initially
     fetchUserJournals();
+
+    // Set up an interval to fetch data every 1 second
+    const intervalId = setInterval(() => {
+      fetchUserJournals();
+    }, 1000);
+
+    // Clear the interval when the component is unmounted
+    return () => {
+      clearInterval(intervalId);
+    };
   }, []);
 
+  // Navigate to create a new journal entry
   const navigateToCreateJournal = () => {
     navigation.navigate('CreateJournal');
   };
-  
+
+  // Navigate to the journal entry detail view and provide actions for updating and deleting
   const navigateToJournalDetail = (journal) => {
     navigation.navigate('JournalDetail', {
       journal,
@@ -51,6 +68,7 @@ export default function JournalScreen({ user }) {
     });
   };
 
+  // Delete a journal entry by its ID
   const deleteJournal = async (journalId) => {
     try {
       const response = await fetch('https://assisterapp.onrender.com/journals/' + journalId, {
@@ -66,6 +84,7 @@ export default function JournalScreen({ user }) {
     }
   };
 
+  // Update a journal entry's content by its ID
   const updateJournal = async (journalId, updatedContent) => {
     try {
       const response = await fetch('https://assisterapp.onrender.com/journals/' + journalId, {
@@ -85,23 +104,7 @@ export default function JournalScreen({ user }) {
     }
   };
 
-  useEffect(() => {
-    // Fetch data initially
-    fetchUserJournals();
-
-    // Set up an interval to fetch data every 1 second
-    const intervalId = setInterval(() => {
-      fetchUserJournals();
-    }, 1000);
-
-    // Clear the interval when the component is unmounted
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, []);
-
-  
-
+  // Filter the journals based on the selected button
   const filteredJournals = selectedButton === 'All'
     ? journals
     : journals.filter((journal) => {

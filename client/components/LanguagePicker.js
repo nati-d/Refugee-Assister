@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { Picker } from '@react-native-picker/picker';
 import tw from 'twrnc';
 
-
 // Import translation files for each language
 import enTranslation from '../translations/en.json';
 import esTranslation from '../translations/es.json';
@@ -15,7 +14,7 @@ import swTranslation from '../translations/sw.json';
 import zuTranslation from '../translations/zu.json';
 import amTranslation from '../translations/am.json';
 
-// Initialize i18next
+// Initialize i18next and configure it with translation resources
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
@@ -29,15 +28,17 @@ i18n.use(initReactI18next).init({
     sw: { translation: swTranslation },
     zu: { translation: zuTranslation },
     am: { translation: amTranslation },
-    
   },
-  lng: 'en',
-  fallbackLng: 'en',
+  lng: 'en',             // Default language
+  fallbackLng: 'en',     // Fallback language in case of missing translations
   interpolation: {
     escapeValue: false,
   },
 });
 
+/**
+ * Demo component for language selection using a dropdown menu.
+ */
 const Demo = () => {
   const { i18n } = useTranslation();
 
@@ -52,10 +53,17 @@ const Demo = () => {
     { label: 'Amharic', value: 'am' },
   ];
 
+  /**
+   * Handle a change in the selected language and update the i18n configuration.
+   * @param {string} language - The selected language code.
+   */
   const handleLanguageChange = (language) => {
     i18n.changeLanguage(language);
   };
 
+  /**
+   * Render language options for the Picker component.
+   */
   const renderOptions = () => {
     return options.map((option, index) => (
       <Picker.Item 

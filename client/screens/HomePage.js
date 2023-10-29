@@ -12,35 +12,33 @@ import * as Location from 'expo-location';
 import axios from 'axios';
 import FunFact from '../components/FunFact';
 
-
 export default function HomePage() {
+  // State variables for location and loading indicators
   const [location, setLocation] = useState(null);
   const [city, setCity] = useState(null);
   const [country, setCountry] = useState(null);
   const [loadingLocation, setLoadingLocation] = useState(true); // Initialize loading state
-  const [fetching, setFetching] = useState('Fetching...');
+  const [fetching, setFetching] = useState('Fetching...'); // Loading message
 
-
-
-
+  // Function to handle language change
   const handleLanguageChange = (language) => {
     setCurrentLanguage(language);
   };
 
+  // Navigation reference
   const navigation = useNavigation();
 
+  // Function to navigate to the EmergencyContacts screen
   const handleEmergency = () => {
-   
-      navigation.navigate('Emergency', { city, country });
-   
+    navigation.navigate('Emergency', { city, country });
   }
 
+  // Fetch location on component mount
   useEffect(() => {
-
     getLocation();
     const timeout = setTimeout(() => {
       if (city && country) {
-        return; 
+        return;
       } else {
         setFetching('Unavailable');
       }
@@ -49,11 +47,9 @@ export default function HomePage() {
     return () => {
       clearTimeout(timeout);
     };
-
-
   }, [city, country]);
 
- 
+  // Function to get the user's location
   const getLocation = async () => {
     try {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -88,16 +84,16 @@ export default function HomePage() {
   }
 
   return (
-    <View style={[tw`flex-1 w-full`, { backgroundColor: colors.background }]}>
+    <View style={[tw `flex-1 w-full`, { backgroundColor: colors.background }]}>
       <ScrollView>
-        <View style={tw`flex items-center`}>
-          <View style={tw`flex w-85`}>
-            <View style={tw`flex-row items-start justify-between mt-2 mr-7`}>
-              <View style={tw`flex w-55 justify-start`}>
-                <Text style={[tw`text-5 font-bold`, { color: colors.black }]}><MultilingualText text='HomePageTitle1' /> </Text>
-                <Text style={[tw`text-5 font-bold`, { color: colors.primary }]}><MultilingualText text='HomePageTitle2' /></Text>
+        <View style={tw `flex items-center`}>
+          <View style={tw `flex w-85`}>
+            <View style={tw `flex-row items-start justify-between mt-2 mr-7`}>
+              <View style={tw `flex w-55 justify-start`}>
+                <Text style={[tw `text-5 font-bold`, { color: colors.black }]}><MultilingualText text='HomePageTitle1' /> </Text>
+                <Text style={[tw `text-5 font-bold`, { color: colors.primary }]}><MultilingualText text='HomePageTitle2' /></Text>
               </View>
-              <View style={tw`flex-row w-18 justify-between items-center`}>
+              <View style={tw `flex-row w-18 justify-between items-center`}>
                 <TouchableOpacity>
                   <Ionicons name="language" size={20} color="black" />
                 </TouchableOpacity>
@@ -107,15 +103,15 @@ export default function HomePage() {
                 </TouchableOpacity>
               </View>
             </View>
-            <View style={tw`flex-row mt-6 items-center`}>
-            <View style={tw`flex-row items-center`}>
+            <View style={tw `flex-row mt-6 items-center`}>
+              <View style={tw `flex-row items-center`}>
                 <Ionicons name="md-pin" size={26} color={colors.primary} />
                 <View>
                   {loadingLocation ? ( // Show loading message if still fetching location
-                    <Text style={tw`text-3 font-bold`}>{fetching}</Text>
+                    <Text style={tw `text-3 font-bold`}>{fetching}</Text>
                   ) : (
                     <View>
-                      <Text style={tw`text-3 font-bold`}>
+                      <Text style={tw `text-3 font-bold`}>
                         {city}, {country}
                       </Text>
                     </View>
@@ -123,21 +119,21 @@ export default function HomePage() {
                 </View>
               </View>
               <View>
-                    <FunFact country={country} />
+                <FunFact country={country} />
               </View>
             </View>
-            <View style={tw`mt-8`}>
+            <View style={tw `mt-8`}>
               <View>
-                <View style={tw`flex-row justify-between`}>
+                <View style={tw `flex-row justify-between`}>
                   <HomeScreenTool name="Diagnose" icon="md-medkit" iconSize={25} />
                   <HomeScreenTool name="Assistant" icon="md-chatbox" iconSize={25} />
                 </View>
-                <View style={tw`flex-row justify-between`}>
+                <View style={tw `flex-row justify-between`}>
                   <HomeScreenTool name="Journal" icon="md-map" iconSize={25} />
                 </View>
               </View>
             </View>
-            <View style={tw`mt-8`}>
+            <View style={tw `mt-8`}>
               <News />
             </View>
           </View>

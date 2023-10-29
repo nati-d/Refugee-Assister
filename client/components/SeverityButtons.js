@@ -3,9 +3,17 @@ import { View, StyleSheet, Text } from 'react-native';
 import Slider from '@react-native-community/slider';
 import MultilingualText from './MultilingualText';
 
+/**
+ * SeveritySlider component that allows the user to select the severity level.
+ * @param {function} onSelectSeverity - Callback function to handle the selected severity.
+ */
 export default function SeveritySlider({ onSelectSeverity }) {
   const [selectedSeverity, setSelectedSeverity] = useState(1);
 
+  /**
+   * Handle changes in the slider value and update the selected severity.
+   * @param {number} value - The selected slider value.
+   */
   const handleSliderChange = (value) => {
     setSelectedSeverity(value);
     onSelectSeverity(value); // Pass the selected severity back to the parent component

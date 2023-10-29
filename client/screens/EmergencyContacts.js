@@ -8,7 +8,10 @@ import { colors } from "../themes/colors";
 import MultilingualText from "../components/MultilingualText";
 
 export default function EmergencyContacts({ route }) {
+  // Initial message with placeholders for user location
   const defaultMessage = `Give me all the necessary emergency contacts in ${route.params.city} ${route.params.country} as a list and do not include any other sentences as a response outside of the list`;
+
+  // State variables to manage message, contacts, and loading state
   const [message, setMessage] = useState(defaultMessage);
   const [contacts, setContacts] = useState([]);
   const scrollViewRef = useRef();
@@ -46,6 +49,7 @@ export default function EmergencyContacts({ route }) {
   };
 
   const handleContactPress = (phoneNo) => {
+    // Prepare the phone number URL and open the dialer
     const phoneNumber = phoneNo.replace(/\D/g, "");
     const phoneUrl = `tel:${phoneNumber}`;
     Linking.openURL(phoneUrl);
@@ -66,6 +70,7 @@ export default function EmergencyContacts({ route }) {
           <View style={tw `w-96 rounded-lg bg-purple-300 p-4`}>
             {loading ? (
               <View>
+                {/* Display a loading indicator while fetching data */}
                 <ActivityIndicator size="large" color={colors.primary} />
               </View>
             ) : (

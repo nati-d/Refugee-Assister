@@ -8,48 +8,54 @@ import { LinearGradient } from 'expo-linear-gradient';
 import MultilingualText from "./MultilingualText";
 import i18n from 'i18next';
 
+/**
+ * HomeScreenTool component for rendering a tool item on the home screen.
+ * @param {object} props - Component props, including 'name', 'icon', 'iconSize'.
+ */
+export default function HomeScreenTool(props) {
+    const navigation = useNavigation();
 
-
-export default function HomeScreenTool (props) {
-    const navigation=useNavigation()
+    /**
+     * Handle the press event based on the tool name and navigate accordingly.
+     */
     const handlePress = () => {
         if (props.name === "Diagnose") {
             navigation.navigate("Diagnosis");
         } else if (props.name === "Assistant") {
             navigation.navigate("Chatbot");
-        }else if (props.name === "Map"){
-            navigation.navigate("Map")
-        }else if (props.name === "Journal"){
-            navigation.navigate("Journal")
+        } else if (props.name === "Map") {
+            navigation.navigate("Map");
+        } else if (props.name === "Journal") {
+            navigation.navigate("Journal");
         }
     }    
-    return(
-        <View>
-          <LinearGradient
-            colors={[colors.primary, '#FF6A6A']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={{
-              borderRadius: 50,
-              marginBottom: 20,
-              shadowColor: '#000',
-              shadowOffset: {
-                width: 0,
-                height: 4,
-              },
-              shadowOpacity: 0.5,
-              shadowRadius: 6,
-              elevation: 8,
-              borderWidth: 1,
-              borderColor: '#ccc',
-            }}
-          >
-            <TouchableOpacity style={[tw `flex-row items-center h-15 w-40 pl-5`]} onPress={() => handlePress()}>                
-              <Ionicons name={props.icon} size={props.iconSize} color='white' />
-              <Text style={tw `text-center text-white font-bold ml-3`}><MultilingualText text={props.name} /></Text>
-            </TouchableOpacity>
-          </LinearGradient>
 
+    return (
+        <View>
+            <LinearGradient
+                colors={[colors.primary, '#FF6A6A']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={{
+                    borderRadius: 50,
+                    marginBottom: 20,
+                    shadowColor: '#000',
+                    shadowOffset: {
+                        width: 0,
+                        height: 4,
+                    },
+                    shadowOpacity: 0.5,
+                    shadowRadius: 6,
+                    elevation: 8,
+                    borderWidth: 1,
+                    borderColor: '#ccc',
+                }}
+            >
+                <TouchableOpacity style={[tw `flex-row items-center h-15 w-40 pl-5`]} onPress={() => handlePress()}>
+                    <Ionicons name={props.icon} size={props.iconSize} color='white' />
+                    <Text style={tw `text-center text-white font-bold ml-3`}><MultilingualText text={props.name} /></Text>
+                </TouchableOpacity>
+            </LinearGradient>
         </View>
     )
 }

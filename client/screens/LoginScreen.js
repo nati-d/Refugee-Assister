@@ -4,6 +4,8 @@ import tw from 'twrnc';
 import { useNavigation } from '@react-navigation/native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../config/firebase';
+
+// URL for the welcome image
 const WelcomeImage = 'https://res.cloudinary.com/dm9wxgkgg/image/upload/v1698052762/Assister-Images/m7lniks0c6tb5hk9hsm5.png'
 
 export default function LoginScreen() {
@@ -13,41 +15,42 @@ export default function LoginScreen() {
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
 
+    // Function to handle the login process
     const handleLogin = async () => {
-      // Validate email
-      if (!email) {
-          setEmailError('Email is required');
-          return;
-      } else {
-          setEmailError('');
-      }
-  
-      // Validate password
-      if (!password) {
-          setPasswordError('Password is required');
-          return;
-      } else {
-          setPasswordError('');
-      }
-  
-      try {
-          await signInWithEmailAndPassword(auth, email, password);
-      } catch (error) {
-          if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-email') {
-              setEmailError('Invalid email address');
-          } else if (error.code === 'auth/wrong-password' || error.code === 'auth/invalid-login-credentials') {
-              setPasswordError('Incorrect password');
-          } else {
-              console.error('Login error:', error);
-          }
-      }
-  }
-  
+        // Validate email
+        if (!email) {
+            setEmailError('Email is required');
+            return;
+        } else {
+            setEmailError('');
+        }
+
+        // Validate password
+        if (!password) {
+            setPasswordError('Password is required');
+            return;
+        } else {
+            setPasswordError('');
+        }
+
+        try {
+            // Attempt to sign in with the provided email and password
+            await signInWithEmailAndPassword(auth, email, password);
+        } catch (error) {
+            if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-email') {
+                setEmailError('Invalid email address');
+            } else if (error.code === 'auth/wrong-password' || error.code === 'auth/invalid-login-credentials') {
+                setPasswordError('Incorrect password');
+            } else {
+                console.error('Login error:', error);
+            }
+        }
+    }
 
     return (
         <View style={[tw`flex flex-1`, styles.container]}>
             <View style={tw`w-full`}>
-                <Image source={{uri:WelcomeImage}} style={[tw`w-[100%] h-50`, styles.img]} />
+                <Image source={{ uri: WelcomeImage }} style={[tw`w-[100%] h-50`, styles.img]} />
             </View>
             <View>
                 <Text style={tw`font-extrabold text-2xl text-center text-gray-800`}>Welcome Back!</Text>

@@ -9,11 +9,16 @@ import tw from 'twrnc';
 import { Audio } from 'expo-av'; // Import the Audio module
 
 import { colors } from '../themes/colors';
+
+// Define the URL for the chatbot's image
 const BotImg = 'https://res.cloudinary.com/dm9wxgkgg/image/upload/v1698052763/Assister-Images/cdj2c2sukp065ofvt1ub.jpg';
+
+// Import ChatMessage and MultilingualText components
 import ChatMessage from '../components/ChatMessage';
 import MultilingualText from '../components/MultilingualText';
 
 export default function ChatbotScreen({ user }) {
+  // State variables to manage the user's message, chat history, and loading state
   const [message, setMessage] = useState('');
   const [chats, setChats] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -21,6 +26,7 @@ export default function ChatbotScreen({ user }) {
   const navigation = useNavigation();
   const scrollViewRef = useRef();
 
+  // Function to fetch chat history when the component mounts
   const fetchChatHistory = async () => {
     try {
       const response = await axios.get(`https://assisterapp.onrender.com/chatHistory?userEmail=${user.email}`);
@@ -37,16 +43,18 @@ export default function ChatbotScreen({ user }) {
     fetchChatHistory(); 
   }, []); 
 
+  // Function to make the chatbot speak the response
   const speak = (aiText) => {
     Speech.speak(aiText);
   };
 
+  // Function to stop the chatbot from speaking
   const stopSpeaking = () => {
     Speech.stop();
     setSpeaking(false);
   };
 
-
+  // Function to handle sending the user's message to the chatbot
   const handleSend = async () => {
     try {
       if (!message) {
@@ -54,8 +62,8 @@ export default function ChatbotScreen({ user }) {
       }
 
       setLoading(true);
-      
 
+      // Send the user's message to the server and receive a response
       const response = await axios.post('https://assisterapp.onrender.com/chat', {
         message: message,
         userEmail: user.email,
@@ -66,6 +74,7 @@ export default function ChatbotScreen({ user }) {
       });
 
       if (response?.data?.response) {
+        // Speak the chatbot's response and update the chat history
         const aiResponse = response.data.response;
         speak(aiResponse);
         setSpeaking(true);
@@ -89,7 +98,7 @@ export default function ChatbotScreen({ user }) {
     }
   }
   
-
+  // Function to scroll to the bottom of the chat when a new message is added
   const scrollToBottom = () => {
     if (scrollViewRef.current) {
       scrollViewRef.current.scrollToEnd({ animated: true });
@@ -172,4 +181,3 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-

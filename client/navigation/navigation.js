@@ -14,8 +14,10 @@ import DiagnosisResultScreen from '../screens/DiagnosisResultScreen';
 import EmergencyContacts from '../screens/EmergencyContacts';
 import JournalScreen from '../screens/JournalScreen';
 
+// Create a native stack navigator for handling screen transitions.
 const Stack = createNativeStackNavigator();
-// Tab
+
+// Create a bottom tab navigator for the main app navigation.
 const Tab = createBottomTabNavigator();
 
 import { MaterialIcons } from '@expo/vector-icons';
@@ -28,6 +30,7 @@ import CreateJournal from '../screens/CreateJournal';
 import JournalDetail from '../screens/JournalDetail';
 import About from '../screens/About';
 
+// Define the tab navigator for the main app screens.
 function HomeTabNavigator() {
   const { user } = useAuth();
 
@@ -46,7 +49,7 @@ function HomeTabNavigator() {
             iconName = 'settings';
           } else if (route.name === 'Profile') {
             iconName = 'person';
-          }else if (route.name === 'About') {
+          } else if (route.name === 'About') {
             iconName = 'book';
           }
         
@@ -54,17 +57,17 @@ function HomeTabNavigator() {
         }
       })}
     >
-      <Tab.Screen name="Home" component={HomePage} options={{ tabBarLabel:() => null, headerShown: false }} />
-      <Tab.Screen name="Tools" component={ToolsPage} options={{ tabBarLabel:() => null, headerShown: false }} />
-      <Tab.Screen name="Profile" options={{ tabBarLabel:() => null, headerShown: false }}>
+      <Tab.Screen name="Home" component={HomePage} options={{ tabBarLabel: () => null, headerShown: false }} />
+      <Tab.Screen name="Tools" component={ToolsPage} options={{ tabBarLabel: () => null, headerShown: false }} />
+      <Tab.Screen name="Profile" options={{ tabBarLabel: () => null, headerShown: false }}>
         {() => <ProfilePage user={user}/>}
-        </Tab.Screen>
-        <Tab.Screen name="About" component={About} options={{ tabBarLabel:() => null, headerShown: false }} />
-
+      </Tab.Screen>
+      <Tab.Screen name="About" component={About} options={{ tabBarLabel: () => null, headerShown: false }} />
     </Tab.Navigator>
   );
 }
 
+// Define the main navigation structure for the entire app.
 function Navigation() {
   const { user } = useAuth();
   return (
@@ -75,11 +78,12 @@ function Navigation() {
         }}
       >
         {user ? ( 
+          // If a user is authenticated, show the main app screens.
           <>
             <Stack.Screen name="home" component={HomeTabNavigator} />
             <Stack.Screen name="EmergencyContacts" component={EmergencyContacts} />
             <Stack.Screen name="Chatbot">
-                {() => <ChatbotScreen user={user} />}
+              {() => <ChatbotScreen user={user} />}
             </Stack.Screen>
             <Stack.Screen name="Diagnosis" component={DiagnosisScreen} />
             <Stack.Screen name="DiagnosisResult" component={DiagnosisResultScreen} />
@@ -88,16 +92,15 @@ function Navigation() {
             <Stack.Screen name="Emergency" component={EmergencyContacts} />
             <Stack.Screen name="NewsDetail" component={NewsDetail} />
             <Stack.Screen name="Journal">
-                {() => <JournalScreen user={user} />}
+              {() => <JournalScreen user={user} />}
             </Stack.Screen>
             <Stack.Screen name="CreateJournal">
-                {() => <CreateJournal user={user} />}
+              {() => <CreateJournal user={user} />}
             </Stack.Screen>
             <Stack.Screen name="JournalDetail" component={JournalDetail} />
-
-            
           </>
          ) : (
+          // If no user is authenticated, show the authentication and onboarding screens.
           <>
             <Stack.Screen name="Opening" component={OpeningScreen} />
             <Stack.Screen name="Splash" component={SplashScreen} />

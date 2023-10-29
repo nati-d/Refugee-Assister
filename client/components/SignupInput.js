@@ -2,6 +2,13 @@ import React from 'react';
 import { View, Text, TextInput } from 'react-native'; // Import required dependencies
 import tw from 'twrnc';
 
+/**
+ * SignupInput component for rendering an input field with a label.
+ * @param {string} placeholder - The label for the input field.
+ * @param {string} value - The current value of the input.
+ * @param {function} onChangeText - A callback function to handle text changes.
+ * @param {string} error - An optional error message to display if there's an error.
+ */
 function SignupInput({ placeholder, value, onChangeText, error }) {
     return (
         <View>

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, Linking } from 'react-native';
 
 const NewsDetail = ({ route }) => {
+  // Retrieve the 'item' object from the route's parameters
   const { item } = route.params;
 
   // Function to open the URL when the "Read More" button is pressed
@@ -13,12 +14,14 @@ const NewsDetail = ({ route }) => {
 
   return (
     <View style={styles.container}>
+      {/* Display the news image */}
       <Image source={{ uri: item.urlToImage }} style={styles.image} />
       <View style={styles.infos}>
         <Text style={styles.date}>{item.publishedAt}</Text>
         <Text style={styles.source}>{item.source.name}</Text>
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.description}>{item.description}</Text>
+        {/* Button to read more, with an 'onPress' event to call the openURL function */}
         <TouchableOpacity
           style={styles.readMoreButton}
           onPress={openURL} // Call the openURL function
@@ -26,7 +29,6 @@ const NewsDetail = ({ route }) => {
           <Text style={styles.readMoreText}>Read More</Text>
         </TouchableOpacity>
       </View>
-      
     </View>
   );
 };
@@ -39,7 +41,6 @@ const styles = StyleSheet.create({
   },
   infos: {
     width: '90%',
-
   },
   image: {
     width: '100%',

@@ -17,6 +17,7 @@ export default function SignupScreen() {
     const [passwordError, setPasswordError] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
+    // Function to handle user signup
     const handleSignup = async () => {
         // Validate email
         if (!isValidEmail(email)) {
@@ -43,15 +44,15 @@ export default function SignupScreen() {
         }
     
         try {
-
+            // Send a request to add the user via an API endpoint
             const response = await axios.post('https://assisterapp.onrender.com/addUser', { 
                 email: email,
-                firstName:firstName,
-                lastName:lastName 
+                firstName: firstName,
+                lastName: lastName 
             });
 
+            // Create a new user with the provided email and password
             await createUserWithEmailAndPassword(auth, email, password);
-
 
             console.log('User added successfully:', response.data);
         } catch (error) {
@@ -63,89 +64,89 @@ export default function SignupScreen() {
         }
     };
     
+    // Function to validate email using a regular expression
     const isValidEmail = (email) => {
-        // Regular expression for checking valid email address
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     };
 
     return (
         <View style={[tw`flex-1 mt-10`, styles.container]}>
-            <View style={tw`w-full p-5`}>
-                <Text style={tw`font-extrabold text-2xl text-center text-gray-800`}>Let's Get Started!</Text>
-                <Text style={tw`text-base text-center text-gray-800`}>Begin Your Journey, Sign Up Now.</Text>
-                <View style={tw`flex-row justify-between mt-5`}>
-                    <View style={tw`w-[48%]`}>
-                        <Text style={tw`text-base font-bold mb-2 text-gray-800`}>First Name:</Text>
-                        <TextInput
-                            style={[tw`border rounded-md h-12 p-2 px-3 border-gray-400 text-gray-800`]}
-                            value={firstName}
-                            onChangeText={(text) => setFirstName(text)}
-                            placeholder='Your First Name'
-                        />
-                    </View>
-                    <View style={tw`w-[48%]`}>
-                        <Text style={tw`text-base font-bold mb-2 text-gray-800`}>Last Name:</Text>
-                        <TextInput
-                            style={[tw`border rounded-md h-12 p-2 px-3 border-gray-400 text-gray-800`]}
-                            value={lastName}
-                            onChangeText={(text) => setLastName(text)}
-                            placeholder='Your Last Name'
-                        />
-                    </View>
-                </View>
-                <View style={tw`mt-2`}>
-                    <Text style={tw`text-base font-bold mb-2 text-gray-800`}>Email:</Text>
+        <View style={tw`w-full p-5`}>
+            <Text style={tw`font-extrabold text-2xl text-center text-gray-800`}>Let's Get Started!</Text>
+            <Text style={tw`text-base text-center text-gray-800`}>Begin Your Journey, Sign Up Now.</Text>
+            <View style={tw`flex-row justify-between mt-5`}>
+                <View style={tw`w-[48%]`}>
+                    <Text style={tw`text-base font-bold mb-2 text-gray-800`}>First Name:</Text>
                     <TextInput
-                        style={[
-                            tw`border rounded-md h-12 p-2 px-3 border-gray-400 text-gray-800`,
-                            { borderColor: emailError ? '#FF0000' : 'gray', shadowColor: emailError ? '#FF0000' : 'transparent' },
-                        ]}
-                        value={email}
-                        onChangeText={(text) => setEmail(text)}
-                        placeholder='Your Email'
+                        style={[tw`border rounded-md h-12 p-2 px-3 border-gray-400 text-gray-800`]}
+                        value={firstName}
+                        onChangeText={(text) => setFirstName(text)}
+                        placeholder='Your First Name'
                     />
-                    {emailError ? <Text style={tw`text-red-600`}>{emailError}</Text> : null}
                 </View>
-                <View style={tw`mt-2`}>
-                    <Text style={tw`text-base font-bold mb-2 text-gray-800`}>Password:</Text>
+                <View style={tw`w-[48%]`}>
+                    <Text style={tw`text-base font-bold mb-2 text-gray-800`}>Last Name:</Text>
                     <TextInput
-                        style={[
-                            tw`border rounded-md h-12 p-2 px-3 border-gray-400 text-gray-800`,
-                            { borderColor: passwordError ? '#FF0000' : 'gray', shadowColor: passwordError ? '#FF0000' : 'transparent' },
-                        ]}
-                        value={password}
-                        onChangeText={(text) => setPassword(text)}
-                        placeholder='Your Password'
-                        secureTextEntry={true}
+                        style={[tw`border rounded-md h-12 p-2 px-3 border-gray-400 text-gray-800`]}
+                        value={lastName}
+                        onChangeText={(text) => setLastName(text)}
+                        placeholder='Your Last Name'
                     />
-                    {passwordError ? <Text style={tw`text-red-600`}>{passwordError}</Text> : null}
                 </View>
-                <View style={tw`mt-2`}>
-                    <Text style={tw`text-base font-bold mb-2 text-gray-800`}>Confirm Password:</Text>
-                    <TextInput
-                        style={[
-                            tw`border rounded-md h-12 p-2 px-3 border-gray-400 text-gray-800`,
-                            { borderColor: confirmPasswordError ? '#FF0000' : 'gray', shadowColor: confirmPasswordError ? '#FF0000' : 'transparent' },
-                        ]}
-                        value={confirmPassword}
-                        onChangeText={(text) => setConfirmPassword(text)}
-                        placeholder='Confirm Password'
-                        secureTextEntry={true}
-                    />
-                    {confirmPasswordError ? <Text style={tw`text-red-600`}>{confirmPasswordError}</Text> : null}
-                </View>
-                <TouchableOpacity style={[styles.button, tw`p-4 mt-4 rounded-md shadow-md`]} onPress={handleSignup}>
-                    <Text style={tw`text-white text-center font-bold`}>Signup</Text>
-                </TouchableOpacity>
             </View>
-            <View style={tw`flex-row mt-5`}>
-                <Text style={tw`text-center`}>Already have an account? </Text>
-                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                    <Text style={tw`font-bold text-blue-600`}>Login</Text>
-                </TouchableOpacity>
+            <View style={tw`mt-2`}>
+                <Text style={tw`text-base font-bold mb-2 text-gray-800`}>Email:</Text>
+                <TextInput
+                    style={[
+                        tw`border rounded-md h-12 p-2 px-3 border-gray-400 text-gray-800`,
+                        { borderColor: emailError ? '#FF0000' : 'gray', shadowColor: emailError ? '#FF0000' : 'transparent' },
+                    ]}
+                    value={email}
+                    onChangeText={(text) => setEmail(text)}
+                    placeholder='Your Email'
+                />
+                {emailError ? <Text style={tw`text-red-600`}>{emailError}</Text> : null}
             </View>
+            <View style={tw`mt-2`}>
+                <Text style={tw`text-base font-bold mb-2 text-gray-800`}>Password:</Text>
+                <TextInput
+                    style={[
+                        tw`border rounded-md h-12 p-2 px-3 border-gray-400 text-gray-800`,
+                        { borderColor: passwordError ? '#FF0000' : 'gray', shadowColor: passwordError ? '#FF0000' : 'transparent' },
+                    ]}
+                    value={password}
+                    onChangeText={(text) => setPassword(text)}
+                    placeholder='Your Password'
+                    secureTextEntry={true}
+                />
+                {passwordError ? <Text style={tw`text-red-600`}>{passwordError}</Text> : null}
+            </View>
+            <View style={tw`mt-2`}>
+                <Text style={tw`text-base font-bold mb-2 text-gray-800`}>Confirm Password:</Text>
+                <TextInput
+                    style={[
+                        tw`border rounded-md h-12 p-2 px-3 border-gray-400 text-gray-800`,
+                        { borderColor: confirmPasswordError ? '#FF0000' : 'gray', shadowColor: confirmPasswordError ? '#FF0000' : 'transparent' },
+                    ]}
+                    value={confirmPassword}
+                    onChangeText={(text) => setConfirmPassword(text)}
+                    placeholder='Confirm Password'
+                    secureTextEntry={true}
+                />
+                {confirmPasswordError ? <Text style={tw`text-red-600`}>{confirmPasswordError}</Text> : null}
+            </View>
+            <TouchableOpacity style={[styles.button, tw`p-4 mt-4 rounded-md shadow-md`]} onPress={handleSignup}>
+                <Text style={tw`text-white text-center font-bold`}>Signup</Text>
+            </TouchableOpacity>
         </View>
+        <View style={tw`flex-row mt-5`}>
+            <Text style={tw`text-center`}>Already have an account? </Text>
+            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                <Text style={tw`font-bold text-blue-600`}>Login</Text>
+            </TouchableOpacity>
+        </View>
+    </View>
     );
 }
 

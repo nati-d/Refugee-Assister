@@ -1,6 +1,12 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
+/**
+ * CheckBoxes component for rendering a list of options with checkboxes.
+ * @param {object} options - An array of option objects with 'id' and 'text' properties.
+ * @param {array} selectedOptions - An array of selected option IDs.
+ * @param {function} onCheckboxChange - A callback function to handle checkbox state changes.
+ */
 export default function CheckBoxes({ options, selectedOptions, onCheckboxChange }) {
   return (
     <View style={styles.mainContainer}>
@@ -37,12 +43,12 @@ const styles = StyleSheet.create({
   checkboxContainer: {
     padding: 5,
     margin: 2,
-    borderRadius: 10, // Increased border radius
+    borderRadius: 10, // Increased border radius for a rounded look
     backgroundColor: '#007bff',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 5,
-    elevation: 3,
+    elevation: 3, // Add a subtle shadow effect
     shadowColor: 'rgba(0, 0, 0, 0.24)',
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 2,

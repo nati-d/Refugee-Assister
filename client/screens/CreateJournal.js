@@ -4,12 +4,15 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 export default function CreateJournal({ user, route }) {
+  // State variables to store user input for the title and story content
   const [title, setTitle] = useState('');
   const [story, setStory] = useState('');
   const navigation = useNavigation();
 
+  // Function to handle the form submission
   const handleSubmit = async () => {
     try {
+      // Send a POST request to the server with the journal data
       const response = await fetch('https://assisterapp.onrender.com/journals', {
         method: 'POST',
         headers: {
@@ -22,13 +25,14 @@ export default function CreateJournal({ user, route }) {
         }),
       });
 
+      // Check the response status and navigate accordingly
       if (response.status === 201) {
-        navigation.navigate('Journal');
+        navigation.navigate('Journal'); // Navigate to the 'Journal' screen on success
       } else {
-        console.error('Failed to save journal entry');
+        console.error('Failed to save journal entry'); // Log an error message on failure
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error:', error); // Log an error if the fetch operation fails
     }
   };
 
@@ -38,6 +42,8 @@ export default function CreateJournal({ user, route }) {
         <Ionicons name="arrow-back" size={24} color="#007bff" />
       </TouchableOpacity>
       <Text style={styles.heading}>Create Journal Entry</Text>
+
+      {/* Input field for the journal title */}
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Title:</Text>
         <TextInput
@@ -47,6 +53,8 @@ export default function CreateJournal({ user, route }) {
           onChangeText={(text) => setTitle(text)}
         />
       </View>
+
+      {/* Input field for the journal story content (multiline) */}
       <View style={styles.storyInputContainer}>
         <Text style={styles.label}>Story:</Text>
         <TextInput
@@ -57,6 +65,8 @@ export default function CreateJournal({ user, route }) {
           onChangeText={(text) => setStory(text)}
         />
       </View>
+
+      {/* Submit button to trigger the handleSubmit function */}
       <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
         <Text style={styles.submitText}>Submit</Text>
       </TouchableOpacity>
@@ -64,6 +74,7 @@ export default function CreateJournal({ user, route }) {
   );
 }
 
+// Styles for the components in the screen
 const styles = StyleSheet.create({
   container: {
     flex: 1,

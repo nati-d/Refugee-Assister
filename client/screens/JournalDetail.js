@@ -8,14 +8,18 @@ export default function JournalDetailScreen() {
   const navigation = useNavigation();
   const route = useRoute();
   const { journal, onDelete, onUpdate } = route.params;
+
+  // State for handling editing mode and content updates
   const [isEditing, setEditing] = useState(false);
   const [updatedContent, setUpdatedContent] = useState(journal.content);
 
+  // Function to handle journal content update
   const handleUpdate = () => {
     onUpdate(journal._id, updatedContent); 
     setEditing(false);
   };
 
+  // Format the date of the journal entry
   const formattedDate = new Date(journal.date);
   const dateOptions = {
     year: 'numeric',
@@ -29,19 +33,23 @@ export default function JournalDetailScreen() {
   return (
     <View style={[tw`flex w-full h-full py-3`, { backgroundColor: 'white' }]}>
       <View style={styles.headerContainer}>
+        {/* Back button to navigate back to the journal */}
         <TouchableOpacity onPress={() => navigation.navigate('Journal')}>
           <Ionicons name="arrow-back" size={30} color="black" />
         </TouchableOpacity>
         <View style={styles.headerButtons}>
           {isEditing ? (
+            // Update button when in edit mode
             <TouchableOpacity style={styles.updateButton} onPress={handleUpdate}>
               <MaterialIcons name="done" size={24} color="green" />
             </TouchableOpacity>
           ) : (
+            // Edit button to enable editing mode
             <TouchableOpacity style={styles.editButton} onPress={() => setEditing(true)}>
               <MaterialCommunityIcons name="pencil" size={24} color="gray" />
             </TouchableOpacity>
           )}
+          {/* Delete button to remove the journal entry */}
           <TouchableOpacity
             style={styles.deleteButton}
             onPress={() => {
@@ -55,10 +63,12 @@ export default function JournalDetailScreen() {
       </View>
 
       <View style={styles.contentContainer}>
+        {/* Display the formatted date and title of the journal entry */}
         <Text style={styles.dateText}>{formattedDateString}</Text>
         <Text style={styles.titleText}>{journal.title}</Text>
 
         {isEditing ? (
+          // Text input for editing the content
           <TextInput
             style={styles.contentInput}
             multiline
@@ -66,6 +76,7 @@ export default function JournalDetailScreen() {
             onChangeText={setUpdatedContent}
           />
         ) : (
+          // Display the journal content or the edited content
           <Text style={styles.contentText}>{journal.content}</Text>
         )}
       </View>

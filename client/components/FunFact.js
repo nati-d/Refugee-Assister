@@ -7,14 +7,25 @@ import { Ionicons, MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { colors } from "../themes/colors";
 import MultilingualText from "../components/MultilingualText";
 
+/**
+ * FunFact component for displaying fun facts about a selected country.
+ * @param {object} props - Component props, including the 'country'.
+ */
 export default function FunFact(props) {
+  // Initial message to send for fun fact retrieval
   const defaultMessage = `The country ${props.country}.`;
-  const [funFact, setFunFact] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [buttonColor, setButtonColor] = useState('gray')
-  const demo = 'Fun fact about Ethiopia is that it is poor.'
 
+  // State variables
+  const [funFact, setFunFact] = useState([]); // Holds the retrieved fun fact
+  const [loading, setLoading] = useState(false); // Indicates if data is loading
+  const [buttonColor, setButtonColor] = useState('gray'); // Button color state
 
+  // A demo fun fact message for testing purposes
+  const demo = 'Fun fact about Ethiopia is that it is poor.';
+
+  /**
+   * Function to generate a fun fact by making an API request.
+   */
   const generateFunFact = async () => {
     try {
       if (!defaultMessage) {
@@ -41,21 +52,23 @@ export default function FunFact(props) {
     }
   };
 
-const [isTextVisible, setIsTextVisible] = useState(false);
+  const [isTextVisible, setIsTextVisible] = useState(false);
 
-const handleCirclePress = () => {
-    if(isTextVisible == false){
-        generateFunFact();
-        setIsTextVisible(true);
-        setButtonColor(colors.primary);
+  /**
+   * Handle the press event on the circular button.
+   */
+  const handleCirclePress = () => {
+    if (isTextVisible === false) {
+      generateFunFact();
+      setIsTextVisible(true);
+      setButtonColor(colors.primary);
     } else {
-        setIsTextVisible(false);
-        setButtonColor('gray');
+      setIsTextVisible(false);
+      setButtonColor('gray');
     }
-};
+  };
 
-
-const styles = {
+  const styles = {
     container: {
       flexDirection: 'row',
       justifyContent: 'flex-end',
@@ -79,29 +92,27 @@ const styles = {
       fontWeight: '600',
       borderRadius: 10,
     },
-    };
+  };
 
-return (
-  <View style={styles.container}>
-
-    {isTextVisible && (
+  return (
+    <View style={styles.container}>
+      {isTextVisible && (
         loading ? (
-            <View>
-                <ActivityIndicator size="small" color={colors.primary} />
-            </View>
-            ) : (
-            <Text numberOfLines={6} style={[styles.text,tw`-pb-16`]}>
-                {funFact}
-            </Text>)
-         )
-    }
-    <TouchableOpacity
-      style={styles.circle}
-      onPress={handleCirclePress}
-    >
-<AntDesign name="questioncircle" size={18} color="white" />    
-</TouchableOpacity>
-  </View>
-);
-};
-
+          <View>
+            <ActivityIndicator size="small" color={colors.primary} />
+          </View>
+        ) : (
+          <Text numberOfLines={6} style={[styles.text, tw`-pb-16`]}>
+            {funFact}
+          </Text>
+        )
+      )}
+      <TouchableOpacity
+        style={styles.circle}
+        onPress={handleCirclePress}
+      >
+        <AntDesign name="questioncircle" size={18} color="white" />
+      </TouchableOpacity>
+    </View>
+  );
+}
