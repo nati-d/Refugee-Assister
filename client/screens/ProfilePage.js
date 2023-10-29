@@ -3,19 +3,21 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import tw from 'twrnc';
 import { signOut } from 'firebase/auth';
 import { auth } from '../config/firebase';
-import axios from 'axios'; // Import Axios
+import axios from 'axios';
 import { colors } from '../themes/colors';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function ProfilePage({ user }) {
-
-  const [avatar, setAvatar] = useState(''); // Initialize with an empty string
+  const [avatar, setAvatar] = useState('');
   const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
+  const [randomQuote, setRandomQuote] = useState('');
 
   useEffect(() => {
     fetchUser();
-  }, []); // Removed [firstName] as it's not needed here
+    fetchRandomQuote();
+  }, []);
 
   const handleLogout = async () => {
     await signOut(auth);
@@ -23,42 +25,58 @@ export default function ProfilePage({ user }) {
 
   const fetchUser = async () => {
     try {
-      // Replace 'your-api-endpoint' with your actual API endpoint
       const response = await axios.get('https://assisterapp.onrender.com/getUser', {
-        params: { userEmail: user.email }, // Pass the user's email as a query parameter
+        params: { userEmail: user.email },
       });
-
+  
       if (response?.data?.user) {
-        setFirstName(response.data.user.firstName);
-        setEmail(response.data.user.email);
-        setAvatar(response.data.user.firstName.charAt(0)); // Set the avatar here
+        const { firstName, lastName, email } = response.data.user;
+        setFirstName(firstName);
+        setLastName(lastName);
+        setEmail(email);
+  
+        // Check if firstName exists before trying to get the first character
+        if (firstName) {
+          setAvatar(firstName.charAt(0));
+        }
       }
     } catch (err) {
       console.error('Error fetching user:', err.message);
     }
   };
+  
+
+  const fetchRandomQuote = async () => {
+    try {
+      const response = await axios.get('https://api.quotable.io/random');
+
+      if (response.data) {
+        setRandomQuote(response.data.content);
+      }
+    } catch (err) {
+      console.error('Error fetching random quote:', err.message);
+    }
+  };
 
   return (
-    <View style={tw`flex-1 items-center bg-white`}>
-          <LinearGradient
-            colors={[colors.primary, '#FF6A6A']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-        style={tw`w-full h-100 flex items-center`}
-      >
-        <Text style={tw `mt-6 text-15  font-bold text-white`}>Assister</Text>
-        <View style={tw `flex justify-center mt-15 bg-gray-800 w-40 h-40 rounded-full`}>
-          <Text style={tw `text-center text-12 font-bold text-white`}>{avatar}</Text>
+    <View style={tw`flex-1 items-center bg-gray-300`}>
+      <View style={tw`bg-blue-800 p-5 w-full rounded-b-2xl`}>
+        <Text style={tw`text-center text-white font-semibold`}>Your Profile</Text>
+        <View style={tw`mt-10 bg-green-300 w-30 h-30 rounded-full mx-auto flex items-center justify-center overflow-hidden`}>
+          <Text style={tw`text-4xl text-white font-bold`}>{avatar}</Text>
         </View>
-      </LinearGradient>
-      <View style={tw`relative bg-white flex-1 w-full`}>
-        <View style={tw`absolute w-full flex-1 -mt-6 bg-white p-8 rounded-t-3xl`}>
-          <Text style={tw`font-bold text-3xl`}>{firstName}</Text>
-          <Text style={tw`font-semibold text-base text-gray-500`}>{email}</Text>
-          <TouchableOpacity onPress={handleLogout} style={tw`bg-red-600 w-[75%] m-auto py-3 rounded-t-md rounded-b-md mt-30`}>
+        <Text style={tw`text-center mt-8 text-lg text-white font-bold`}>{firstName} {lastName}</Text>
+        <Text style={tw`text-center text-sm text-white mb-12`}>{email}</Text>
+      </View>
+
+      <View style={tw`relative w-full`}>
+        <View style={tw`absolute -top-10 left-5 w-[90%] h-50 z-50 bg-white rounded-t-xl rounded-b-xl flex items-center justify-center`}>
+          <Text style={tw`text-center text-4 text-black`}>"{randomQuote}"</Text>
+        </View>
+
+        <TouchableOpacity onPress={handleLogout} style={tw`bg-red-600 w-[75%] mx-auto  py-3 rounded-t-md rounded-b-md mt-60`}>
             <Text style={tw`text-center text-white font-semibold`}>Sign out</Text>
           </TouchableOpacity>
-        </View>
       </View>
     </View>
   );
