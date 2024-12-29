@@ -37,7 +37,6 @@ import About from '../screens/About';
 // Define the tab navigator for the main app screens.
 function HomeTabNavigator() {
   const { user } = useAuth();
-
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
