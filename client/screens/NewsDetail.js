@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, Linking } from 'react-native';
+import Background from '../components/Background';
 
 const NewsDetail = ({ route }) => {
   // Retrieve the 'item' object from the route's parameters
@@ -13,6 +14,7 @@ const NewsDetail = ({ route }) => {
   };
 
   return (
+    <Background>
     <View style={styles.container}>
       {/* Display the news image */}
       <Image source={{ uri: item.urlToImage }} style={styles.image} />
@@ -29,7 +31,7 @@ const NewsDetail = ({ route }) => {
           <Text style={styles.readMoreText}>Read More</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </View></Background>
   );
 };
 

@@ -6,6 +6,7 @@ import { Linking } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { colors } from "../themes/colors";
 import MultilingualText from "../components/MultilingualText";
+import Background from "../components/Background";
 
 export default function EmergencyContacts({ route }) {
   // Initial message with placeholders for user location
@@ -56,7 +57,8 @@ export default function EmergencyContacts({ route }) {
   };
 
   return (
-    <View style={[tw `flex-1`, { backgroundColor: colors.background }]}>
+    <Background>
+    <View style={[tw `flex-1`]}>
       <ScrollView
         ref={scrollViewRef}
         contentContainerStyle={tw `p-4`}
@@ -92,6 +94,6 @@ export default function EmergencyContacts({ route }) {
           </View>
         </View>
       </ScrollView>
-    </View>
+    </View></Background>
   );
 }

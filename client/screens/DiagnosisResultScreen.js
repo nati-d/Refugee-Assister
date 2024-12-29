@@ -28,7 +28,7 @@ export default function DiagnosisResultScreen({ route, navigation }) {
 
   return (
     <ScrollView style={{ flex: 1 }}>
-      <View style={{ backgroundColor: "white" }}>
+      <View>
         {/* Back button */}
         <TouchableOpacity style={tw`mt-7 ml-4 absolute z-10`} onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={32} color="#007bff" />

@@ -9,12 +9,14 @@ import {
   ScrollView,
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import { useNavigation } from '@navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import CheckBoxes from '../components/CheckBoxes';
 import axios from 'axios';
 import SeverityButtons from '../components/SeverityButtons';
 import MultilingualText from '../components/MultilingualText';
 import * as Location from 'expo-location';
+import Background from '../components/Background';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function DiagnosisScreen({ route }) {
   const navigation = useNavigation();
@@ -88,6 +90,18 @@ export default function DiagnosisScreen({ route }) {
     // List of symptom options with unique IDs
     { id: 'option1', text: 'Fever' },
     { id: 'option2', text: 'Cough' },
+    { id: 'option3', text: 'Headache' },
+    { id: 'option4', text: 'Diarrhea' },
+    { id: 'option5', text: 'Fatigue' },
+    { id: 'option6', text: 'Vomiting' },
+    { id: 'option7', text: 'Chest pain' },
+    { id: 'option8', text: 'Dizziness' },
+    { id: 'option9', text: 'Sneezing' },
+    { id: 'option10', text: 'Asthma' },
+    { id: 'option11', text: 'Sore throat' },
+    { id: 'option12', text: 'Heart Attack' },
+    { id: 'option13', text: 'Cough' },
+    { id: 'option14', text: 'Cough' },
     // Add more symptom options here
   ];
 
@@ -147,8 +161,15 @@ export default function DiagnosisScreen({ route }) {
   };
 
   return (
+    <Background>
     <ScrollView contentContainerStyle={styles.container}>
+      {/* Back Button */}
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <MaterialIcons name="arrow-back" size={24} color="#000" />
+        <Text style={styles.backText}></Text>
+      </TouchableOpacity>
       <View style={styles.content}>
+        
         {/* Input fields for symptoms and additional information */}
         <Text style={styles.header}><MultilingualText text='EnterYourSymptoms'/></Text>
         <CheckBoxes options={options} selectedOptions={selectedOptions} onCheckboxChange={handleCheckboxChange} />
@@ -206,7 +227,7 @@ export default function DiagnosisScreen({ route }) {
           )}
         </TouchableOpacity>
       </View>
-    </ScrollView>
+    </ScrollView></Background>
   );
 }
 
@@ -214,9 +235,8 @@ export default function DiagnosisScreen({ route }) {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: '#f5f5f5',
     paddingHorizontal: 20,
-    justifyContent: 'center',
+    paddingTop:50
   },
   content: {
     width: '100%',
