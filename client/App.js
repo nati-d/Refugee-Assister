@@ -1,5 +1,6 @@
 import React from 'react';
 import { colors } from './themes/colors';
+import { ThemeProvider } from './themes/ThemeProvider';
 import { StatusBar } from 'react-native';
 import 'intl-pluralrules'; 
 import Navigation from './navigation/navigation';
@@ -7,8 +8,8 @@ import Navigation from './navigation/navigation';
 const App = ()=> {
   return(
     <>
-      <StatusBar backgroundColor={colors.background} barStyle="dark-content" />
-      <Navigation/>
+      
+      <ThemeProvider><Navigation /></ThemeProvider>
 
     </>
   );

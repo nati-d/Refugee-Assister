@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import tw from 'twrnc';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function JournalScreen({ user }) {
   // Initialize current date and state for selected button and journals
@@ -115,6 +116,10 @@ export default function JournalScreen({ user }) {
   return (
     <View style={[tw`flex w-full h-full py-3 `, { backgroundColor: '#007bff' }]}>
       <View style={tw`flex flex-row items-center justify-between mx-4`}>
+        {/* Back Button */}
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <MaterialIcons name="arrow-back" size={24} color="#fff" />
+      </TouchableOpacity>
         <Text style={tw`text-2xl font-extrabold text-white`}>Journal</Text>
         <TouchableOpacity onPress={navigateToCreateJournal}>
           <Feather name="plus-square" size={30} color="white" />

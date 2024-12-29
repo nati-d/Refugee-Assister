@@ -1,10 +1,11 @@
 import { View, Text, Image } from 'react-native'
 import React from 'react'
 import tw from 'twrnc'
+import Background from '../components/Background'
 
 export default function About() {
   return (
-    <View style={tw`bg-white flex flex-1 px-3`}>
+    <Background><View style={tw` flex flex-1 px-3`}>
       {/* Title and App Information */}
       <View>
         <Text style={tw`text-center text-lg mt-3 font-semibold`}>About Our App</Text>
@@ -30,6 +31,6 @@ export default function About() {
           </Text>
         </View>
       </View>
-    </View>
+    </View></Background>
   )
 }

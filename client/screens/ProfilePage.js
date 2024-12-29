@@ -6,6 +6,7 @@ import { auth } from '../config/firebase';
 import axios from 'axios';
 import { colors } from '../themes/colors';
 import { LinearGradient } from 'expo-linear-gradient';
+import Background from '../components/Background';
 
 export default function ProfilePage({ user }) {
   const [avatar, setAvatar] = useState('');
@@ -59,7 +60,8 @@ export default function ProfilePage({ user }) {
   };
 
   return (
-    <View style={tw`flex-1 items-center bg-gray-300`}>
+    <Background>
+    <View style={tw`flex-1 items-center`}>
       <View style={tw`bg-blue-800 p-5 w-full rounded-b-2xl`}>
         <Text style={tw`text-center text-white font-semibold`}>Your Profile</Text>
         <View style={tw`mt-10 bg-green-300 w-30 h-30 rounded-full mx-auto flex items-center justify-center overflow-hidden`}>
@@ -78,6 +80,6 @@ export default function ProfilePage({ user }) {
             <Text style={tw`text-center text-white font-semibold`}>Sign out</Text>
           </TouchableOpacity>
       </View>
-    </View>
+    </View></Background>
   );
 }

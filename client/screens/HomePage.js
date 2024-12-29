@@ -6,11 +6,14 @@ import HomeScreenTool from '../components/HomeScreenTools';
 import MultilingualText from '../components/MultilingualText';
 import LanguagePicker from '../components/LanguagePicker';
 import { useNavigation } from '@react-navigation/native';
-import { colors } from '../themes/colors';
 import News from '../components/News';
 import * as Location from 'expo-location';
 import axios from 'axios';
 import FunFact from '../components/FunFact';
+import ThemePicker from '../components/ThemePicker'; // Import ThemePicker
+import { useTheme } from '../themes/ThemeProvider';
+import { colors } from '../themes/colors';
+import Background from '../components/Background';
 
 export default function HomePage() {
   // State variables for location and loading indicators
@@ -19,6 +22,8 @@ export default function HomePage() {
   const [country, setCountry] = useState(null);
   const [loadingLocation, setLoadingLocation] = useState(true); // Initialize loading state
   const [fetching, setFetching] = useState('Fetching...'); // Loading message
+  const { theme, setCustomTheme } = useTheme(); // Get the current theme and setter function
+
 
   // Function to handle language change
   const handleLanguageChange = (language) => {
@@ -84,20 +89,22 @@ export default function HomePage() {
   }
 
   return (
-    <View style={[tw `flex-1 w-full`, { backgroundColor: colors.background }]}>
+    <Background>
+    <View style={[tw `flex-1 w-full`]}>
       <ScrollView>
         <View style={tw `flex items-center`}>
           <View style={tw `flex w-85`}>
             <View style={tw `flex-row items-start justify-between mt-2 mr-7`}>
               <View style={tw `flex w-55 justify-start`}>
-                <Text style={[tw `text-5 font-bold`, { color: colors.black }]}><MultilingualText text='HomePageTitle1' /> </Text>
-                <Text style={[tw `text-5 font-bold`, { color: colors.primary }]}><MultilingualText text='HomePageTitle2' /></Text>
+              <Text style={[tw `text-5 font-bold`, { color: theme === 'light' ? '#fff' : '#000' }]}><MultilingualText text='HomePageTitle1' /> </Text>
+              <Text style={[tw `text-5 font-bold`, { color: theme === 'light' ? '#ff6347' : '#1e90ff' }]}><MultilingualText text='HomePageTitle2' /></Text>
               </View>
               <View style={tw `flex-row w-18 justify-between items-center`}>
                 <TouchableOpacity>
-                  <Ionicons name="language" size={20} color="black" />
+                <Ionicons name="language" size={20} color={theme === 'light' ? '#fff' : '#000'} />
                 </TouchableOpacity>
                 <LanguagePicker onLanguageChange={handleLanguageChange} />
+                <ThemePicker />
                 <TouchableOpacity onPress={handleEmergency}>
                   <Ionicons name="md-alert-circle" size={24} color="gray" />
                 </TouchableOpacity>
@@ -114,6 +121,7 @@ export default function HomePage() {
                       <Text style={tw `text-3 font-bold`}>
                         {city}, {country}
                       </Text>
+                      
                     </View>
                   )}
                 </View>
@@ -130,6 +138,7 @@ export default function HomePage() {
                 </View>
                 <View style={tw `flex-row justify-between`}>
                   <HomeScreenTool name="Journal" icon="md-map" iconSize={25} />
+                  <HomeScreenTool name="Resources" icon="newspaper-outline" iconSize={25} />
                 </View>
               </View>
             </View>
@@ -139,6 +148,6 @@ export default function HomePage() {
           </View>
         </View>
       </ScrollView>
-    </View>
+    </View></Background>
   );
 }

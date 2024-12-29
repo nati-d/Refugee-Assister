@@ -27,6 +27,8 @@ export default function HomeScreenTool(props) {
             navigation.navigate("Map");
         } else if (props.name === "Journal") {
             navigation.navigate("Journal");
+        } else if (props.name === "Resources"){
+            navigation.navigate("Resources");
         }
     }    
 

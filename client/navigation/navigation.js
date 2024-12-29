@@ -13,6 +13,10 @@ import ProfilePage from '../screens/ProfilePage';
 import DiagnosisResultScreen from '../screens/DiagnosisResultScreen';
 import EmergencyContacts from '../screens/EmergencyContacts';
 import JournalScreen from '../screens/JournalScreen';
+import ResourcesScreen from '../screens/ResourceScreen';
+import ResourcesDetailScreen from '../screens/ResourcesDetailScreen';
+import { View, StyleSheet } from 'react-native';
+import { BlurView } from 'expo-blur';
 
 // Create a native stack navigator for handling screen transitions.
 const Stack = createNativeStackNavigator();
@@ -33,13 +37,18 @@ import About from '../screens/About';
 // Define the tab navigator for the main app screens.
 function HomeTabNavigator() {
   const { user } = useAuth();
-
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        activeTintColor: '#007BFF',
-        inactiveTintColor: 'gray',
-        tabBarStyle: { justifyContent: 'center' },
+        tabBarStyle: {
+          backgroundColor: 'transparent',
+          position: 'absolute',
+          borderTopWidth: 0,
+          elevation: 0,
+        },
+        tabBarBackground: () => (
+          <BlurView intensity={30} style={StyleSheet.absoluteFill} tint="dark" />
+        ),
         tabBarIcon: ({ color, size }) => {
           let iconName;
 
@@ -54,7 +63,9 @@ function HomeTabNavigator() {
           }
         
           return <MaterialIcons name={iconName} size={size} color={color} />;
-        }
+        },
+        tabBarActiveTintColor: '#007BFF',
+        tabBarInactiveTintColor: 'white',
       })}
     >
       <Tab.Screen name="Home" component={HomePage} options={{ tabBarLabel: () => null, headerShown: false }} />
@@ -98,6 +109,8 @@ function Navigation() {
               {() => <CreateJournal user={user} />}
             </Stack.Screen>
             <Stack.Screen name="JournalDetail" component={JournalDetail} />
+            <Stack.Screen name="Resources" component={ResourcesScreen} />
+            <Stack.Screen name="ResourceDetail" component={ResourcesDetailScreen} />
           </>
          ) : (
           // If no user is authenticated, show the authentication and onboarding screens.
